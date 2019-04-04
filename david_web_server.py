@@ -14,7 +14,7 @@ import logging
 ip_addr = '192.168.1.44' 
 port = 80
 file_sqlite_db = r'/home/user/david/david_db.sqlite'
-file_log = r'/home/user/david/log/climate.log'
+file_log = r'/home/user/david/log/david_web_server.log'
 
 # For tests
 #ip_addr = '192.168.1.52' 
@@ -36,9 +36,9 @@ climate = logging.getLogger('climate')
 
 def check_file(file_name):
     if isfile(file_name):
-        climate.info(f'Message=check_file;File={file_name};Result=exists.')
+        climate.info(f'Message=check_file;File={file_name};Result=exists')
     else:
-        climate.error(f'Message=check_file;File={file_name};Result=does not exist.')
+        climate.error(f'Message=check_file;File={file_name};Result=does_not_exist')
 
 
 class MyHandler(BaseHTTPRequestHandler):
