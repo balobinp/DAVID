@@ -41,8 +41,9 @@ void loop()
       http.begin(httpurldata);
       http.GET();
       http.end();
+      delay(15000);
     } else {
       digitalWrite(5,LOW);
     }
-    delay(15000);
+    delay(1000);
 }
