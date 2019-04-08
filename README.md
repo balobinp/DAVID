@@ -69,18 +69,58 @@ Version 0.0.1.dev change list:
 Version 0.0.1.dev change procedure:
 0. Остановить скрины.
 1. Создать пользователя david и директорию /home/user/david/
-1. Настроить виртуальное окружение для программы.
-2. Создать директорию /home/user/david/log
-3. Перенести базу данных в /home/user/david/david_db.sqlite
+su
+adduser david
+usermod -aG sudo david
+2. Настроить виртуальное окружение для программы.
+sudo pip3.6 install virtualenv
+virtualenv env
+source /home/david/env/bin/activate
+python --version
+pip list
+pip freeze --local > requirements.txt
+deactivate
+3. Создать директорию /home/user/david/log
+mkdir ./log
+3. Перенести базу данных в /home/david/david_db.sqlite
+sudo cp /home/pavel/david/david_db.sqlite /home/david/david_db.sqlite
+sudo chown david:david /home/david/david_db.sqlite
 4. Обновить базу данных запустив скрипт david_db_create.py
-5. Обновить файл david_web_server.py и поместить его в /home/user/david
-6. Обновить файл climate_check.py и поместить его в /home/user/david
+python ./david_db_create.py
+5. Обновить файл david_web_server.py и поместить его в /home/david
+6. Обновить файл david_climate_check.py и поместить его в /home/david
+7. Поместить файл голосового сэмпла в /home/pavel/david/VOICE_SAMPLES
+mkdir ./VOICE_SAMPLES
+cp /home/pavel/david/VOICE_SAMPLES/climate_hot_bedroom.mp3 /home/david/VOICE_SAMPLES/climate_hot_bedroom.mp3
 7. Обновить прошивку NodeMcu01BedRoom.
 8. Запустить скрин для david_web_server.py и climate_check.py
 
 Default version change procedure:
 
+------------------------------------
 Instalation procedure:
+------------------------------------
+
+1. Создать пользователя david и директорию /home/user/david/
+su
+adduser david
+usermod -aG sudo david
+
+2. Настроить виртуальное окружение для программы.
+sudo pip3.6 install virtualenv
+virtualenv env
+source /home/david/env/bin/activate
+python --version
+pip list
+pip freeze --local > requirements.txt
+deactivate
+
+3. Создать директорию /home/user/david/log
+mkdir ./log
+
+4. Создать базу данных запустив скрипт david_db_create.py
+python ./david_db_create.py
+
 ps -aux | grep david_web_server
 sudo screen -S climate_check
 sudo python3.6 ./david/climate_check.py

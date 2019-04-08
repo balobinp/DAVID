@@ -13,8 +13,8 @@ import logging
 # DavidServer
 ip_addr = '192.168.1.44' 
 port = 80
-file_sqlite_db = r'/home/user/david/david_db.sqlite'
-file_log = r'/home/user/david/log/david_web_server.log'
+file_sqlite_db = r'/home/david/david_db.sqlite'
+file_log = r'/home/david/log/david_web_server.log'
 
 # For tests
 #ip_addr = '192.168.1.52' 

@@ -1,12 +1,12 @@
-#python3.5
+#python3.6
 
 import sqlite3
 
 # DavidServer
-file_sqlite_db = r'/home/user/david/david_db.sqlite'
+file_sqlite_db = r'/home/david/david_db.sqlite'
 
 # For tests
-file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
+#file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
 
 conn = sqlite3.connect(file_sqlite_db)
 cur = conn.cursor()

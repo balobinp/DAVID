@@ -9,9 +9,9 @@ import logging
 #from importlib import reload
 #reload(logging)
 
-file_climate_hot_bedroom = r'/home/pavel/david/VOICE_SAMPLES/climate_hot_bedroom.mp3'
-file_sqlite_db = r'/home/user/david/david_db.sqlite'
-file_log = r'/home/user/david/log/climate_check.log'
+file_climate_hot_bedroom = r'/home/david/VOICE_SAMPLES/climate_hot_bedroom.mp3'
+file_sqlite_db = r'/home/david/david_db.sqlite'
+file_log = r'/home/david/log/climate_check.log'
 
 # For tests
 #file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
