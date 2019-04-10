@@ -14,6 +14,7 @@ file_sqlite_db = r'/home/david/david_db.sqlite'
 file_log = r'/home/david/log/climate_check.log'
 
 # For tests
+#file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'
 #file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
 #file_log = r'c:\Users\balob\Downloads\DAVID\log\climate.log'
 
