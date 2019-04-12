@@ -21,6 +21,7 @@ To Do list:
 14. Установить датчик движения в коридор для определения когда кто-то пришел с улицы для приветствия.
 15. Модуль "Важные события". Добавить оповещение в случае изменения курса доллара.
 16. Вынести переменные и функции в отдельный модуль для того чтобы была возможность выполнить юнит тестирование.
+17. Вынести повторяющиеся переменные и функции в отдельный модуль.
 
 Модуль david_web_server:
 1. В случае отсутствия файлов базы данных или логов добавлять их.
@@ -125,6 +126,29 @@ mkdir ./log
 
 4. Создать базу данных запустив скрипт david_db_create.py
 python ./david_db_create.py
+
+5. Поместить в директорию /home/david файлы:
+david_lib.py
+david_web_server.py
+david_unittest.py
+david_climate_check.py
+
+Пример для ubuntu win10
+cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
+
+6. Запустить скрин david_web_server
+su david
+cd /home/david
+sudo screen -S david_web_server
+source /home/david/env/bin/activate
+sudo python3.6 /home/david/david_web_server.py
+Ctrl+A -> D
+sudo screen -ls
+sudo screen -d -r 27.david_web_server
+
+7. Выполнить unit тестирование
+sudo python3.6 /home/david/david_unittest.py
+
 
 ps -aux | grep david_web_server
 sudo screen -S climate_check

@@ -20,7 +20,7 @@ file_log = r'/home/david/log/david_web_server.log'
 #ip_addr = '192.168.1.52' 
 #port = 80
 #file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
-#file_log = r'c:\Users\balob\Downloads\DAVID\log\climate.log'
+#file_log = r'c:\Users\balob\Downloads\DAVID\log\david_web_server.log'
 
 # Create logger
 logging.basicConfig(filename=file_log, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
