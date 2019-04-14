@@ -1,8 +1,8 @@
 # DAVID
 
 Author: balobin.p@mail.ru
-Version 0.0.1.dev
-Date 05.04.19
+Version 0.0.1
+Date 14.04.19
 
 **************************************************************************************************************************************************
 To Do list:
@@ -22,6 +22,8 @@ To Do list:
 15. Модуль "Важные события". Добавить оповещение в случае изменения курса доллара.
 16. Вынести переменные и функции в отдельный модуль для того чтобы была возможность выполнить юнит тестирование.
 17. Вынести повторяющиеся переменные и функции в отдельный модуль.
+18. Установить Splunk для контроля состояния по данным файлов логов.
+19. Добавить watchdog контроля запущеных скринов с перезапуском в случае остановки.
 
 Модуль david_web_server:
 1. В случае отсутствия файлов базы данных или логов добавлять их.
@@ -46,7 +48,9 @@ To Do list:
 Изменения версий и процедуры
 **************************************************************************************************************************************************
 
-Version 0.0.1.dev change list:
+------------------------------------
+Version 0.0.1.dev change list and instalation procedure:
+------------------------------------
 
 Главный Компьютер:
 1. Добавлены таблицы SENSORS и MOTION_SENSORS в базу данных.
@@ -70,32 +74,62 @@ Version 0.0.1.dev change list:
 
 Version 0.0.1.dev change procedure:
 0. Остановить скрины.
-1. Создать пользователя david и директорию /home/user/david/
+1. Создать пользователя david и директорию /home/david
 su
 adduser david
 usermod -aG sudo david
+cd /home
+mkdir ./david
+
 2. Настроить виртуальное окружение для программы.
 sudo pip3.6 install virtualenv
 virtualenv env
 source /home/david/env/bin/activate
 python --version
+pip install requests
 pip list
 pip freeze --local > requirements.txt
-deactivate
-3. Создать директорию /home/user/david/log
+#deactivate
+
+3. Создать директорию /home/david/log
 mkdir ./log
+
 3. Перенести базу данных в /home/david/david_db.sqlite
 sudo cp /home/pavel/david/david_db.sqlite /home/david/david_db.sqlite
 sudo chown david:david /home/david/david_db.sqlite
+
 4. Обновить базу данных запустив скрипт david_db_create.py
-python ./david_db_create.py
-5. Обновить файл david_web_server.py и поместить его в /home/david
-6. Обновить файл david_climate_check.py и поместить его в /home/david
-7. Поместить файл голосового сэмпла в /home/pavel/david/VOICE_SAMPLES
+python /home/david/david_db_create.py
+
+5. Поместить в директорию /home/david файлы:
+david_lib.py
+david_web_server.py
+david_unittest.py
+david_climate_check.py
+
+6. Поместить файл голосового сэмпла в /home/pavel/david/VOICE_SAMPLES
 mkdir ./VOICE_SAMPLES
 cp /home/pavel/david/VOICE_SAMPLES/climate_hot_bedroom.mp3 /home/david/VOICE_SAMPLES/climate_hot_bedroom.mp3
-7. Обновить прошивку NodeMcu01BedRoom.
-8. Запустить скрин для david_web_server.py и climate_check.py
+
+7. Выполнить unit тестирование
+python /home/david/david_unittest.py
+
+8. Обновить прошивку NodeMcu01BedRoom.
+
+9. Запустить скрин для david_web_server.py и climate_check.py
+sudo screen -S david_web_server
+cd /home/david
+source /home/david/env/bin/activate
+python /home/david/david_web_server.py
+Ctrl+A -> D
+sudo screen -ls
+
+sudo screen -S david_climate_check
+cd /home/david
+source /home/david/env/bin/activate
+python /home/david/david_climate_check.py
+Ctrl+A -> D
+sudo screen -ls
 
 Default version change procedure:
 
@@ -103,12 +137,14 @@ Default version change procedure:
 Instalation procedure:
 ------------------------------------
 
-1. Создать пользователя david и директорию /home/user/david/
+1. Создать пользователя david и директорию /home/david
 su
 adduser david
 usermod -aG sudo david
 exit
 su david
+cd /home
+mkdir ./david
 
 2. Настроить виртуальное окружение для программы.
 sudo apt-get install python3-pip
@@ -117,15 +153,16 @@ cd /home/david
 virtualenv env
 source /home/david/env/bin/activate
 python --version
+pip install requests
 pip list
 pip freeze --local > requirements.txt
-deactivate
+#deactivate
 
 3. Создать директорию /home/david/log
 mkdir ./log
 
 4. Создать базу данных запустив скрипт david_db_create.py
-python ./david_db_create.py
+python /home/david/david_db_create.py
 
 5. Поместить в директорию /home/david файлы:
 david_lib.py
@@ -136,18 +173,23 @@ david_climate_check.py
 Пример для ubuntu win10
 cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
 
-6. Запустить скрин david_web_server
-su david
-cd /home/david
+9. Запустить скрин для david_web_server.py и climate_check.py
 sudo screen -S david_web_server
+cd /home/david
 source /home/david/env/bin/activate
-sudo python3.6 /home/david/david_web_server.py
+python /home/david/david_web_server.py
 Ctrl+A -> D
 sudo screen -ls
-sudo screen -d -r 27.david_web_server
+
+sudo screen -S david_climate_check
+cd /home/david
+source /home/david/env/bin/activate
+python /home/david/david_climate_check.py
+Ctrl+A -> D
+sudo screen -ls
 
 7. Выполнить unit тестирование
-sudo python3.6 /home/david/david_unittest.py
+sudo python /home/david/david_unittest.py
 
 
 ps -aux | grep david_web_server
