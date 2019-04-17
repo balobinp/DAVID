@@ -20,6 +20,7 @@ file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite
 
 
 class TestFiles(unittest.TestCase):
+
     def test_check_file(self):
         self.assertEqual(isdir(dir_david), True)
         self.assertEqual(isfile(join(dir_david, file_climate_hot_bedroom)), True)
@@ -56,6 +57,14 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text, 'OK')
+
+
+class TestDavidLib(unittest.TestCase):
+
+    def test_get_valute(self):
+        usd = david_lib.get_valute('USD')
+        self.assertEqual(usd[0], 'USD')
+        self.assertTrue(usd[1])
 
 
 if __name__ == '__main__':
