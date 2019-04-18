@@ -5,6 +5,7 @@ import datetime as dt
 import shutil
 
 import david_lib
+import david_currency_check
 
 #reload(david_lib)
 
@@ -62,7 +63,7 @@ class TestWebServer(unittest.TestCase):
 class TestDavidLib(unittest.TestCase):
 
     def test_get_valute(self):
-        usd = david_lib.get_valute('USD')
+        usd = david_currency_check.get_valute('USD')
         self.assertEqual(usd[0], 'USD')
         self.assertTrue(usd[1])
 

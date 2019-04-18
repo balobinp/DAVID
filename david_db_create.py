@@ -1,14 +1,25 @@
 #python3.6
 
 import sqlite3
+import datetime as dt
+from os.path import join
+import shutil
+
+import david_lib
 
 # DavidServer
-file_sqlite_db = r'/home/david/david_db.sqlite'
+dir_david = david_lib.dir_david
+file_sqlite_db = david_lib.file_sqlite_db
+file_sqlite_db_path = join(dir_david, file_sqlite_db)
+file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
+file_sqlite_db_backup_path = join(dir_david, file_sqlite_db_backup)
 
 # For tests
 #file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
 
-conn = sqlite3.connect(file_sqlite_db)
+shutil.copy(file_sqlite_db_path, file_sqlite_db_backup_path)
+
+conn = sqlite3.connect(file_sqlite_db_path)
 cur = conn.cursor()
 
 # cur.execute('DROP TABLE IF EXISTS CLIMATE_SENSORS')
