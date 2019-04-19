@@ -4,26 +4,25 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
 import re
 import sqlite3
-from os.path import isfile
+from os.path import isfile, join
 import logging
+
+import david_lib
 
 #from importlib import reload
 #reload(logging)
 
 # DavidServer
-ip_addr = '192.168.1.44' 
-port = 80
-file_sqlite_db = r'/home/david/david_db.sqlite'
-file_log = r'/home/david/log/david_web_server.log'
-
-# For tests
-#ip_addr = '192.168.1.52' 
-#port = 80
-#file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
-#file_log = r'c:\Users\balob\Downloads\DAVID\log\david_web_server.log'
+server_ip_addr = david_lib.ip_addr
+server_port = david_lib.port
+dir_david = david_lib.dir_david
+file_sqlite_db = david_lib.file_sqlite_db
+file_sqlite_db_path = join(dir_david, file_sqlite_db)
+file_log_web_server = david_lib.file_log_web_server
+file_log_web_server_path = join(dir_david, file_log_web_server)
 
 # Create logger
-logging.basicConfig(filename=file_log, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+logging.basicConfig(filename=file_log_web_server_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
 web_server_log = logging.getLogger('web_server')
 
 # Logger examples
@@ -63,7 +62,7 @@ class MyHandler(BaseHTTPRequestHandler):
             humidity = get_params.get('humidity')[0]
             web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id};Attempt={attempt};Temp={temperature};Hum={humidity}')
             try:
-                conn = sqlite3.connect(file_sqlite_db)
+                conn = sqlite3.connect(file_sqlite_db_path)
                 cur = conn.cursor()
                 cur.execute('''INSERT INTO CLIMATE_SENSORS (REP_DATE, SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY)
                                VALUES (datetime(), ?, ?, ?, ?)''', (sensor_id, attempt, temperature, humidity))
@@ -80,7 +79,7 @@ class MyHandler(BaseHTTPRequestHandler):
             sensor_id = get_params.get('sensor')[0]
             web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id}')
             try:
-                conn = sqlite3.connect(file_sqlite_db)
+                conn = sqlite3.connect(file_sqlite_db_path)
                 cur = conn.cursor()
                 cur.execute('''INSERT INTO MOTION_SENSORS (REP_DATE, SENSOR_ID)
                                VALUES (datetime(), ?)''', (sensor_id))
@@ -91,9 +90,9 @@ class MyHandler(BaseHTTPRequestHandler):
                 conn.close()
 
 
-check_file(file_sqlite_db)
-check_file(file_log)
+check_file(file_sqlite_db_path)
+check_file(file_log_web_server_path)
 
-with HTTPServer((ip_addr, port), MyHandler) as httpd:
-    print(f"Serving on port {port}...\nVisit http://{ip_addr}:{port}\nTo kill the server enter 'Ctrl + C'")
+with HTTPServer((server_ip_addr, server_port), MyHandler) as httpd:
+    print(f"Serving on port {server_port}...\nVisit http://{server_ip_addr}:{server_port}\nTo kill the server enter 'Ctrl + C'")
     httpd.serve_forever()

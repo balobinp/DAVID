@@ -458,3 +458,20 @@ http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66
 2. Передача информации
 http://<IP address>:80/<information_type>;sensor=<sensor_num>&<key1>=<value1>&<key2>=<value2>...
 http://192.168.1.44:80/climate;sensor=1&readattempt=0&temperature=25&humidity=30"
+
+------------------------------------
+For everyday use
+------------------------------------
+
+sudo screen -S david_web_server
+cd /home/david
+source /home/david/env/bin/activate
+python /home/david/david_web_server.py
+python --version
+Ctrl+A -> D
+sudo screen -ls
+
+cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_lib.py /home/david/david_lib.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_web_server.py /home/david/david_web_server.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_currency_check.py /home/david/david_currency_check.py
