@@ -1,19 +1,24 @@
 #python3.6
 #Author: balobin.p@mail.ru
 
-from os.path import isfile
+from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
 import logging
+
+import david_lib
+
 #from importlib import reload
 
 #reload(logging)
 
-file_log = r'/home/david/log/currency_check.log'
+dir_david = david_lib.dir_david
+file_log_currency_check = david_lib.file_log_currency_check
+file_log_web_server_path = join(dir_david, file_log_currency_check)
 url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
 
 # Create logger
-logging.basicConfig(filename=file_log, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+logging.basicConfig(filename=file_log_web_server_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
 currency_check = logging.getLogger('currency_check')
 
 # Logger examples
@@ -71,6 +76,6 @@ def get_valute(valute_name='USD'):
                 currency_check.info(f'Message=http_currency_request;CharCode={char_code};Rate={rate}')
                 return char_code, rate
 
-check_file(file_log)
+check_file(file_log_web_server_path)
 
 usd_rate = get_valute('USD')

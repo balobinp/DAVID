@@ -31,9 +31,14 @@ To Do list:
 Модуль david_web_server:
 1. В случае отсутствия файлов базы данных или логов добавлять их.
 2. Переписать модуль david_web_server на flask сервер.
+3. Отключить собственное логирование Flask в модуле david_web_server (Application=werkzeug)
 
 Модуль climate_check:
 1. Отслеживать динамику изменения температуры и при резком похолодании сообщать: "В спальне становиться прохладно".
+2. Вынести все имена файлов в модуль david_lib.py.
+
+Модуль david_unittest:
+1. Настроить порядок выполнения тестов. Тест test_z_fetch_climate_data_from_db после test_get_climate.
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Реализовать подключение к WiFi модулей ESP в цикле только для передачи информации, чтобы устранить лишнее излучение (???).
@@ -65,6 +70,8 @@ Version 0.0.2.dev change procedure:
 0. Войти в виртуальное окружение для программы.
 source /home/david/env/bin/activate
 python --version
+pip install Flask
+pip install Flask-RESTful
 pip list
 pip freeze --local > requirements.txt
 # deactivate
@@ -197,6 +204,8 @@ virtualenv env
 source /home/david/env/bin/activate
 python --version
 pip install requests
+pip install Flask
+pip install Flask-RESTful
 pip list
 pip freeze --local > requirements.txt
 #deactivate

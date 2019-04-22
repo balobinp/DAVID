@@ -1,53 +1,21 @@
-#python3.6
-
-from flask import Flask, abort # pip install Flask
+from flask import Flask # pip install Flask
 from flask_restful import Resource, Api # pip install Flask-RESTful
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
-import re
-import sqlite3
-from os.path import isfile, join
-import logging
 
 import david_lib
 
-#from importlib import reload
-#reload(logging)
-
-# DavidServer
 server_ip_addr = david_lib.ip_addr
+server_ip_addr = '192.168.1.53'
 server_port = david_lib.port
-dir_david = david_lib.dir_david
-file_sqlite_db = david_lib.file_sqlite_db
-file_sqlite_db_path = join(dir_david, file_sqlite_db)
-file_log_web_server = david_lib.file_log_web_server
-file_log_web_server_path = join(dir_david, file_log_web_server)
 
-# Create logger
-logging.basicConfig(filename=file_log_web_server_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-web_server_log = logging.getLogger('web_server')
-
-# Logger examples
-
-#climate.debug(f'Message=;')
-#climate.info(f'Message=;')
-#climate.warning(f'Message=;')
-#climate.error(f'Message=;')
-#climate.critical(f'Message=;')
-
-def check_file(file_name):
-    if isfile(file_name):
-        web_server_log.info(f'Message=check_file;File={file_name};Result=exists')
-    else:
-        web_server_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
+app = Flask(__name__)
+api = Api(app)
 
 def get_request_handler(url_parameters):
     get_url = urlparse(url_parameters)
     get_params = parse_qs(get_url.params, keep_blank_values=True)
     return get_url, get_params
 
-app = Flask(__name__)
-api = Api(app)
 
 class DavidWebServerHandler(Resource):
     def get(self, parameters):
@@ -61,12 +29,12 @@ class DavidWebServerHandler(Resource):
             web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id};Attempt={attempt};Temp={temperature};Hum={humidity}')
             try:
                 conn = sqlite3.connect(file_sqlite_db_path)
-            except Exception as e:
-                web_server_log.error(f'Message=db_connect;Exception={e}')
-            else:
                 cur = conn.cursor()
                 cur.execute('''INSERT INTO CLIMATE_SENSORS (REP_DATE, SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY)
-                                VALUES (datetime(), ?, ?, ?, ?)''', (sensor_id, attempt, temperature, humidity))
+                               VALUES (datetime(), ?, ?, ?, ?)''', (sensor_id, attempt, temperature, humidity))
+            except Exception as e:
+                web_server_log.error(f'Message=db_connect;Exception={e}')
+            finally:
                 conn.commit()
                 conn.close()
         elif get_url.path == 'connected':
@@ -78,23 +46,18 @@ class DavidWebServerHandler(Resource):
             web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id}')
             try:
                 conn = sqlite3.connect(file_sqlite_db_path)
+                cur = conn.cursor()
+                cur.execute('''INSERT INTO MOTION_SENSORS (REP_DATE, SENSOR_ID)
+                               VALUES (datetime(), ?)''', (sensor_id))
             except Exception as e:
                 web_server_log.error(f'Message=db_connect;Exception={e}')
-            else:
-                cur = conn.cursor()
-                cur.execute('''INSERT INTO MOTION_SENSORS (REP_DATE, SENSOR_ID) VALUES (datetime(), ?)''', (sensor_id))
+            finally:
                 conn.commit()
                 conn.close()
-        else:
-            abort(404)
 
         return 'OK', 200 # Отклик и Status
 
-
 api.add_resource(DavidWebServerHandler, '/<string:parameters>')
 
-check_file(file_sqlite_db_path)
-check_file(file_log_web_server_path)
-
 if __name__ == '__main__':
-    app.run(host=server_ip_addr, port=server_port, debug=False)
+    app.run(host=server_ip_addr, port=server_port, debug=True)
