@@ -22,6 +22,8 @@ shutil.copy(file_sqlite_db_path, file_sqlite_db_backup_path)
 conn = sqlite3.connect(file_sqlite_db_path)
 cur = conn.cursor()
 
+# Tables
+
 # cur.execute('DROP TABLE IF EXISTS CLIMATE_SENSORS')
 
 cur.execute('''CREATE TABLE IF NOT EXISTS CLIMATE_SENSORS (REP_DATE TEXT
@@ -50,6 +52,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS CURRENCY_RATES (REP_DATE TEXT
             ,ID INTEGER PRIMARY KEY AUTOINCREMENT
             ,CURRENCY_NAME VARCHAR(3)
             ,CURRENCY_RATE NUMERIC)''')
+
+# Views
 
 cur.execute('DROP VIEW IF EXISTS V_CLIMATE_SENSORS')
 

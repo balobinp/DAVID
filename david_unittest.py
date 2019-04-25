@@ -52,7 +52,7 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
-    def test_get_climate(self):
+    def test_01_get_climate(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=24.0&humidity=35.0'
         url_02 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=nan&humidity=35.0'
         url_03 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=6&temperature=6.0&humidity=6.0'
@@ -61,6 +61,19 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_02_fetch_climate_data(self):
+        conn = sqlite3.connect(file_sqlite_db_path)
+        cur = conn.cursor()
+        sql_str = """SELECT SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY FROM CLIMATE_SENSORS
+        WHERE REP_DATE >= DATETIME('now','-1 minute')
+        AND ID = (SELECT MAX(ID) FROM CLIMATE_SENSORS);"""
+        cur.execute(sql_str)
+        result = None
+        for results in cur:
+            result = results
+        conn.close()
+        self.assertEqual(result, (1, 6, 6, 6))
 
     def test_get_motion(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
@@ -77,26 +90,24 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 404)
 
-    def test_z_fetch_climate_data_from_db(self):
+    def test_get_valute(self):
+        char_code, usd_rate = david_currency_check.get_valute('USD')
+        self.assertEqual(char_code, 'USD')
+        self.assertTrue(usd_rate)
+
+    def test_currency_rate_db_insert(self):
+        david_currency_check.currency_rate_db_insert('USD', 666)
         conn = sqlite3.connect(file_sqlite_db_path)
         cur = conn.cursor()
-        sql_str = """SELECT SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY FROM CLIMATE_SENSORS
-        WHERE REP_DATE >= DATETIME('now','-1 minute')
-        AND ID = (SELECT MAX(ID) FROM CLIMATE_SENSORS);"""
+        sql_str = """SELECT CURRENCY_NAME, CURRENCY_RATE FROM CURRENCY_RATES
+                WHERE REP_DATE >= DATETIME('now','-1 minute')
+                AND ID = (SELECT MAX(ID) FROM CURRENCY_RATES);"""
         cur.execute(sql_str)
         result = None
         for results in cur:
             result = results
         conn.close()
-        self.assertEqual(result, (1, 6, 6, 6))
-
-
-class TestDavidLib(unittest.TestCase):
-
-    def test_get_valute(self):
-        usd = david_currency_check.get_valute('USD')
-        self.assertEqual(usd[0], 'USD')
-        self.assertTrue(usd[1])
+        self.assertEqual(result, ('USD', 666))
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ file_log_climate_check = r'./log/climate_check.log'
 file_log_currency_check = r'./log/currency_check.log'"""
 
 # For tests
-ip_addr = '192.168.1.53'
+ip_addr = '192.168.1.52'
 port = 80
 dir_david = r'c:\Users\balob\Downloads\DAVID'
 file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'
