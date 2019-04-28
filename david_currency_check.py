@@ -18,6 +18,7 @@ file_log_currency_check_path = join(dir_david, file_log_currency_check)
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
+currency_threshold_increase_per = david_lib.currency_threshold_increase_per
 
 # Create logger
 logging.basicConfig(filename=file_log_currency_check_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
@@ -86,7 +87,32 @@ def currency_rate_db_insert(char_code, rate):
         conn.close()
     return None
 
+def currency_check():
+    try:
+        conn = sqlite3.connect(file_sqlite_db_path)
+    except Exception as e:
+        currency_check_log.error(f'Message=currency_check;Exception={e}')
+    else:
+        cur = conn.cursor()
+        cur.execute('''SELECT
+            a.REP_DATE, a.CURRENCY_NAME, a.CURRENCY_RATE, b.CURRENCY_RATE AS PREV_CURRENCY_RATE
+            ,IFNULL((a.CURRENCY_RATE - b.CURRENCY_RATE) * 100 / NULLIF(b.CURRENCY_RATE, 0), 0) AS CURRENCY_CHANGE_PER
+            FROM CURRENCY_RATES a
+            LEFT JOIN CURRENCY_RATES b ON b.ID = a.ID - 1
+            WHERE a.CURRENCY_NAME = 'USD' AND b.CURRENCY_NAME = 'USD'
+            ORDER BY a.REP_DATE DESC
+            LIMIT 1''')
+        _, _, _, _, currency_change_per = cur.fetchone()
+        conn.close()
+    if currency_change_per > currency_threshold_increase_per:
+        return 'currency_abnormal_increase'
+    else:
+        return 'currency_normal'
+
+
 if __name__ == '__main__':
     check_file(file_log_currency_check_path)
     char_code, usd_rate = get_valute('USD')
     currency_rate_db_insert(char_code, usd_rate)
+    currency_check_result = currency_check()
+    print(currency_check_result)

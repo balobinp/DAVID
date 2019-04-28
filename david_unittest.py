@@ -90,6 +90,8 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 404)
 
+    # david_currency_check.py
+
     def test_get_valute(self):
         char_code, usd_rate = david_currency_check.get_valute('USD')
         self.assertEqual(char_code, 'USD')
@@ -108,6 +110,11 @@ class TestWebServer(unittest.TestCase):
             result = results
         conn.close()
         self.assertEqual(result, ('USD', 666))
+
+    def test_currency_check(self):
+        currency_check_variants = ['currency_abnormal_increase', 'currency_normal', 'currency_abnormal_decrease']
+        currency_check_result = david_currency_check.currency_check()
+        self.assertTrue(currency_check_result in currency_check_variants)
 
 
 if __name__ == '__main__':

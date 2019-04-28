@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_currency_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_currency_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_db_create.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_db_create.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
@@ -42,8 +40,8 @@
         <option value="$PROJECT_DIR$/david_test.py" />
         <option value="$PROJECT_DIR$/david_web_server.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
-        <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/david_unittest.py" />
+        <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/david_currency_check.py" />
       </list>
     </option>
@@ -59,7 +57,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -76,6 +73,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -205,18 +203,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_currency_check.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="91" column="48" lean-forward="true" selection-start-line="91" selection-start-column="48" selection-end-line="91" selection-end-column="48" />
+        <state relative-caret-position="278">
+          <caret line="117" column="31" selection-start-line="117" selection-start-column="31" selection-end-line="117" selection-end-column="31" />
           <folding>
             <element signature="e#38#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/david_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/david_db_create.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" column="7" lean-forward="true" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
+        <state relative-caret-position="258">
+          <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding>
             <element signature="e#12#26#0" expanded="true" />
           </folding>
@@ -225,18 +230,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_unittest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="112" selection-start-line="112" selection-end-line="112" selection-end-column="26" />
+        <state relative-caret-position="156">
+          <caret line="114" column="81" selection-start-line="114" selection-start-column="66" selection-end-line="114" selection-end-column="81" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="20" column="53" lean-forward="true" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="53" />
         </state>
       </provider>
     </entry>
