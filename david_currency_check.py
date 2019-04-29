@@ -5,6 +5,7 @@ from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
 import logging
+from twilio.rest import Client
 
 import david_lib
 
@@ -21,7 +22,8 @@ url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
 currency_threshold_increase_per = david_lib.currency_threshold_increase_per
 
 # Create logger
-logging.basicConfig(filename=file_log_currency_check_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+logging.basicConfig(filename=file_log_currency_check_path, level=logging.DEBUG,
+                    format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
 currency_check_log = logging.getLogger('currency_check')
 
 # Logger examples
@@ -102,17 +104,34 @@ def currency_check():
             WHERE a.CURRENCY_NAME = 'USD' AND b.CURRENCY_NAME = 'USD'
             ORDER BY a.REP_DATE DESC
             LIMIT 1''')
-        _, _, _, _, currency_change_per = cur.fetchone()
+        rep_date, currency_name, currency_rate, prev_currency_rate, currency_change_per = cur.fetchone()
         conn.close()
     if currency_change_per > currency_threshold_increase_per:
-        return 'currency_abnormal_increase'
+        return 'currency_abnormal_increase', currency_rate
     else:
-        return 'currency_normal'
+        return 'currency_normal', currency_rate
+
+def currency_change_inform_user():
+    currency_check_result, currency_rate = currency_check()
+    currency_check_log.debug(f'Message=send_wa_notify;Action=sending_the_message_in_wa;Currency_check_result={currency_check_result}')
+    try:
+        account_sid = 'AC431b47a9c6b392bc8b5f38ccfe666a96'
+        auth_token = 'df57cfe7d1b42d1eaf492fefc4c848af'
+        client = Client(account_sid, auth_token)
+        message = client.messages.create(body=f'Currency check: {currency_check_result}. USD rate: {currency_rate} RUB',
+                                         from_='whatsapp:+14155238886',
+                                         to='whatsapp:+79217428080')
+        currency_check_log.info(f'Message=send_wa_notify;Result=OK;Currency_check_result={currency_check_result}')
+        result = 'OK'
+    except Exception as e:
+        currency_check_log.error(f'Message=send_wa_notify;Exception={e}')
+        result='NOK'
+    return result
 
 
 if __name__ == '__main__':
     check_file(file_log_currency_check_path)
     char_code, usd_rate = get_valute('USD')
     currency_rate_db_insert(char_code, usd_rate)
-    currency_check_result = currency_check()
-    print(currency_check_result)
+    currency_change_inform_user()
+

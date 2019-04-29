@@ -113,8 +113,12 @@ class TestWebServer(unittest.TestCase):
 
     def test_currency_check(self):
         currency_check_variants = ['currency_abnormal_increase', 'currency_normal', 'currency_abnormal_decrease']
-        currency_check_result = david_currency_check.currency_check()
+        currency_check_result, _ = david_currency_check.currency_check()
         self.assertTrue(currency_check_result in currency_check_variants)
+
+    def test_currency_change_inform_user(self):
+        result = david_currency_check.currency_change_inform_user()
+        self.assertEqual(result, 'OK')
 
 
 if __name__ == '__main__':

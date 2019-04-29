@@ -27,19 +27,20 @@ To Do list:
 21. Вынести все имена файлов в модуль david_lib.py. Оттуда их импортировать в модули и в unittest.
 22. Информирование по WA в случае срабатывания датчика движения входной двери.
 23. Добавить возможность выполнения API запросов из внешней сети (либо запросов по WA).
+24. Переписать logging на индивидуальные файлы для каждого приложения.
 
 Модуль david_web_server:
 1. В случае отсутствия файлов базы данных или логов добавлять их.
-2. Переписать модуль david_web_server на flask сервер.
-3. Отключить собственное логирование Flask в модуле david_web_server (Application=werkzeug)
 
 Модуль climate_check:
 1. Отслеживать динамику изменения температуры и при резком похолодании сообщать: "В спальне становиться прохладно".
 2. Вынести все имена файлов в модуль david_lib.py.
-3. Перевести модуль на запуск по crontab
+
+Модуль david_currency_check:
+1. 
 
 Модуль david_unittest:
-1. Настроить порядок выполнения тестов. Тест test_z_fetch_climate_data_from_db после test_get_climate.
+1. 
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Реализовать подключение к WiFi модулей ESP в цикле только для передачи информации, чтобы устранить лишнее излучение (???).
@@ -64,18 +65,21 @@ Version 0.0.2.dev change list and instalation procedure:
 ------------------------------------
 
 Главный Компьютер:
-1. Добавлен модуль david_currency_check (в процессе разработки).
+1. Добавлен модуль david_currency_check.
+2. Модуль david_web_server переведен на Flast-RESTful.
+3. Модуль climate_check переведен на запуск по crontab.
 
 Нерешенные проблемы:
 1. В файл логов записываются лишние данные других модулей.
 
 Version 0.0.2.dev change procedure:
 
-0. Войти в виртуальное окружение для программы.
+0. Войти в виртуальное окружение для программы и установить библиотеки.
 source /home/david/env/bin/activate
 python --version
 pip install Flask
 pip install Flask-RESTful
+pip install twilio
 pip list
 pip freeze --local > requirements.txt
 # deactivate
@@ -85,6 +89,7 @@ david_currency_check.py
 david_unittest.py
 david_lib.py
 david_db_create.py
+david_web_server.py
 
 2. Сделать backup базы данных и обновить ее запустив скрипт:
 python /home/david/david_db_create.py
@@ -100,7 +105,7 @@ python /home/david/david_db_create.py
 6. Выполнить unit тестирование
 python /home/david/david_unittest.py
 
-7. Добавить модуль david_currency_check.py в crontab
+7. Добавить модули david_currency_check.py и climate_check.py в crontab
 
 ------------------------------------
 Version 0.0.1.dev change list and instalation procedure:
@@ -210,6 +215,7 @@ python --version
 pip install requests
 pip install Flask
 pip install Flask-RESTful
+pip install twilio
 pip list
 pip freeze --local > requirements.txt
 #deactivate
