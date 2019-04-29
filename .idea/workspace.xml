@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_currency_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_currency_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/david_unittest.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_unittest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +39,8 @@
         <option value="$PROJECT_DIR$/david_web_server.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
         <option value="$PROJECT_DIR$/david_lib.py" />
-        <option value="$PROJECT_DIR$/david_unittest.py" />
         <option value="$PROJECT_DIR$/david_currency_check.py" />
+        <option value="$PROJECT_DIR$/david_unittest.py" />
       </list>
     </option>
   </component>
@@ -202,16 +199,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="42" column="35" lean-forward="true" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/david_test.py" />
     <entry file="file://$PROJECT_DIR$/david_lib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -221,8 +209,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_unittest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="123" column="26" lean-forward="true" selection-start-line="123" selection-start-column="26" selection-end-line="123" selection-end-column="26" />
+        <state relative-caret-position="343">
+          <caret line="120" column="102" selection-start-line="120" selection-start-column="102" selection-end-line="120" selection-end-column="102" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -231,8 +219,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_currency_check.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="135" column="33" lean-forward="true" selection-start-line="135" selection-start-column="33" selection-end-line="135" selection-end-column="33" />
+        <state relative-caret-position="2295">
+          <caret line="135" column="48" selection-start-line="135" selection-start-column="48" selection-end-line="135" selection-end-column="48" />
           <folding>
             <element signature="e#38#52#0" expanded="true" />
           </folding>

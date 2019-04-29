@@ -111,8 +111,7 @@ def currency_check():
     else:
         return 'currency_normal', currency_rate
 
-def currency_change_inform_user():
-    currency_check_result, currency_rate = currency_check()
+def currency_change_inform_user(currency_check_result, currency_rate):
     currency_check_log.debug(f'Message=send_wa_notify;Action=sending_the_message_in_wa;Currency_check_result={currency_check_result}')
     try:
         account_sid = 'AC431b47a9c6b392bc8b5f38ccfe666a96'
@@ -133,5 +132,6 @@ if __name__ == '__main__':
     check_file(file_log_currency_check_path)
     char_code, usd_rate = get_valute('USD')
     currency_rate_db_insert(char_code, usd_rate)
-    currency_change_inform_user()
+    currency_check_result, currency_rate = currency_check()
+    currency_change_inform_user(currency_check_result, currency_rate)
 

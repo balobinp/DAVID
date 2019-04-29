@@ -117,7 +117,8 @@ class TestWebServer(unittest.TestCase):
         self.assertTrue(currency_check_result in currency_check_variants)
 
     def test_currency_change_inform_user(self):
-        result = david_currency_check.currency_change_inform_user()
+        currency_check_result, currency_rate = david_currency_check.currency_check()
+        result = david_currency_check.currency_change_inform_user(currency_check_result, currency_rate)
         self.assertEqual(result, 'OK')
 
 
