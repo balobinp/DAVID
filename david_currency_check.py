@@ -22,9 +22,13 @@ url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
 currency_threshold_increase_per = david_lib.currency_threshold_increase_per
 
 # Create logger
-logging.basicConfig(filename=file_log_currency_check_path, level=logging.DEBUG,
-                    format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+
 currency_check_log = logging.getLogger('currency_check')
+currency_check_log.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+file_handler = logging.FileHandler(file_log_currency_check_path)
+file_handler.setFormatter(formatter)
+currency_check_log.addHandler(file_handler)
 
 # Logger examples
 

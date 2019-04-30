@@ -3,24 +3,32 @@
 import os
 from time import sleep
 import sqlite3
-from os.path import isfile
+from os.path import isfile, join
 import logging
+
+import david_lib
 
 #from importlib import reload
 #reload(logging)
 
-file_climate_hot_bedroom = r'/home/david/VOICE_SAMPLES/climate_hot_bedroom.mp3'
-file_sqlite_db = r'/home/david/david_db.sqlite'
-file_log = r'/home/david/log/climate_check.log'
-
-# For tests
-#file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'
-#file_sqlite_db = r'c:\Users\balob\Downloads\DAVID\david_db.sqlite'
-#file_log = r'c:\Users\balob\Downloads\DAVID\log\climate.log'
+dir_david = david_lib.dir_david
+file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
+file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
+file_climate_cold_bedroom = david_lib.file_climate_hot_bedroom
+file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+file_sqlite_db = david_lib.file_sqlite_db
+file_sqlite_db_path = join(dir_david, file_sqlite_db)
+file_log_climate_check = david_lib.file_log_climate_check
+file_log_climate_check_path = join(dir_david, file_log_climate_check)
 
 # Create logger
-logging.basicConfig(filename=file_log, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-climate_check = logging.getLogger('climate_check')
+
+climate_check_log = logging.getLogger('climate_check')
+climate_check_log.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+file_handler = logging.FileHandler(file_log_climate_check_path)
+file_handler.setFormatter(formatter)
+climate_check_log.addHandler(file_handler)
 
 # Logger examples
 
@@ -32,12 +40,12 @@ climate_check = logging.getLogger('climate_check')
 
 def check_file(file_name):
     if isfile(file_name):
-        climate_check.info(f'Message=check_file;File={file_name};Result=exists')
+        climate_check_log.info(f'Message=check_file;File={file_name};Result=exists')
     else:
-        climate_check.error(f'Message=check_file;File={file_name};Result=does_not_exist')
+        climate_check_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
 
 def get_climate_data():
-    conn = sqlite3.connect(file_sqlite_db)
+    conn = sqlite3.connect(file_sqlite_db_path)
     cur = conn.cursor()
     sql_str = """SELECT TEMPERATURE FROM CLIMATE_SENSORS
     WHERE REP_DATE >= DATETIME('now','-15 minute')
@@ -50,20 +58,21 @@ def get_climate_data():
     conn.close()
     return t
 
-check_file(file_sqlite_db)
-check_file(file_log)
-check_file(file_climate_hot_bedroom)
-
-while True:
+if __name__ == '__main__':
+    check_file(file_sqlite_db_path)
+    check_file(file_log_climate_check_path)
+    check_file(file_climate_hot_bedroom_path)
     t = get_climate_data()
-    climate_check.info(f'Message=got_data_from_table_climate_sensors;t={t}')
+    climate_check_log.info(f'Message=got_data_from_table_climate_sensors;t={t}')
     if t and t > 25:
         try:
-            os.system("mpg123 " + file_climate_hot_bedroom)
-            climate_check.debug(f'Message=playing_file;file={file_climate_hot_bedroom}')
+            os.system("mpg123 " + file_climate_hot_bedroom_path)
+            climate_check_log.debug(f'Message=playing_file;file={file_climate_hot_bedroom_path}')
         except Exception as e:
-            climate_check.error(f'Message=playing_file;Exception={e}')
-        finally:
-            sleep(15*60)
-    else:
-        sleep(15*60)
+            climate_check_log.error(f'Message=playing_file;Exception={e}')
+    elif t and t < 23:
+        try:
+            os.system("mpg123 " + file_climate_cold_bedroom_path)
+            climate_check_log.debug(f'Message=playing_file;file={file_climate_cold_bedroom_path}')
+        except Exception as e:
+            climate_check_log.error(f'Message=playing_file;Exception={e}')

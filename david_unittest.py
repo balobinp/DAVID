@@ -7,6 +7,7 @@ import sqlite3
 
 import david_lib
 import david_currency_check
+import david_climate_check
 
 #reload(david_lib)
 
@@ -43,6 +44,8 @@ class TestWebServer(unittest.TestCase):
     def tearDownClass(cls):
         shutil.copy(join(dir_david, file_sqlite_db_backup), join(dir_david, file_sqlite_db))
 
+    # david_web_server.py
+
     def test_get_connect(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/connected;sensor=1&ip=192.168.1.63'
         url_02 = f'http://{server_ip_addr}:{server_port}/connected;sensor=3&ip=192.168.1.64'
@@ -51,6 +54,21 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_get_motion(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
+        urls = [url_01]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_get_not_found(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/any_text'
+        urls = [url_01]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 404)
 
     def test_01_get_climate(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=24.0&humidity=35.0'
@@ -75,20 +93,14 @@ class TestWebServer(unittest.TestCase):
         conn.close()
         self.assertEqual(result, (1, 6, 6, 6))
 
-    def test_get_motion(self):
-        url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
-        urls = [url_01]
-        for url in urls:
-            r = requests.get(url)
-            self.assertEqual(r.status_code, 200)
-            self.assertEqual(r.text.strip(), '"OK"')
+    # david_climate_check.py
 
-    def test_get_not_found(self):
-        url_01 = f'http://{server_ip_addr}:{server_port}/any_text'
-        urls = [url_01]
-        for url in urls:
-            r = requests.get(url)
-            self.assertEqual(r.status_code, 404)
+    def test_03_get_climate_data(self):
+        result = david_climate_check.get_climate_data()
+        if result:
+            self.assertEqual(result, 6)
+        else:
+            self.assertIsNone(result)
 
     # david_currency_check.py
 

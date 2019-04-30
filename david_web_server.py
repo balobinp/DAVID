@@ -24,8 +24,12 @@ file_log_web_server = david_lib.file_log_web_server
 file_log_web_server_path = join(dir_david, file_log_web_server)
 
 # Create logger
-logging.basicConfig(filename=file_log_web_server_path, level=logging.DEBUG, format='%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
 web_server_log = logging.getLogger('web_server')
+web_server_log.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
+file_handler = logging.FileHandler(file_log_web_server_path)
+file_handler.setFormatter(formatter)
+web_server_log.addHandler(file_handler)
 
 # Logger examples
 
