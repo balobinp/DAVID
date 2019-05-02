@@ -104,6 +104,7 @@ python /home/david/david_db_create.py
 python /home/david/david_unittest.py
 
 7. Добавить модули david_currency_check.py и climate_check.py в crontab
+crontab -e
 
 ------------------------------------
 Version 0.0.1.dev change list and instalation procedure:
@@ -234,7 +235,7 @@ david_climate_check.py
 Пример для ubuntu win10
 cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
 
-9. Запустить скрин для david_web_server.py и climate_check.py
+9. Запустить скрин для david_web_server.py
 sudo screen -S david_web_server
 cd /home/david
 source /home/david/env/bin/activate
@@ -242,12 +243,8 @@ python /home/david/david_web_server.py
 Ctrl+A -> D
 sudo screen -ls
 
-sudo screen -S david_climate_check
-cd /home/david
-source /home/david/env/bin/activate
-python /home/david/david_climate_check.py
-Ctrl+A -> D
-sudo screen -ls
+7. Добавить модули david_currency_check.py и climate_check.py в crontab
+crontab -e
 
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py

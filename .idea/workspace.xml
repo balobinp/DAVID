@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_climate_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_climate_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_currency_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_currency_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_template.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_unittest.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_unittest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_web_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_web_server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,16 +36,16 @@
         <option value="$PROJECT_DIR$/VOICE_SAMPLES/david_test.py" />
         <option value="$PROJECT_DIR$/david_test.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
-        <option value="$PROJECT_DIR$/david_currency_check.py" />
         <option value="$PROJECT_DIR$/david_unittest.py" />
-        <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/david_climate_check.py" />
         <option value="$PROJECT_DIR$/david_web_server.py" />
         <option value="$PROJECT_DIR$/david_template.py" />
+        <option value="$PROJECT_DIR$/david_currency_check.py" />
+        <option value="$PROJECT_DIR$/david_lib.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="145" />
     <option name="y" value="45" />
     <option name="width" value="3500" />
@@ -108,9 +104,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="58" y="18" width="1400" height="794" extended-state="0" />
+    <frame x="58" y="18" width="1400" height="794" extended-state="1" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1985348" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1985348" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -121,7 +117,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3298193" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3298193" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.3298193" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -206,13 +202,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_climate_check.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -222,8 +211,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_currency_check.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        <state relative-caret-position="224">
+          <caret line="119" column="42" selection-start-line="119" selection-start-column="42" selection-end-line="119" selection-end-column="42" />
           <folding>
             <element signature="e#38#52#0" expanded="true" />
           </folding>
@@ -232,11 +221,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_unittest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1357">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="2142">
+          <caret line="126" column="111" selection-start-line="126" selection-start-column="85" selection-end-line="126" selection-end-column="111" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
         </state>
       </provider>
     </entry>

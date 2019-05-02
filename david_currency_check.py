@@ -20,6 +20,8 @@ file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
 currency_threshold_increase_per = david_lib.currency_threshold_increase_per
+currency_usd_threshold_high = david_lib.currency_usd_threshold_high
+currency_usd_threshold_low = david_lib.currency_usd_threshold_low
 
 # Create logger
 
@@ -110,8 +112,12 @@ def currency_check():
             LIMIT 1''')
         rep_date, currency_name, currency_rate, prev_currency_rate, currency_change_per = cur.fetchone()
         conn.close()
-    if currency_change_per > currency_threshold_increase_per:
+    if currency_change_per and \
+            (currency_change_per > currency_threshold_increase_per or currency_rate > currency_usd_threshold_high):
         return 'currency_abnormal_increase', currency_rate
+    elif currency_change_per and \
+            (currency_change_per < currency_threshold_increase_per or currency_rate < currency_usd_threshold_low):
+        return 'currency_abnormal_decrease', currency_rate
     else:
         return 'currency_normal', currency_rate
 
