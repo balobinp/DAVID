@@ -2,7 +2,7 @@
 
 Author: balobin.p@mail.ru
 Version 0.0.2
-Date 18.04.19
+Date 02.05.19
 
 **************************************************************************************************************************************************
 To Do list:
@@ -29,6 +29,7 @@ To Do list:
 
 Модуль climate_check:
 1. Отслеживать динамику изменения температуры и при резком похолодании сообщать: "В спальне становиться прохладно".
+2. Вынести пороги температуры срабатывания в david_lib
 
 Модуль david_currency_check:
 1. 
@@ -87,6 +88,7 @@ david_unittest.py
 david_lib.py
 david_db_create.py
 david_web_server.py
+climate_check.py
 ./VOICE_SAMPLES/climate_cold_bedroom.mp3
 
 2. Сделать backup базы данных и обновить ее запустив скрипт:
@@ -94,17 +96,29 @@ python /home/david/david_db_create.py
 
 3. Переименоват копию backup базы данных (т.к. unittest перезапишет копию).
 
-4. Обновить базу данных запустив скрипт david_db_create.py
-python /home/david/david_db_create.py
-
-5. Создать файл лога
+4. Создать файл лога
 /home/david/log/currency_check.log
+
+0. Перезапустить скрин david_web_server и остановить david_climate_check
+sudo screen -ls
+sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
+Ctrl+C
+exit
+sudo screen -d -r 30137.david_web_server
+sudo screen -S david_web_server
+cd /home/david
+source /home/david/env/bin/activate
+python /home/david/david_web_server.py
+Ctrl+A -> D
+sudo screen -ls
 
 6. Выполнить unit тестирование
 python /home/david/david_unittest.py
 
-7. Добавить модули david_currency_check.py и climate_check.py в crontab
+7. Добавить модули david_currency_check.py и david_climate_check.py в crontab
 crontab -e
+*/15 * * * * python /home/david/david_climate_check.py
+0 17 */1 * 1-5 python /home/david/david_currency_check.py
 
 ------------------------------------
 Version 0.0.1.dev change list and instalation procedure:
