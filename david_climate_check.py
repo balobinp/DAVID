@@ -40,7 +40,7 @@ climate_check_log.addHandler(file_handler)
 
 def check_file(file_name):
     if isfile(file_name):
-        climate_check_log.info(f'Message=check_file;File={file_name};Result=exists')
+        return None
     else:
         climate_check_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
 

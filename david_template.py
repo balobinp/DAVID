@@ -28,7 +28,7 @@ temp_log.addHandler(file_handler)
 
 def check_file(file_name):
     if isfile(file_name):
-        temp_log.info(f'Message=check_file;File={file_name};Result=exists')
+        return None
     else:
         temp_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
     return None
