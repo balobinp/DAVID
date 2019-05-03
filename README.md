@@ -56,8 +56,13 @@ To Do list:
 **************************************************************************************************************************************************
 Изменения версий и процедуры
 **************************************************************************************************************************************************
+
 ------------------------------------
-Version 0.0.2.dev change list and instalation procedure:
+Version 0.0.3.dev change list and instalation procedure:
+------------------------------------
+
+------------------------------------
+Version 0.0.2 change list and instalation procedure:
 ------------------------------------
 
 Главный Компьютер:
@@ -118,8 +123,8 @@ python /home/david/david_unittest.py
 
 7. Добавить модули david_currency_check.py и david_climate_check.py в crontab
 crontab -e
-*/15 * * * * python /home/david/david_climate_check.py
-0 17 */1 * 1-5 python /home/david/david_currency_check.py
+*/15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
+0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
 
 ------------------------------------
 Version 0.0.1.dev change list and instalation procedure:
@@ -250,16 +255,17 @@ david_climate_check.py
 Пример для ubuntu win10
 cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
 
-9. Запустить скрин для david_web_server.py
-sudo screen -S david_web_server
-cd /home/david
-source /home/david/env/bin/activate
-python /home/david/david_web_server.py
-Ctrl+A -> D
-sudo screen -ls
+9. Запустить сервис для david_web_server.py
+Поместить /etc/systemd/system/david.service
+sudo systemctl daemon-reload
+sudo systemctl enable foo.service
+systemctl start david.service
+systemctl status david.service
 
-7. Добавить модули david_currency_check.py и climate_check.py в crontab
+7. Добавить модули david_currency_check.py и david_climate_check.py в crontab
 crontab -e
+*/15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
+0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
 
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py

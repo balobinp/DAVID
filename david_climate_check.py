@@ -14,7 +14,7 @@ import david_lib
 dir_david = david_lib.dir_david
 file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
 file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
-file_climate_cold_bedroom = david_lib.file_climate_hot_bedroom
+file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
 file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
