@@ -49,6 +49,7 @@ To Do list:
 
 Микроконтроллер NodeMcu02Gas:
 1. Сделать.
+2. Добавить датчик температуры.
 
 Микроконтроллер NodeMcu03Door (датчик между входными дверями)
 1. Заменить датчик движения.
@@ -69,8 +70,11 @@ Version 0.2.0.dev change list and instalation procedure:
 Модуль david_web_server:
 1. Добавлен обработчик событий от Микроконтроллера NodeMcu02Gas.
 
-Микроконтроллер NodeMcu02Gas:
-1. 
+Модуль NodeMcu02Gas:
+1. Написать модуль.
+
+Микроконтроллер NodeMcu02Gas
+1. Сделана прошивка микроконтроллера.
 
 Version 0.2.0 change procedure:
 

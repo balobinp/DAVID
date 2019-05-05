@@ -15,47 +15,47 @@ const char* password = "ASDFGHQWERTY";
 
 void setup()
 {
-	Serial.begin(9600);
-	delay(1000);
+    Serial.begin(9600);
+    delay(1000);
 
-	WiFi.disconnect();
-	delay(2000);
-	Serial.println("Start connecting...");
-	WiFi.begin(ssid, password);
-	while ((!(WiFi.status() == WL_CONNECTED))){
-		delay(300);
-		Serial.print(".");
-	  }
-	ip = (WiFi.localIP().toString());
+    WiFi.disconnect();
+    delay(2000);
+    Serial.println("Start connecting...");
+    WiFi.begin(ssid, password);
+    while ((!(WiFi.status() == WL_CONNECTED))){
+        delay(300);
+        Serial.print(".");
+      }
+    ip = (WiFi.localIP().toString());
 
-	Serial.println("");
-	Serial.println("Connected with IP: ");
-	Serial.println(ip);
+    Serial.println("");
+    Serial.println("Connected with IP: ");
+    Serial.println(ip);
 
-	httpurlconn += "connected;";
-	httpurlconn += sensor
-	httpurlconn += "&ip="
-	httpurlconn += ip;
+    httpurlconn += "connected;";
+    httpurlconn += sensor;
+    httpurlconn += "&ip=";
+    httpurlconn += ip;
 
-	http.begin(httpurlconn);
-	http.GET();
-	http.end();
+    http.begin(httpurlconn);
+    http.GET();
+    http.end();
 }
 
 void loop()
 {
-	sensorValue = analogRead(A0);
-	Serial.print("Sensor value = ");
-	Serial.println(sensorValue);
-	
-	httpurldata += "gas;";
-	httpurldata += sensor;
-	httpurldata += "&sensorValue=";
-	httpurldata += String(sensorValue);
+    sensorValue = analogRead(A0);
+    Serial.print("Sensor value = ");
+    Serial.println(sensorValue);
 
-	http.begin(httpurldata);
-	http.GET();
-	http.end();
-	
-	delay(1000);
+    httpurldata += "gas;";
+    httpurldata += sensor;
+    httpurldata += "&sensorValue=";
+    httpurldata += String(sensorValue);
+
+    http.begin(httpurldata);
+    http.GET();
+    http.end();
+
+    delay(900000);
 }
