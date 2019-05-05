@@ -9,8 +9,6 @@ import david_lib
 import david_currency_check
 import david_climate_check
 
-#reload(david_lib)
-
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
 dir_david = david_lib.dir_david
@@ -18,11 +16,11 @@ file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
 file_sqlite_db = david_lib.file_sqlite_db
 file_log_web_server = david_lib.file_log_web_server
 file_log_climate_check = david_lib.file_log_climate_check
-
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
-
 file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
 
+
+# Check files
 
 class TestFiles(unittest.TestCase):
 
@@ -48,12 +46,35 @@ class TestWebServer(unittest.TestCase):
 
     def test_get_connect(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/connected;sensor=1&ip=192.168.1.63'
-        url_02 = f'http://{server_ip_addr}:{server_port}/connected;sensor=3&ip=192.168.1.64'
-        urls = [url_01, url_02]
+        url_02 = f'http://{server_ip_addr}:{server_port}/connected;sensor=2&ip=192.168.1.64'
+        url_03 = f'http://{server_ip_addr}:{server_port}/connected;sensor=3&ip=192.168.1.65'
+        url_04 = f'http://{server_ip_addr}:{server_port}/connected;sensor=4&ip=192.168.1.66'
+        urls = [url_01, url_02, url_03, url_04]
+        for url in urls:
+            r = requests.get(url, timeout=3)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_01_get_gas(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666'
+        urls = [url_01]
         for url in urls:
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_02_fetch_gas_data(self):
+        conn = sqlite3.connect(file_sqlite_db_path)
+        cur = conn.cursor()
+        sql_str = """SELECT SENSOR_ID, SENSOR_VALUE FROM GAS_SENSORS
+        WHERE REP_DATE >= DATETIME('now','-1 minute')
+        AND ID = (SELECT MAX(ID) FROM GAS_SENSORS);"""
+        cur.execute(sql_str)
+        result = None
+        for results in cur:
+            result = results
+        conn.close()
+        self.assertEqual(result, (2, 666))
 
     def test_get_motion(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
@@ -95,7 +116,7 @@ class TestWebServer(unittest.TestCase):
 
     # david_climate_check.py
 
-    def test_03_get_climate_data(self):
+    def test_02_get_climate_data(self):
         result = david_climate_check.get_climate_data()
         if result:
             self.assertEqual(result, 6)
@@ -132,6 +153,11 @@ class TestWebServer(unittest.TestCase):
         currency_check_result, currency_rate = david_currency_check.currency_check()
         result = david_currency_check.currency_change_inform_user(currency_check_result, currency_rate)
         self.assertEqual(result, 'OK')
+
+    # david_gas_check.py
+
+    def test_gas_check(self):
+        pass
 
 
 if __name__ == '__main__':

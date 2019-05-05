@@ -40,6 +40,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS SENSORS (SENSOR_ID INTEGER PRIMARY KEY
             ,LOCATION NVARCHAR(55))''')
 
 cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (1, 'climate', 'bedroom'))
+cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (2, 'gas', 'kitchen'))
 cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (3, 'motion', 'indoor'))
 
 #cur.execute('DROP TABLE IF EXISTS MOTION_SENSORS')
@@ -54,6 +55,13 @@ cur.execute('''CREATE TABLE IF NOT EXISTS CURRENCY_RATES (REP_DATE TEXT
             ,ID INTEGER PRIMARY KEY AUTOINCREMENT
             ,CURRENCY_NAME VARCHAR(3)
             ,CURRENCY_RATE FLOAT)''')
+
+#cur.execute('DROP TABLE IF EXISTS GAS_SENSORS')
+
+cur.execute('''CREATE TABLE IF NOT EXISTS GAS_SENSORS (REP_DATE TEXT
+            ,ID INTEGER PRIMARY KEY AUTOINCREMENT
+            ,SENSOR_ID INTEGER NOT NULL
+            ,SENSOR_VALUE NUMERIC)''')
 
 # Views
 
@@ -77,6 +85,17 @@ cur.execute('''CREATE VIEW V_MOTION_SENSORS AS
             ,s.LOCATION
             FROM MOTION_SENSORS ms, SENSORS s
             WHERE ms.SENSOR_ID = s.SENSOR_ID
+            ORDER BY s.LOCATION, ms.REP_DATE DESC''')
+
+cur.execute('DROP VIEW IF EXISTS V_GAS_SENSORS')
+
+cur.execute('''CREATE VIEW V_GAS_SENSORS AS
+            SELECT
+            strftime('%Y-%m-%d %H:%M', datetime(ms.REP_DATE, 'localtime')) AS REP_DATE
+            ,s.LOCATION
+            ,gs.SENSOR_VALUE
+            FROM GAS_SENSORS gs, SENSORS s
+            WHERE gs.SENSOR_ID = s.SENSOR_ID
             ORDER BY s.LOCATION, ms.REP_DATE DESC''')
 
 conn.commit()

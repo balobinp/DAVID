@@ -27,11 +27,13 @@ To Do list:
 
 Модуль david_web_server:
 1. В случае отсутствия файлов базы данных или логов добавлять их.
-2. Добавить обработчик событий от Микроконтроллера NodeMcu02Gas.
 
 Модуль climate_check:
 1. Отслеживать динамику изменения температуры и при резком похолодании сообщать: "В спальне становиться прохладно".
 2. Вынести пороги температуры срабатывания в david_lib
+
+Модуль david_gas_check:
+1. Написать модуль.
 
 Модуль david_currency_check:
 1. 
@@ -61,6 +63,39 @@ To Do list:
 ------------------------------------
 Version 0.2.0.dev change list and instalation procedure:
 ------------------------------------
+
+Главный Компьютер:
+
+Модуль david_web_server:
+1. Добавлен обработчик событий от Микроконтроллера NodeMcu02Gas.
+
+Микроконтроллер NodeMcu02Gas:
+1. 
+
+Version 0.2.0 change procedure:
+
+1. Войти в виртуальное окружение для программы.
+source /home/david/env/bin/activate
+python --version
+
+2. Поместить в директорию /home/david файлы:
+david_unittest.py
+david_lib.py
+david_db_create.py
+david_web_server.py
+
+3. Сделать backup базы данных и обновить ее запустив скрипт:
+python /home/david/david_db_create.py
+
+4. Переименоват копию backup базы данных (т.к. unittest перезапишет копию).
+
+5. Перезапустить сервис david_web_server
+systemctl stop david.service
+systemctl start david.service
+systemctl status david.service
+
+6. Выполнить unit тестирование
+python /home/david/david_unittest.py
 
 ------------------------------------
 Version 0.0.2 change list and instalation procedure:
@@ -342,6 +377,27 @@ crontab
 
 Вспомогательные модули Главного Компьютера
 ------------------------------------
+Модуль david_unittest
+-----------------
+Файл: david_unittest.py
+
+Метод запуска:
+Ручной запуск
+
+Задача:
+1. Делает бэкап базы данных.
+2. Выполняет тесты.
+3. Восстанавливает базу данных из бэкапа.
+
+Модуль david_lib
+-----------------
+Файл: david_lib.py
+
+Метод запуска:
+Импортируемая библиотека.
+
+Задача:
+1. Содержит переменные и функции, используемые другими модулями.
 
 Модуль david_db_create
 -----------------
@@ -381,7 +437,7 @@ crontab
 Задача:
 1. Считывает данные с датчика газа.
 2. Отправляет данные на Главный Компьютер посредством http get запроса.
-3. 
+http://192.168.1.44:80/gas;sensor=2&sensorValue=666
 
 Элементная база: 
 
@@ -547,7 +603,7 @@ http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66
 
 2. Передача информации
 http://<IP address>:80/<information_type>;sensor=<sensor_num>&<key1>=<value1>&<key2>=<value2>...
-http://192.168.1.44:80/climate;sensor=1&readattempt=0&temperature=25&humidity=30"
+http://192.168.1.44:80/climate;sensor=1&readattempt=0&temperature=25&humidity=30
 
 ------------------------------------
 For everyday use

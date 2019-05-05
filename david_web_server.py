@@ -89,6 +89,20 @@ class DavidWebServerHandler(Resource):
                 cur.execute('''INSERT INTO MOTION_SENSORS (REP_DATE, SENSOR_ID) VALUES (datetime(), ?)''', (sensor_id))
                 conn.commit()
                 conn.close()
+        elif get_url.path == 'gas':
+            sensor_id = get_params.get('sensor')[0]
+            sensor_value = get_params.get('sensorValue')[0]
+            web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id}')
+            try:
+                conn = sqlite3.connect(file_sqlite_db_path)
+            except Exception as e:
+                web_server_log.error(f'Message=db_connect;Exception={e}')
+            else:
+                cur = conn.cursor()
+                cur.execute('''INSERT INTO GAS_SENSORS (REP_DATE, SENSOR_ID, SENSOR_VALUE)
+                                VALUES (datetime(), ?, ?)''', (sensor_id, sensor_value))
+                conn.commit()
+                conn.close()
         else:
             abort(404)
 
