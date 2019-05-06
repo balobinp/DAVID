@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/david_unittest.py" line="43" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/david_unittest.py" line="60" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/NodeMcu02Gas.pde" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu02Gas.pde" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/david_climate_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_climate_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/david_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_template.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/david_unittest.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_unittest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/david_web_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_web_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/voice_recorder.py" beforeDir="false" afterPath="$PROJECT_DIR$/voice_recorder.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +40,15 @@
         <option value="$PROJECT_DIR$/VOICE_SAMPLES/david_test.py" />
         <option value="$PROJECT_DIR$/david_test.py" />
         <option value="$PROJECT_DIR$/david_currency_check.py" />
-        <option value="$PROJECT_DIR$/david_template.py" />
-        <option value="$PROJECT_DIR$/david_climate_check.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
-        <option value="$PROJECT_DIR$/david_web_server.py" />
-        <option value="$PROJECT_DIR$/david_unittest.py" />
-        <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/NodeMcu02Gas.pde" />
+        <option value="$PROJECT_DIR$/david_climate_check.py" />
+        <option value="$PROJECT_DIR$/david_template.py" />
+        <option value="$PROJECT_DIR$/david_gas_check.py" />
+        <option value="$PROJECT_DIR$/david_unittest.py" />
+        <option value="$PROJECT_DIR$/voice_recorder.py" />
+        <option value="$PROJECT_DIR$/david_lib.py" />
+        <option value="$PROJECT_DIR$/david_web_server.py" />
       </list>
     </option>
   </component>
@@ -56,7 +63,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -68,6 +74,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -155,68 +162,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_test_get.py" />
     <entry file="file://$PROJECT_DIR$/david_test.py" />
-    <entry file="file://$PROJECT_DIR$/voice_recorder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="7" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_currency_check.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="119" column="42" selection-start-line="119" selection-start-column="42" selection-end-line="119" selection-end-column="42" />
-          <folding>
-            <element signature="e#38#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_template.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding>
-            <element signature="e#39#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_climate_check.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
-          <folding>
-            <element signature="e#12#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_unittest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="57" column="23" lean-forward="true" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_web_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="101" column="54" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="54" />
-          <folding>
-            <element signature="e#12#62#0" expanded="true" />
-            <element signature="e#2751#2922#0" />
-            <element signature="e#2974#3508#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_db_create.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -224,13 +169,6 @@
           <folding>
             <element signature="e#12#26#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
@@ -245,6 +183,85 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
           <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_currency_check.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" selection-start-line="42" selection-end-line="42" selection-end-column="28" />
+          <folding>
+            <element signature="e#38#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_climate_check.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-625">
+          <caret line="16" selection-start-line="16" selection-end-line="17" selection-end-column="69" />
+          <folding>
+            <element signature="e#12#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_template.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="15" lean-forward="true" selection-start-line="30" selection-start-column="15" selection-end-line="30" selection-end-column="15" />
+          <folding>
+            <element signature="e#39#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="94" column="75" selection-start-line="94" selection-start-column="75" selection-end-line="94" selection-end-column="75" />
+          <folding>
+            <element signature="e#12#62#0" expanded="true" />
+            <element signature="e#2751#2922#0" />
+            <element signature="e#2974#3508#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_gas_check.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-115">
+          <caret line="53" column="19" lean-forward="true" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+          <folding>
+            <element signature="e#39#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voice_recorder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_unittest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="23" column="74" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="74" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -8,16 +8,30 @@ import sqlite3
 import david_lib
 import david_currency_check
 import david_climate_check
+import david_gas_check
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
 dir_david = david_lib.dir_david
-file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
+
 file_sqlite_db = david_lib.file_sqlite_db
-file_log_web_server = david_lib.file_log_web_server
-file_log_climate_check = david_lib.file_log_climate_check
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
+
+file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
+file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
+file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
+file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+file_log_climate_check = david_lib.file_log_climate_check
+file_log_climate_check_path = join(dir_david, file_log_climate_check)
+
+file_log_web_server = david_lib.file_log_web_server
+file_log_web_server_path = join(dir_david, file_log_web_server)
+
+file_log_gas_check = david_lib.file_log_gas_check
+file_log_gas_check_path = join(dir_david, file_log_gas_check)
+file_gas_danger = david_lib.file_gas_danger
+file_gas_danger_path = join(dir_david, file_gas_danger)
 
 
 # Check files
@@ -26,10 +40,13 @@ class TestFiles(unittest.TestCase):
 
     def test_check_file(self):
         self.assertEqual(isdir(dir_david), True)
-        self.assertEqual(isfile(join(dir_david, file_climate_hot_bedroom)), True)
         self.assertEqual(isfile(file_sqlite_db_path), True)
-        self.assertEqual(isfile(join(dir_david, file_log_web_server)), True)
-        self.assertEqual(isfile(join(dir_david, file_log_climate_check)), True)
+        self.assertEqual(isfile(file_climate_hot_bedroom_path), True)
+        self.assertEqual(isfile(file_climate_cold_bedroom_path), True)
+        self.assertEqual(isfile(file_log_climate_check_path), True)
+        self.assertEqual(isfile(file_log_web_server_path), True)
+        self.assertEqual(isfile(file_log_gas_check_path), True)
+        self.assertEqual(isfile(file_gas_danger_path), True)
 
 
 class TestWebServer(unittest.TestCase):
@@ -158,6 +175,13 @@ class TestWebServer(unittest.TestCase):
 
     def test_gas_check(self):
         pass
+
+    def test_02_get_gas_data(self):
+        result = david_gas_check.get_gas_data()
+        if result:
+            self.assertEqual(result, 666)
+        else:
+            self.assertIsNone(result)
 
 
 if __name__ == '__main__':

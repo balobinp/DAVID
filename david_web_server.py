@@ -92,7 +92,7 @@ class DavidWebServerHandler(Resource):
         elif get_url.path == 'gas':
             sensor_id = get_params.get('sensor')[0]
             sensor_value = get_params.get('sensorValue')[0]
-            web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id}')
+            web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id};GasSensorValue={sensor_value}')
             try:
                 conn = sqlite3.connect(file_sqlite_db_path)
             except Exception as e:

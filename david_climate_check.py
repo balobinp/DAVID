@@ -1,15 +1,11 @@
 #python3.6
 
 import os
-from time import sleep
 import sqlite3
 from os.path import isfile, join
 import logging
 
 import david_lib
-
-#from importlib import reload
-#reload(logging)
 
 dir_david = david_lib.dir_david
 file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
