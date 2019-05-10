@@ -114,12 +114,12 @@ def currency_check():
         conn.close()
     if currency_change_per and \
             (currency_change_per > currency_threshold_increase_per or currency_rate > currency_usd_threshold_high):
-        return 'currency_abnormal_increase', currency_rate
+        return 'currency_abnormal_increase', currency_rate, currency_name, rep_date
     elif currency_change_per and \
             (currency_change_per < currency_threshold_increase_per or currency_rate < currency_usd_threshold_low):
-        return 'currency_abnormal_decrease', currency_rate
+        return 'currency_abnormal_decrease', currency_rate, currency_name, rep_date
     else:
-        return 'currency_normal', currency_rate
+        return 'currency_normal', currency_rate, currency_name, rep_date
 
 def currency_change_inform_user(currency_check_result, currency_rate):
     currency_check_log.debug(f'Message=send_wa_notify;Action=sending_the_message_in_wa;Currency_check_result={currency_check_result}')

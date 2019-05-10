@@ -9,6 +9,7 @@ import david_lib
 import david_currency_check
 import david_climate_check
 import david_gas_check
+import david_healthcheck
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
@@ -163,18 +164,15 @@ class TestWebServer(unittest.TestCase):
 
     def test_currency_check(self):
         currency_check_variants = ['currency_abnormal_increase', 'currency_normal', 'currency_abnormal_decrease']
-        currency_check_result, _ = david_currency_check.currency_check()
+        currency_check_result, _, _, _ = david_currency_check.currency_check()
         self.assertTrue(currency_check_result in currency_check_variants)
 
     def test_currency_change_inform_user(self):
-        currency_check_result, currency_rate = david_currency_check.currency_check()
+        currency_check_result, currency_rate, _, _ = david_currency_check.currency_check()
         result = david_currency_check.currency_change_inform_user(currency_check_result, currency_rate)
         self.assertEqual(result, 'OK')
 
     # david_gas_check.py
-
-    def test_gas_check(self):
-        pass
 
     def test_02_get_gas_data(self):
         result = david_gas_check.get_gas_data()
@@ -183,6 +181,15 @@ class TestWebServer(unittest.TestCase):
         else:
             self.assertIsNone(result)
 
+    # david_healthcheck.py
+
+    def test_02_healthcheck_fetch_climate_data(self):
+        result = david_healthcheck.fetch_climate_data()
+        self.assertEqual(result, [('bedroom', 6)])
+
+    def test_02_healthcheck_fetch_gas_data(self):
+        result = david_healthcheck.fetch_gas_data()
+        self.assertEqual(result, 666)
 
 if __name__ == '__main__':
     unittest.main()
