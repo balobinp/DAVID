@@ -130,7 +130,7 @@ class TestWebServer(unittest.TestCase):
         for results in cur:
             result = results
         conn.close()
-        self.assertEqual(result, (1, 6, 6, 6))
+        self.assertTupleEqual(result, (1, 6, 6, 6))
 
     # david_climate_check.py
 
@@ -191,8 +191,14 @@ class TestWebServer(unittest.TestCase):
         result = david_healthcheck.fetch_gas_data()
         self.assertEqual(result, 666)
 
+    def test_get_system_data(self):
+        result = david_healthcheck.get_system_data()
+        self.assertIsInstance(result, dict)
+        self.assertIsInstance(result['percent'], float)
+        self.assertIsInstance(result['cpu'], float)
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=1)
 
 # suite = unittest.TestLoader().loadTestsFromTestCase(TestFiles)
 # runner = unittest.TextTestRunner(verbosity=2)

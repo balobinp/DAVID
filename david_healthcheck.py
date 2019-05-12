@@ -4,6 +4,7 @@
 from os.path import isfile, join
 import logging
 import sqlite3
+import psutil
 
 from david_currency_check import currency_check
 import david_lib
@@ -57,6 +58,7 @@ def fetch_climate_data():
                 FROM CLIMATE_SENSORS cs
                 LEFT JOIN SENSORS s ON cs.SENSOR_ID = s.SENSOR_ID
                 WHERE cs.REP_DATE >= DATETIME('now','-15 minute')
+                AND s.SENSOR_TYPE = 'climate'
                 AND cs.ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
     cur.execute(sql_str)
     result = []
@@ -64,7 +66,11 @@ def fetch_climate_data():
         # result = results
         result.append(results)
     conn.close()
-    return result
+    healthcheck_logger.debug(f'Message=get_data_from_db;climate={result}')
+    if not result:
+        return None
+    else:
+        return result
 
 def fetch_gas_data():
     conn = sqlite3.connect(file_sqlite_db_path)
@@ -77,7 +83,14 @@ def fetch_gas_data():
     for results in cur:
         result = results[0]
     conn.close()
+    healthcheck_logger.debug(f'Message=get_data_from_db;gas={result}')
     return result
+
+def get_system_data():
+    system_data_dict = dict(psutil.virtual_memory()._asdict())
+    system_data_dict.update({'cpu': psutil.cpu_percent()})
+    healthcheck_logger.debug(f"Message=system_check;cpu={system_data_dict['cpu']}%;mem:{system_data_dict['percent']}%")
+    return system_data_dict
 
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)
@@ -85,9 +98,18 @@ if __name__ == '__main__':
     gas_sensor_value = fetch_gas_data()
     climate_data = fetch_climate_data()
     currency_check_result, currency_rate, currency_name, rep_date = currency_check()
+    system_data_dict = get_system_data()
 
     healthcheck_report_dict = {'gas_sensor_data': gas_sensor_value,
                                'climate_data': climate_data,
-                               'currency_data': [rep_date, currency_check_result, currency_rate, currency_name]}
+                               'currency_data': {currency_name: {'rep_date': rep_date,
+                                                                 'currency_check_result': currency_check_result,
+                                                                 'currency_rate': currency_rate,} },
+                               'system_data': system_data_dict}
 
-    print(healthcheck_report_dict)
+    healthcheck_logger.debug(f'Message=healthcheck_report;report={healthcheck_report_dict}')
+
+    if healthcheck_report_dict['gas_sensor_data'] is None:
+        print("Отсутствуют данные с датчика газа.")
+    if healthcheck_report_dict['climate_data'] is None:
+        print("Отсутствуют данные с датчика температуры.")
