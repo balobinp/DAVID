@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_web_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_web_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02Gas.pde" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu02Gas.pde" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +34,6 @@
         <option value="$PROJECT_DIR$/VOICE_SAMPLES/david_unittest.py" />
         <option value="$PROJECT_DIR$/VOICE_SAMPLES/david_test.py" />
         <option value="$PROJECT_DIR$/david_test.py" />
-        <option value="$PROJECT_DIR$/NodeMcu02Gas.pde" />
         <option value="$PROJECT_DIR$/david_climate_check.py" />
         <option value="$PROJECT_DIR$/voice_recorder.py" />
         <option value="$PROJECT_DIR$/david_web_server.py" />
@@ -47,10 +45,11 @@
         <option value="$PROJECT_DIR$/david_healthcheck.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/david_lib.py" />
+        <option value="$PROJECT_DIR$/NodeMcu02Gas.pde" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="205" />
     <option name="y" value="90" />
     <option name="width" value="3415" />
@@ -112,7 +111,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="82" y="36" width="1366" height="744" extended-state="1" />
+    <frame x="82" y="36" width="1366" height="744" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -163,32 +162,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/david_test_get.py" />
     <entry file="file://$PROJECT_DIR$/david_test.py" />
-    <entry file="file://$PROJECT_DIR$/NodeMcu02Gas.pde">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="59" column="18" lean-forward="true" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom.pde">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_web_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="94" column="75" selection-start-line="94" selection-start-column="75" selection-end-line="94" selection-end-column="75" />
-          <folding>
-            <element signature="e#12#62#0" expanded="true" />
-            <element signature="e#2751#2922#0" />
-            <element signature="e#2974#3508#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/voice_recorder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -283,6 +256,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom.pde">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu02Gas.pde">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="94" column="59" lean-forward="true" selection-start-line="94" selection-start-column="59" selection-end-line="94" selection-end-column="59" />
+          <folding>
+            <element signature="e#38#88#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -4,7 +4,7 @@
 String httpurl = "http://192.168.1.44:80/";
 String sensor = "sensor=2";
 String httpurlconn = httpurl;
-String httpurldata = httpurl;
+String httpurldata;
 String ip;
 float sensorValue;
 
@@ -48,6 +48,7 @@ void loop()
     Serial.print("Sensor value = ");
     Serial.println(sensorValue);
 
+    httpurldata = httpurl;
     httpurldata += "gas;";
     httpurldata += sensor;
     httpurldata += "&sensorValue=";
