@@ -185,7 +185,7 @@ class TestWebServer(unittest.TestCase):
 
     def test_02_healthcheck_fetch_climate_data(self):
         result = david_healthcheck.fetch_climate_data()
-        self.assertEqual(result, [('bedroom', 6)])
+        self.assertEqual(result, {'bedroom': 6})
 
     def test_02_healthcheck_fetch_gas_data(self):
         result = david_healthcheck.fetch_gas_data()

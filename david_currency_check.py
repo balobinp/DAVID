@@ -6,6 +6,7 @@ import requests
 import xml.etree.ElementTree as ET
 import logging
 from twilio.rest import Client
+import datetime as dt
 
 import david_lib
 
@@ -111,7 +112,14 @@ def currency_check():
             ORDER BY a.REP_DATE DESC
             LIMIT 1''')
         rep_date, currency_name, currency_rate, prev_currency_rate, currency_change_per = cur.fetchone()
+        rep_date = dt.datetime.strptime(rep_date, '%Y-%m-%d %H:%M:%S')
         conn.close()
+
+        if type(currency_rate) is str:
+            currency_rate = float(currency_rate.replace(',', '.'))
+        if type(currency_change_per) is str:
+            currency_change_per = float(currency_change_per.replace(',', '.'))
+
     if currency_change_per and \
             (currency_change_per > currency_threshold_increase_per or currency_rate > currency_usd_threshold_high):
         return 'currency_abnormal_increase', currency_rate, currency_name, rep_date
@@ -142,6 +150,6 @@ if __name__ == '__main__':
     check_file(file_log_currency_check_path)
     char_code, usd_rate = get_valute('USD')
     currency_rate_db_insert(char_code, usd_rate)
-    currency_check_result, currency_rate = currency_check()
+    currency_check_result, _, currency_rate, _ = currency_check()
     currency_change_inform_user(currency_check_result, currency_rate)
 

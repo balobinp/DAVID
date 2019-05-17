@@ -5,6 +5,7 @@ from os.path import isfile, join
 import logging
 import sqlite3
 import psutil
+import datetime as dt
 
 from david_currency_check import currency_check
 import david_lib
@@ -61,10 +62,10 @@ def fetch_climate_data():
                 AND s.SENSOR_TYPE = 'climate'
                 AND cs.ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
     cur.execute(sql_str)
-    result = []
+    result = {}
     for results in cur:
         # result = results
-        result.append(results)
+        result.update({results[0]: results[1]})
     conn.close()
     healthcheck_logger.debug(f'Message=get_data_from_db;climate={result}')
     if not result:
@@ -111,5 +112,37 @@ if __name__ == '__main__':
 
     if healthcheck_report_dict['gas_sensor_data'] is None:
         print("Отсутствуют данные с датчика газа.")
+    else:
+        print(f"Данные с датчика газа: {healthcheck_report_dict['gas_sensor_data']}")
+
     if healthcheck_report_dict['climate_data'] is None:
         print("Отсутствуют данные с датчика температуры.")
+    else:
+        print(f"Данные с датчиов температуры: {healthcheck_report_dict['climate_data']}")
+
+    dt_today = dt.date.today()
+    dt_last_currency_check = healthcheck_report_dict['currency_data']['USD']['rep_date'].date()
+    dt_diff_currency_check = (dt_last_currency_check - dt_today).days
+
+    if dt_last_currency_check != dt_today:
+        print(f"Отсутствуют данные по курсу доллара. Последнее обновление {abs(dt_diff_currency_check)} дней назад.")
+    elif healthcheck_report_dict['currency_data']['USD']['currency_check_result'] == 'currency_normal':
+        print(f"Курс доллара в норме. "
+              f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
+    else:
+        print(f"Превышены пороги изменения курса доллара."
+              f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
+
+    if healthcheck_report_dict['system_data']['cpu'] < 40:
+        print(f"Загрузка CPU в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
+    else:
+        print(f"Превышена загрузка CPU. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
+
+    if healthcheck_report_dict['system_data']['percent'] < 70:
+        print(f"Загрузка памяти в норме. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
+    else:
+        print(f"Превышена загрузка памяти. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
+
+    # import pprint
+    # pprint.pprint(healthcheck_report_dict)
+
