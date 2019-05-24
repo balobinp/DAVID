@@ -17,6 +17,9 @@ file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_log_climate_check = david_lib.file_log_climate_check
 file_log_climate_check_path = join(dir_david, file_log_climate_check)
 
+climate_cold_threshold = david_lib.climate_cold_threshold
+climate_hot_threshold = david_lib.climate_hot_threshold
+
 # Create logger
 
 climate_check_log = logging.getLogger('climate_check')
@@ -60,13 +63,13 @@ if __name__ == '__main__':
     check_file(file_climate_hot_bedroom_path)
     t = get_climate_data()
     climate_check_log.info(f'Message=got_data_from_table_climate_sensors;t={t}')
-    if t and t > 25:
+    if t and t > climate_hot_threshold:
         try:
             os.system("mpg123 " + file_climate_hot_bedroom_path)
             climate_check_log.debug(f'Message=playing_file;file={file_climate_hot_bedroom_path}')
         except Exception as e:
             climate_check_log.error(f'Message=playing_file;Exception={e}')
-    elif t and t < 23:
+    elif t and t < climate_cold_threshold:
         try:
             os.system("mpg123 " + file_climate_cold_bedroom_path)
             climate_check_log.debug(f'Message=playing_file;file={file_climate_cold_bedroom_path}')

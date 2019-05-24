@@ -35,7 +35,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS CLIMATE_SENSORS (REP_DATE TEXT
 
 cur.execute('DROP TABLE IF EXISTS SENSORS')
 
-cur.execute('''CREATE TABLE IF NOT EXISTS SENSORS (SENSOR_ID INTEGER
+cur.execute('''CREATE TABLE IF NOT EXISTS SENSORS (SENSOR_ID INTEGER NOT NULL UNIQUE
             ,SENSOR_TYPE NVARCHAR(15)
             ,LOCATION NVARCHAR(55))''')
 
@@ -69,7 +69,7 @@ cur.execute('DROP VIEW IF EXISTS V_CLIMATE_SENSORS')
 
 cur.execute('''CREATE VIEW V_CLIMATE_SENSORS AS
             SELECT
-            strftime('%Y-%m-%d %H:%M', datetime(cs.REP_DATE, 'localtime')) AS REP_DATE
+            strftime('%Y-%m-%d %H:%M:%S', datetime(cs.REP_DATE, 'localtime')) AS REP_DATE
             ,s.LOCATION
             ,cs.TEMPERATURE
             ,cs.HUMIDITY
@@ -81,7 +81,7 @@ cur.execute('DROP VIEW IF EXISTS V_MOTION_SENSORS')
 
 cur.execute('''CREATE VIEW V_MOTION_SENSORS AS
             SELECT
-            strftime('%Y-%m-%d %H:%M', datetime(ms.REP_DATE, 'localtime')) AS REP_DATE
+            strftime('%Y-%m-%d %H:%M:%S', datetime(ms.REP_DATE, 'localtime')) AS REP_DATE
             ,s.LOCATION
             FROM MOTION_SENSORS ms, SENSORS s
             WHERE ms.SENSOR_ID = s.SENSOR_ID

@@ -1,12 +1,16 @@
 #python3.6
 
+version = '0.2.0.dev'
+currency_threshold_increase_per = 2
+currency_usd_threshold_high = 67
+currency_usd_threshold_low = 63
+climate_cold_threshold = 23
+climate_hot_threshold = 25
+
 # DavidServer
 
 # ip_addr = '192.168.1.44'
 # port = 80
-# currency_threshold_increase_per = 2
-# currency_usd_threshold_high = 67
-# currency_usd_threshold_low = 63
 # dir_david = r'/home/david'
 # file_climate_hot_bedroom = r'./VOICE_SAMPLES/climate_hot_bedroom.mp3'
 # file_climate_cold_bedroom = r'./VOICE_SAMPLES/climate_cold_bedroom.mp3'
@@ -22,9 +26,6 @@
 
 ip_addr = '192.168.1.52'
 port = 80
-currency_threshold_increase_per = 2
-currency_usd_threshold_high = 67
-currency_usd_threshold_low = 63
 dir_david = r'c:\Users\balob\Downloads\DAVID'
 file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'
 file_climate_cold_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_cold_bedroom.mp3'

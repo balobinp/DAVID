@@ -135,7 +135,9 @@ def currency_change_inform_user(currency_check_result, currency_rate):
         account_sid = 'AC431b47a9c6b392bc8b5f38ccfe666a96'
         auth_token = 'df57cfe7d1b42d1eaf492fefc4c848af'
         client = Client(account_sid, auth_token)
-        message = client.messages.create(body=f'Currency check: {currency_check_result}. USD rate: {currency_rate} RUB',
+        # body = f'Currency check: {currency_check_result}. USD rate: {currency_rate} RUB'
+        body = f'Your {currency_check_result} code is {currency_rate}'
+        message = client.messages.create(body=body,
                                          from_='whatsapp:+14155238886',
                                          to='whatsapp:+79217428080')
         currency_check_log.info(f'Message=send_wa_notify;Result=OK;Currency_check_result={currency_check_result}')
@@ -150,6 +152,5 @@ if __name__ == '__main__':
     check_file(file_log_currency_check_path)
     char_code, usd_rate = get_valute('USD')
     currency_rate_db_insert(char_code, usd_rate)
-    currency_check_result, _, currency_rate, _ = currency_check()
+    currency_check_result, currency_rate, _, _ = currency_check()
     currency_change_inform_user(currency_check_result, currency_rate)
-
