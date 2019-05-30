@@ -2,7 +2,7 @@
 
 Author: balobin.p@mail.ru
 Version 0.3.0.dev
-Date 27.05.19
+Date 29.05.19
 
 ************************************************************************************************************************
 To Do list:
@@ -73,6 +73,67 @@ To Do list:
 ------------------------------------
 Version 0.3.0 change list and installation procedure:
 ------------------------------------
+
+Нерешенные проблемы:
+1. Как выполнить импорт модуля, находящегося в другой директории из файла в проекте Django?
+import david_lib
+Вариант решения:
+https://stackoverflow.com/questions/24868733/how-to-access-a-module-from-outside-your-file-folder-in-python
+
+Version 0.3.0 change procedure:
+
+1. Войти в виртуальное окружение для программы и установить библиотеки.
+source /home/david/env/bin/activate
+pip install Django
+pip list
+pip freeze --local > requirements.txt
+python --version
+
+2. Поместить в директорию /home/david файлы:
+
+3. Обновить базу данных:
+python /home/david/david_db_create.py
+
+4. Перезапустить сервис david_web_server
+systemctl stop david.service
+systemctl start david.service
+systemctl status david.service
+
+5. Создать Django проект и запустить сервер
+5.1. Создать проект
+django-admin startproject WEB_UI
+cd ./WEB_UI
+python manage.py runserver
+Ctl+Break
+5.2. Выполнить миграции
+python manage.py migrate
+5.3. Создать пользователя
+python manage.py createsuperuser
+david/7
+5.4. Запустить сервер и залогиниться
+python manage.py runserver
+http://127.0.0.1:8000/admin
+5.5. Настройка базы данных sqlite
+В файле settings.py добавить:
+import sys
+sys.path.append(r'c:\Users\balob\Documents\DAVID')
+import david_lib
+dir_david = david_lib.dir_david
+file_sqlite_db = david_lib.file_sqlite_db
+file_sqlite_db_path = os.path.join(dir_david, file_sqlite_db)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': file_sqlite_db_path,
+    }
+}
+
+6. Выполнить unit тестирование
+python /home/david/david_unittest.py
+
+7. Добавить модуль david_gas_check.py в crontab
+crontab -e
 
 ------------------------------------
 Version 0.2.0 change list and installation procedure:
