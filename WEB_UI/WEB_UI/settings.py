@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'children_math',
+    'mainpage',
 ]
 
 MIDDLEWARE = [
