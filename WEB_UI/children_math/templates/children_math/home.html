@@ -6,13 +6,17 @@
 </head>
 <body>
 
-<h3>Calculation tasks:</h3>
-<form method="post" enctype="multipart/form-data" action="steering_result">
-	{% csrf_token %}
+    <h3>Calculation tasks:</h3>
+    <form method="post" enctype="multipart/form-data" action="math_result">
+        {% csrf_token %}
 
-{% block content %}
-{% include "children_math/includes/math_task_01.html" %}
-{% endblock %}
+    {% block content %}
+    {% include "children_math/includes/math_01_task.html" %}
+    {% endblock %}
+
+
+    <br><br>
+    <input id="feedback-submit" type="submit">
 
 </body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+
+<h1>HEY!</h1>
+
+{% block content %}
+{% include "children_math/includes/math_01_answer.html" %}
+{% endblock %}
+
+<h2>Your score: {{ score }}</h2>
+{% if score == 5 %}
+<h2>Good Job</h2>
+{% endif %}
+
+</body>
+</html>

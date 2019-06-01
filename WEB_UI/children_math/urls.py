@@ -18,4 +18,5 @@ from django.urls import path
 
 urlpatterns = [
 	path('', views.index, name='index'),
+    path('math_result', views.math_result, name='math_result'),
 ]
