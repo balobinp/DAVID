@@ -17,5 +17,5 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-	path('', views.index, name='mainpage-index'),
+	path('', views.register, name='register'),
 ]

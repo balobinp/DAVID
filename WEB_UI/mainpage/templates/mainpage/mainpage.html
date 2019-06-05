@@ -5,6 +5,15 @@
     <title>David</title>
 </head>
 <body>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tag}}">
+            {{ message.tag}}
+        </div>
+    {% endfor %}
+{% endif %}
+
 <h1><a href='/children_math'>Kate</a></h1>
 <h1><a href='/'>Ann</a></h1>
 </body>

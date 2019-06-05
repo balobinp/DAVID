@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'children_math',
-    'mainpage',
+    'children_math.apps.ChildrenMathConfig',
+    'users.apps.UsersConfig',
+    'mainpage.apps.MainpageConfig',
 ]
 
 MIDDLEWARE = [
