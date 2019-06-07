@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Math</title>
-</head>
-<body>
-
+{% extends "mainpage/header.html" %}
+{% block content %}
     <h3>Calculation tasks:</h3>
     <form method="post" enctype="multipart/form-data" action="math_result">
         {% csrf_token %}
-
-        {% block content %}
         {% include "children_math/includes/math_01_task.html" %}
-        {% endblock %}
-
     <br><br>
     <input id="feedback-submit" type="submit">
-
-</body>
-</html>
+{% endblock %}

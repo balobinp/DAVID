@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration form</title>
-</head>
-<body>
+{% extends "mainpage/header.html" %}
+{% block content %}
     <div>
         <form method="POST">
             {% csrf_token %}
@@ -22,5 +17,4 @@
             </small>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

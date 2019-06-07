@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Result</title>
-</head>
-<body>
-
-<h3>Calculation tasks:</h3>
-
+{% extends "mainpage/header.html" %}
 {% block content %}
-{% include "children_math/includes/math_01_answer.html" %}
+    <h3>Calculation tasks:</h3>
+    {% include "children_math/includes/math_01_answer.html" %}
+    <h3>Your score: {{ score }}</h3>
+    {% if score == 5 %}
+        <h2>Good Job</h2>
+    {% endif %}
+    <h3><a href='/children_math'>Back</a></h3>
 {% endblock %}
-
-<h3>Your score: {{ score }}</h3>
-{% if score == 5 %}
-<h2>Good Job</h2>
-{% endif %}
-
-<h3><a href='/children_math'>Back</a></h3>
-
-</body>
-</html>

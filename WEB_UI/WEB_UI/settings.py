@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
 import sys
 sys.path.append(r'c:\Users\balob\Documents\DAVID')
 import david_lib
@@ -129,4 +128,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'mainpage-index'
+LOGIN_REDIRECT_URL = 'mainpage'
+LOGIN_URL = 'login'

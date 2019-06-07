@@ -2,7 +2,7 @@
 
 Author: balobin.p@mail.ru
 Version 0.3.0.dev
-Date 29.05.19
+Date 07.06.19
 
 ************************************************************************************************************************
 To Do list:
@@ -85,11 +85,14 @@ Version 0.3.0 change procedure:
 1. Войти в виртуальное окружение для программы и установить библиотеки.
 source /home/david/env/bin/activate
 pip install Django
+pip install pandas
+pip install numpy
 pip list
 pip freeze --local > requirements.txt
 python --version
 
 2. Поместить в директорию /home/david файлы:
+./WEB_UI
 
 3. Обновить базу данных:
 python /home/david/david_db_create.py
@@ -114,26 +117,14 @@ david/7
 python manage.py runserver
 http://127.0.0.1:8000/admin
 5.5. Настройка базы данных sqlite
-В файле settings.py добавить:
+В файле settings.py поменять ??:
 import sys
 sys.path.append(r'c:\Users\balob\Documents\DAVID')
-import david_lib
-dir_david = david_lib.dir_david
-file_sqlite_db = david_lib.file_sqlite_db
-file_sqlite_db_path = os.path.join(dir_david, file_sqlite_db)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': file_sqlite_db_path,
-    }
-}
+на директорию проекта
+sys.path.append(r'/home/david')
 
 6. Выполнить unit тестирование
 python /home/david/david_unittest.py
-
-7. Добавить модуль david_gas_check.py в crontab
-crontab -e
 
 ------------------------------------
 Version 0.2.0 change list and installation procedure:

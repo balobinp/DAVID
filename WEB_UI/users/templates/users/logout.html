@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "mainpage/header.html" %}
+{% block content %}
     <h2>You have been logged out</h2>
     <div>
         <small>
             <a href="{% url 'login' %}">Log In</a>
         </small>
     </div>
-</body>
-</html>
+{% endblock %}
