@@ -1,6 +1,6 @@
 {% extends "mainpage/header.html" %}
 {% block content %}
-    <h3>Calculation tasks:</h3>
+    <h3>Calculation task for {{ user.username }}:</h3>
     <form method="post" enctype="multipart/form-data" action="math_result">
         {% csrf_token %}
         {% include "children_math/includes/math_01_task.html" %}

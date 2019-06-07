@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import sys
-sys.path.append(r'c:\Users\balob\Documents\DAVID')
+# sys.path.append(r'c:\Users\balob\Documents\DAVID')
+sys.path.append(r'/home/david')
+
 import david_lib
 dir_david = david_lib.dir_david
 file_sqlite_db = david_lib.file_sqlite_db
@@ -31,8 +33,10 @@ SECRET_KEY = 'kr)8^--s4ub((5^h8+z7(&9&j01o%m(b0q8+$3jvkt0m3u_z+g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['192.168.1.44',
+                 '0.0.0.0',
+                 '127.0.0.1',
+]
 
 # Application definition
 

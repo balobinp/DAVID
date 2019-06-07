@@ -27,6 +27,11 @@ To Do list:
 27. Добавить API на базе flask и flask_sqlalchemy.
 28. Сделать модуль inform_user для взаимодействия с пользователями.
 
+Модуль Django Математика:
+1. Упростить пароли
+2. Сделать service для запуска django
+3. Добавить тесты
+
 Модуль david_web_server:
 1.
 
@@ -87,12 +92,16 @@ source /home/david/env/bin/activate
 pip install Django
 pip install pandas
 pip install numpy
+pip install lxml
 pip list
 pip freeze --local > requirements.txt
 python --version
 
 2. Поместить в директорию /home/david файлы:
-./WEB_UI
+david_lib.py
+david_user_interface.py
+requirements.txt
+test.py
 
 3. Обновить базу данных:
 python /home/david/david_db_create.py
@@ -103,25 +112,24 @@ systemctl start david.service
 systemctl status david.service
 
 5. Создать Django проект и запустить сервер
-5.1. Создать проект
-django-admin startproject WEB_UI
-cd ./WEB_UI
-python manage.py runserver
-Ctl+Break
+5.1. Загрузить папку WEB_UI
+./WEB_UI
 5.2. Выполнить миграции
 python manage.py migrate
 5.3. Создать пользователя
 python manage.py createsuperuser
-david/7
-5.4. Запустить сервер и залогиниться
-python manage.py runserver
-http://127.0.0.1:8000/admin
-5.5. Настройка базы данных sqlite
-В файле settings.py поменять ??:
-import sys
-sys.path.append(r'c:\Users\balob\Documents\DAVID')
-на директорию проекта
-sys.path.append(r'/home/david')
+5.4. Запустить проект
+sudo screen -ls
+sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
+Ctrl+C
+exit
+sudo screen -d -r 30137.david_web_server
+sudo screen -S david_web_server
+cd /home/david/WEB_UI
+source /home/david/env/bin/activate
+python manage.py runserver 0.0.0.0:8000
+Ctrl+A -> D
+sudo screen -ls
 
 6. Выполнить unit тестирование
 python /home/david/david_unittest.py
@@ -392,6 +400,26 @@ sudo systemctl daemon-reload
 sudo systemctl enable foo.service
 systemctl start david.service
 systemctl status david.service
+
+5. Создать Django проект и запустить сервер
+5.1. Загрузить папку WEB_UI
+./WEB_UI
+5.2. Выполнить миграции
+python manage.py migrate
+5.3. Создать пользователя
+python manage.py createsuperuser
+5.4. Запустить проект
+sudo screen -ls
+sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
+Ctrl+C
+exit
+sudo screen -d -r 30137.david_web_server
+sudo screen -S david_web_server
+cd /home/david/WEB_UI
+source /home/david/env/bin/activate
+python manage.py runserver 0.0.0.0:8000
+Ctrl+A -> D
+sudo screen -ls
 
 7. Добавить модули david_currency_check.py и david_climate_check.py в crontab
 crontab -e
