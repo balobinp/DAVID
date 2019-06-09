@@ -15,8 +15,9 @@ def index(request):
     for i in range(5):
         list_feedback.append(f'<input id="feedback-Answer_{i}" type="text" name="Answer_{i}">')
     df['Your Answer'] = list_feedback
-    df[['First', 'Sign', 'Second', 'Your Answer']].to_html('children_math/templates/children_math/includes/math_01_task.html',
-               index=True, escape=False, justify='center')
+    df[['First', 'Sign', 'Second', 'Your Answer']].to_html(
+        f'children_math/templates/children_math/includes/{request.user.username}_math_01_task.html',
+        index=True, escape=False, justify='center')
     return render(request, 'children_math/home.html')
 
 @login_required
@@ -26,7 +27,8 @@ def math_result(request):
     Answer_2 = request.POST.get('Answer_2')
     Answer_3 = request.POST.get('Answer_3')
     Answer_4 = request.POST.get('Answer_4')
-    df_list = pd.read_html('children_math/templates/children_math/includes/math_01_task.html', index_col=0)
+    df_list = pd.read_html(
+        f'children_math/templates/children_math/includes/{request.user.username}_math_01_task.html', index_col=0)
     df = df_list[0]
     df['Correct Answer'] = df.apply(lambda x:
                                     x['First'] + x['Second'] if x['Sign'] == '+' else x['First'] - x['Second'], axis=1)
