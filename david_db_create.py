@@ -98,5 +98,42 @@ cur.execute('''CREATE VIEW V_GAS_SENSORS AS
             WHERE gs.SENSOR_ID = s.SENSOR_ID
             ORDER BY s.LOCATION, ms.REP_DATE DESC''')
 
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_MATH_TASK01')
+
+cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK01 AS
+            SELECT
+            strftime('%Y-%m-%d', REP_DATE) AS REP_DATE
+            ,USER_NAME
+            ,COUNT(*) AS ATTEMPTS
+            ,SUM(CASE WHEN SCORE = 5 THEN 1 ELSE 0 END) AS SCORE_FIVE
+            FROM
+            (
+            SELECT strftime('%Y-%m-%d %H:%M:%S', mt.date) AS REP_DATE
+            ,au.username AS USER_NAME
+            ,SUM(CASE
+            WHEN mt.sign = '+' AND (mt.first + mt.second) = mt.user_answer THEN 1
+            WHEN mt.sign = '-' AND (mt.first - mt.second) = mt.user_answer THEN 1
+            ELSE 0 END) AS SCORE
+            FROM children_math_task01 mt, auth_user au
+            WHERE mt.user_id = au.id
+            GROUP BY 1, 2
+            )
+            GROUP BY 1, 2
+            ORDER BY USER_NAME, REP_DATE DESC''')
+
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_MATH_TASK01_DETAILED')
+
+cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK01_DETAILED AS
+            SELECT mt.date  AS REP_DATE
+            ,au.username AS USER_NAME
+            ,CASE
+            WHEN mt.sign = '+' AND (mt.first + mt.second) = mt.user_answer THEN 1
+            WHEN mt.sign = '-' AND (mt.first - mt.second) = mt.user_answer THEN 1
+            ELSE 0 END AS ANSWER
+            ,mt.first, mt.sign,mt.second
+            FROM children_math_task01 mt, auth_user au
+            WHERE mt.user_id = au.id
+            ORDER BY REP_DATE DESC''')
+
 conn.commit()
 conn.close()

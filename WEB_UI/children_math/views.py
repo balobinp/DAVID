@@ -34,9 +34,23 @@ def math_result(request):
                                     x['First'] + x['Second'] if x['Sign'] == '+' else x['First'] - x['Second'], axis=1)
     df['Your Answer'] = [Answer_0, Answer_1, Answer_2, Answer_3, Answer_4]
     df['Your Answer'] = df['Your Answer'].replace({'': 0}).astype('int')
-    for result in df[['First', 'Second', 'Sign', 'Your Answer']].values:
-        task_01 = Task01(user_id=request.user.id, first=result[0], second=result[1], sign=result[2], user_answer=result[3])
-        task_01.save()
+
+    # for result in df[['First', 'Second', 'Sign', 'Your Answer']].values:
+    #     task_01 = Task01(user_id=request.user.id, first=result[0], second=result[1], sign=result[2], user_answer=result[3])
+    #     task_01.save()
+
+    objs = [
+        Task01(
+            user_id=request.user.id,
+            first=result[0],
+            second=result[1],
+            sign=result[2],
+            user_answer=result[3]
+        )
+        for result in df[['First', 'Second', 'Sign', 'Your Answer']].values
+    ]
+    Task01.objects.bulk_create(objs)
+
     df['Result'] = df.apply(lambda x: 'OK' if x['Your Answer'] == x['Correct Answer'] else 'WRONG', axis=1)
     df.to_html('children_math/templates/children_math/includes/math_01_answer.html',
                index=True, escape=False, justify='center')
