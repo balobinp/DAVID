@@ -7,10 +7,7 @@
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/math_01_answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/math_01_answer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_db_create.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_db_create.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +21,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="204">
-                <caret line="84" column="81" selection-start-line="84" selection-start-column="81" selection-end-line="84" selection-end-column="81" />
+              <first_editor relative-caret-position="221">
+                <caret line="34" column="43" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
               </first_editor>
               <second_editor />
             </state>
@@ -77,7 +74,6 @@
         <option value="$PROJECT_DIR$/WEB_UI/users/templates/users/logout.html" />
         <option value="$PROJECT_DIR$/WEB_UI/users/templates/users/register.html" />
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/urls.py" />
-        <option value="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html" />
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/mainpage.html" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/math_result.html" />
         <option value="$PROJECT_DIR$/david_lib.py" />
@@ -85,6 +81,7 @@
         <option value="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/views.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
+        <option value="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -100,6 +97,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -122,13 +120,48 @@
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
               <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="mainpage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="mainpage" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="mainpage" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="mainpage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
               <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -175,8 +208,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="102" y="66" width="1366" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -187,7 +221,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" visible="true" weight="0.35667753" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" visible="true" weight="0.35667753" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003756" side_tool="true" weight="0.35667753" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32899022" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -429,13 +463,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="6" column="94" selection-start-line="6" selection-start-column="94" selection-end-line="6" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/mainpage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -480,13 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_unittest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1765">
@@ -525,10 +545,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="54" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="51" column="30" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="30" />
+        <state relative-caret-position="85">
+          <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -538,8 +572,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="204">
-            <caret line="84" column="81" selection-start-line="84" selection-start-column="81" selection-end-line="84" selection-end-column="81" />
+          <first_editor relative-caret-position="221">
+            <caret line="34" column="43" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
           </first_editor>
           <second_editor />
         </state>
