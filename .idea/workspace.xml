@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/david_math_01_task.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/david_math_01_task.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/math_01_answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/includes/math_01_answer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/mainpage.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +19,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="36">
-                <caret line="79" selection-start-line="79" selection-end-line="79" />
+              <first_editor relative-caret-position="68">
+                <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
               </first_editor>
               <second_editor />
             </state>
@@ -178,6 +173,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="28" width="1366" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -566,8 +562,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="36">
-            <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <first_editor relative-caret-position="68">
+            <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
           </first_editor>
           <second_editor />
         </state>
