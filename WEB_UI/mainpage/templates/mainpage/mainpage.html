@@ -2,10 +2,17 @@
 {% block content %}
     <div>
         {% if user.is_authenticated %}
-            <h3>You are logged in as: {{ user.username }}</h3>
+            <b>
+                Hello <u><font color="green" size="4">{{ user.username }}</font></u>, my name is Getrizarubsin!
+                <br>Or you can call me Dinessa, how are you?<br><br>
+            </b>
+        {% else %}
+            <b>
+                Hello, how are you?<br><br>
+            </b>
         {% endif %}
     </div>
     <div>
-        <h4><a href='/children_math'>Calculation task</a></h4>
+        <h5><a href='/children_math'>Calculation task</a></h5>
     </div>
 {% endblock %}
