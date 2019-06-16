@@ -13,11 +13,13 @@ def index(request):
     df['Sign'] = np.random.choice(['-', '+'], 5)
     list_feedback = []
     for i in range(5):
-        list_feedback.append(f'<input id="feedback-Answer_{i}" type="text" name="Answer_{i}">')
+        list_feedback.append(f'<input class="form-control" id="feedback-Answer_{i}" type="text" name="Answer_{i}">')
     df['Your Answer'] = list_feedback
-    df[['First', 'Sign', 'Second', 'Your Answer']].to_html(
+    df.index.name = '#'
+    df.reset_index(inplace=True)
+    df[['#', 'First', 'Sign', 'Second', 'Your Answer']].to_html(
         f'children_math/templates/children_math/includes/{request.user.username}_math_01_task.html',
-        index=True, escape=False, justify='center')
+        index=False, escape=False, justify='center', classes="table table-striped")
     return render(request, 'children_math/home.html')
 
 @login_required
@@ -52,6 +54,7 @@ def math_result(request):
     Task01.objects.bulk_create(objs)
 
     df['Result'] = df.apply(lambda x: 'OK' if x['Your Answer'] == x['Correct Answer'] else 'WRONG', axis=1)
+    df.reset_index(inplace=True)
     df.to_html('children_math/templates/children_math/includes/math_01_answer.html',
-               index=True, escape=False, justify='center')
+               index=False, escape=False, justify='center', classes="table table-striped")
     return render(request, 'children_math/math_result.html', {'score': len(df[df['Result'] == 'OK'])})

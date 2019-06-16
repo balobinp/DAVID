@@ -3,7 +3,6 @@
     <h3>Calculation task for {{ user.username }}:</h3>
     <form method="post" enctype="multipart/form-data" action="math_result">
         {% csrf_token %}
-
         {% if user.username == 'david' %}
             {% include "children_math/includes/david_math_01_task.html" %}
         {% elif user.username == 'Ann' %}
@@ -11,7 +10,6 @@
         {% elif user.username == 'Cat' %}
             {% include "children_math/includes/Cat_math_01_task.html" %}
         {% endif %}
-
-    <br><br>
+    <br>
     <input id="feedback-submit" type="submit">
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends "mainpage/header.html" %}
 {% block content %}
-    <div>
+    <div class="row">
         {% if user.is_authenticated %}
             <b>
                 Hello <u><font color="green" size="4">{{ user.username }}</font></u>, my name is Getrizarubsin!
@@ -12,7 +12,7 @@
             </b>
         {% endif %}
     </div>
-    <div>
+    <div class="row">
         <h5><a href='/children_math'>Calculation task</a></h5>
     </div>
 {% endblock %}
