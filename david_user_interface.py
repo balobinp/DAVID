@@ -3,9 +3,10 @@
 
 from os.path import isfile, join
 import logging
-import david_lib
-
+import smtplib, ssl
 from twilio.rest import Client
+
+import david_lib
 
 dir_david = david_lib.dir_david
 file_log_user_interface = david_lib.file_log_user_interface
@@ -71,6 +72,22 @@ class InformUser:
     def pavel(self):
         result = inform_user_pavel_wa('Hello', 'world')
         print(result)
+        return None
+
+    def mail(self, message):
+        port = 465  # For SSL
+        smtp_server = "smtp.gmail.com"
+        gmail_account = "balobin.p@gmail.com"
+        gmail_password = "" # Отв1
+        receiver_email = "david_robot@mail.ru"  # Enter receiver address
+        message = message
+        # message = """\
+        # Subject: Hi there
+        # This message is sent from Python."""
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(gmail_account, gmail_password)
+            server.sendmail(gmail_account, receiver_email, message)
 
 if __name__ == '__main__':
     pass
