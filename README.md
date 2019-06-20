@@ -90,6 +90,9 @@ Version 0.4.0.dev change list and installation procedure:
 Модуль david_healthcheck:
 1. Реализована отправка данных по mail.
 
+Модуль david_web_server:
+1. Добавлена отправка сообщения при обнаружении движения
+
 Version 0.4.0 change procedure:
 
 1. Войти в виртуальное окружение для программы и установить библиотеки.
