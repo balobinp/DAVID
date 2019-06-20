@@ -26,6 +26,7 @@ To Do list:
 26. Добавить версию прошивки в http запрос от контроллеров и обработчик получения версии на web_server.
 27. Добавить API на базе flask и flask_sqlalchemy.
 28. Сделать модуль inform_user для взаимодействия с пользователями.
+28. Вынести все пароли в отдельный файл json.
 
 Модуль Django Математика:
 1. Упростить пароли
@@ -58,7 +59,7 @@ To Do list:
 2. Доделать информирование пользователя.
 
 Модуль david_user_interface:
-1. 
+1.
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Реализовать подключение к WiFi модулей ESP в цикле только для передачи информации, чтобы устранить лишнее излучение (???).
@@ -85,6 +86,48 @@ Version 0.4.0.dev change list and installation procedure:
 ------------------------------------
 Модуль david_user_interface:
 1. Добавлена возможность отправки почты.
+
+Модуль david_healthcheck:
+1. Реализована отправка данных по mail.
+
+Version 0.4.0 change procedure:
+
+1. Войти в виртуальное окружение для программы и установить библиотеки.
+source /home/david/env/bin/activate
+pip freeze --local > requirements.txt
+python --version
+
+2. Поместить в директорию /home/david файлы:
+david_lib.py
+david_user_interface.py
+david_healthcheck.py
+
+3. Обновить базу данных:
+python /home/david/david_db_create.py
+
+4. Перезапустить сервис david_web_server
+systemctl stop david.service
+systemctl start david.service
+systemctl status david.service
+
+5.  Перезагрузить папку WEB_UI запустить сервер
+./WEB_UI
+sudo screen -ls
+sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
+sudo screen -S david_web_server # создать скрин
+cd /home/david/WEB_UI
+source /home/david/env/bin/activate
+python manage.py runserver 0.0.0.0:8000
+Ctrl+A -> D
+sudo screen -ls
+
+7. Добавить модуль david_healthcheck.py в crontab
+crontab -e
+0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
+
+6. Выполнить unit тестирование
+python /home/david/david_unittest.py
+
 ------------------------------------
 Version 0.3.3 change list and installation procedure:
 ------------------------------------
@@ -378,8 +421,6 @@ Default version change procedure:
 Initial installation procedure:
 ------------------------------------
 
-0. Проверить, что все обновляемые скрипты имеют актуальные версии в заголовках.
-
 1. Создать пользователя david и директорию /home/david
 su
 adduser david
@@ -429,33 +470,24 @@ systemctl start david.service
 systemctl status david.service
 
 5. Создать Django проект и запустить сервер
-5.1. Загрузить папку WEB_UI
 ./WEB_UI
-5.2. Выполнить миграции
-python manage.py migrate
-5.3. Создать пользователя
-python manage.py createsuperuser
-5.4. Запустить проект
 sudo screen -ls
 sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
-Ctrl+C
-exit
-sudo screen -d -r 30137.david_web_server
-sudo screen -S david_web_server
+sudo screen -S david_web_server # создать скрин
 cd /home/david/WEB_UI
 source /home/david/env/bin/activate
 python manage.py runserver 0.0.0.0:8000
 Ctrl+A -> D
 sudo screen -ls
 
-7. Добавить модули david_currency_check.py и david_climate_check.py в crontab
+7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
 crontab -e
 */15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
+0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
 
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py
-
 
 ps -aux | grep david_web_server
 sudo screen -S climate_check

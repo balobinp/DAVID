@@ -74,12 +74,12 @@ class InformUser:
         print(result)
         return None
 
-    def mail(self, message):
+    def mail(self, message, receiver_mail_list):
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
         gmail_account = "balobin.p@gmail.com"
         gmail_password = "" # Отв1
-        receiver_email = "david_robot@mail.ru"  # Enter receiver address
+        receiver_email = receiver_mail_list # "balobin.p@mail.ru"  # Enter receiver address
         message = message
         # message = """\
         # Subject: Hi there

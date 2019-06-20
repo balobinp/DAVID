@@ -1,4 +1,6 @@
 import david_user_interface
+import david_healthcheck
+
 
 a = david_user_interface.InformUser()
 message = """\
