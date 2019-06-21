@@ -34,6 +34,25 @@ To Do list:
 3. Добавить тесты для автотестирования приложения
 4. Решить проблему передачи данных между view.
 5. Сделать оформление на основе Django blog
+6. Сделать отчет по успешно сданным циклам
+import sqlite3
+import pandas as pd
+db_folder = r'c:\Users\balob\Downloads\DAVID'
+query = """SELECT * FROM V_CHILDREN_MATH_TASK01;"""
+con = sqlite3.connect(join(db_folder, 'david_db.sqlite'))
+con.execute(query)
+df=pd.read_sql(query, con, parse_dates=['REP_DATE'], index_col=['REP_DATE'])
+con.close()
+df_resampled = DataFrame()
+for name in df.USER_NAME.unique():
+    df_temp = df[df.USER_NAME == name].resample('D').asfreq('')
+    df_temp.USER_NAME = name
+    df_resampled = df_resampled.append(df_temp)
+
+df = df_resampled[df_resampled.USER_NAME == 'Ann'].reset_index()
+display(df)
+df.SCORE_FIVE.replace({0: np.nan}, inplace=True)
+df.groupby(df.index // 7).agg({'REP_DATE': 'max', 'USER_NAME': 'first', 'ATTEMPTS': np.size, 'SCORE_FIVE': 'count'})
 
 Модуль david_web_server:
 1.
@@ -72,7 +91,7 @@ To Do list:
 2. Добавить датчик температуры.
 
 Микроконтроллер NodeMcu03Door (датчик между входными дверями)
-1. Заменить датчик движения.
+1. Увеличить таймер выключения света до 30 секунд.
 
 Микроконтроллер NodeMcu04Entrance (датчик в коридоре)
 1. Заменить датчик движения.
