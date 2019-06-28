@@ -6,5 +6,5 @@
     {% if score == 5 %}
         <h2>Good Job, {{ user.username }}!</h2>
     {% endif %}
-    <h3><a href='/children_math'>Back</a></h3>
+    <h3><a href="{% url 'children_math_01_task' %}">Back</a></h3>
 {% endblock %}

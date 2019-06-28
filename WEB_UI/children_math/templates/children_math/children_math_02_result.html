@@ -1,0 +1,16 @@
+{% extends "mainpage/header.html" %}
+{% block content %}
+    <h3>Math contest:</h3>
+    <div>
+        {% if user_result == 1 %}
+            {{ user.username }}, your answer is {{ user_answer }}, correct answer is {{ contest_answer }}.
+            Good Job, {{ user.username }}!
+        {% elif user_result == 0 %}
+            {{ user.username }}, your answer {{ user_answer }} is not correct.
+            Try again, please.
+        {% endif %}
+    </div>
+    <div>
+        <a href="{% url 'children_math_02_task' %}">Back</a>
+    </div>
+{% endblock %}

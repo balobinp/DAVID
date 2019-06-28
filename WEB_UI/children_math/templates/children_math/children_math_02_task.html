@@ -1,0 +1,15 @@
+{% extends "mainpage/header.html" %}
+{% block content %}
+    <h4>Math contest task for {{ user.username }}:</h4>
+    <form method="post" enctype="multipart/form-data" action="children_math_02_result">
+        {% csrf_token %}
+        <div>
+            {{ contest_task }}
+        </div>
+        <br>
+        <div>
+            <input class="form-control" id="feedback-user_answer" type="text" name="user_answer">
+        </div>
+    <br><br>
+    <input id="feedback-submit" type="submit">
+{% endblock %}

@@ -17,6 +17,9 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-	path('', views.index, name='index'),
-    path('math_result', views.math_result, name='math_result'),
+    path('', views.children_math_main, name='children_math_main'),
+	path('children_math_01_task', views.children_math_01_task, name='children_math_01_task'),
+    path('children_math_01_result', views.children_math_01_result, name='children_math_01_result'),
+    path('children_math_02_task', views.children_math_02_task, name='children_math_02_task'),
+    path('children_math_02_result', views.children_math_02_result, name='children_math_02_result'),
 ]
