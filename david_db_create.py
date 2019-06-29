@@ -135,5 +135,32 @@ cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK01_DETAILED AS
             WHERE mt.user_id = au.id
             ORDER BY REP_DATE DESC''')
 
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_MATH_TASK02')
+
+cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK02 AS
+            SELECT
+            strftime('%Y-%m-%d', t.date) AS REP_DATE,
+            au.username AS USER_NAME,
+            MAX(CASE WHEN c.answer = t.user_answer THEN 1 ELSE 0 END) AS USER_RESULT
+            FROM children_math_contest01 c, children_math_task02 t, auth_user au
+            WHERE c.id = t.contest01_task_id
+            AND t.user_id = au.id
+            GROUP BY 1, 2
+            ORDER BY USER_NAME, REP_DATE DESC''')
+
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_MATH_TASK02_DETAILED')
+
+cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK02_DETAILED AS
+            SELECT
+            strftime('%Y-%m-%d %H:%M:%S', t.date) AS REP_DATE,
+            au.username AS USER_NAME,
+            c.id AS TASK_ID,
+            CASE WHEN c.answer = t.user_answer THEN 1 ELSE 0 END AS USER_RESULT,
+            t.user_answer AS USER_ANSWER, c.answer AS CORRECT_ANSWER
+            FROM children_math_contest01 c, children_math_task02 t, auth_user au
+            WHERE c.id = t.contest01_task_id
+            AND t.user_id = au.id
+            ORDER BY REP_DATE DESC''')
+
 conn.commit()
 conn.close()

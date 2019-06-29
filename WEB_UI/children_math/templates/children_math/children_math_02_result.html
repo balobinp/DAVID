@@ -3,8 +3,8 @@
     <h3>Math contest:</h3>
     <div>
         {% if user_result == 1 %}
-            {{ user.username }}, your answer is {{ user_answer }}, correct answer is {{ contest_answer }}.
-            Good Job, {{ user.username }}!
+            <h3>{{ user.username }}, your answer is {{ user_answer }}, correct answer is {{ contest_answer }}.</h3>
+            <h2>Good Job, {{ user.username }}!</h2>
         {% elif user_result == 0 %}
             {{ user.username }}, your answer {{ user_answer }} is not correct.
             Try again, please.

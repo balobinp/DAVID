@@ -10,7 +10,10 @@ from os.path import join
 import sqlite3
 import pandas as pd
 
-from .children_math_modules import math_result_estimate
+from .children_math_modules import math01_result_estimate
+from .children_math_modules import math02_result_estimate
+from .children_math_modules import math02_get_task_id
+
 import david_lib
 
 dir_david = david_lib.dir_david
@@ -34,10 +37,13 @@ def children_math_main(request):
     df = collect_data_from_db_task01()
     if request.user.username:
         df = df[df.USER_NAME == request.user.username]
-        today_task, solved_tasks = math_result_estimate.math_result_estimate(df)
-        context = {'today_task': str(today_task), 'solved_tasks': str(solved_tasks)}
+        today_task01, solved_tasks01 = math01_result_estimate.math_result_estimate(df)
+        today_task02, solved_tasks02 = math02_result_estimate.math_result_estimate(request.user.username, file_sqlite_db_path)
+        context = {'today_task01': str(today_task01), 'solved_tasks01': str(solved_tasks01),
+                   'today_task02': str(today_task02), 'solved_tasks02': str(solved_tasks02)}
     else:
-        context = {'today_task': '-', 'solved_tasks': '-'}
+        context = {'today_task01': '-', 'solved_tasks01': '-',
+                   'today_task02': '-', 'solved_tasks02': '-'}
     return render(request, 'children_math/children_math_main.html', context)
 
 @login_required
@@ -92,17 +98,17 @@ def children_math_01_result(request):
                index=False, escape=False, justify='center', classes="table table-striped")
     return render(request, 'children_math/children_math_01_result.html', {'score': len(df[df['Result'] == 'OK'])})
 
-contest01_task_id = 2
-
 @login_required
 def children_math_02_task(request):
+    contest01_task_id = math02_get_task_id.math_get_task_id(request.user.username, file_sqlite_db_path)
     contest_task = Contest01.objects.get(id=contest01_task_id).task_description
-    context = {'contest_task': contest_task}
+    context = {'contest_task': contest_task, 'contest01_task_id': contest01_task_id}
     return render(request, 'children_math/children_math_02_task.html', context)
 
 @login_required
 def children_math_02_result(request):
-    user_answer = str(request.POST.get('user_answer').strip())
+    contest01_task_id = int(request.POST.get('task_id'))
+    user_answer = str(request.POST.get('user_answer').replace(' ', '').lower())
     contest_answer = str(Contest01.objects.get(id=contest01_task_id).answer)
     if user_answer == contest_answer:
         user_result = 1
