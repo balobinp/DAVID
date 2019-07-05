@@ -32,8 +32,10 @@ To Do list:
 1. Упростить пароли
 2. Сделать service для запуска django
 3. Добавить тесты для автотестирования приложения
-4. Решить проблему передачи данных между view.
+4. Решить проблему передачи данных между view для task01.
 5. Сделать оформление на основе Django blog
+6. Решить проблему с первым входом на страницу Math, когда у пользователя нет ни одной решенной задачи в task02.
+В этом случае выходит ошибка.
 
 Модуль david_web_server:
 1.
@@ -82,6 +84,10 @@ To Do list:
 Изменения версий и процедуры
 ************************************************************************************************************************
 ------------------------------------
+Version 0.5.0.dev change list and installation procedure:
+------------------------------------
+
+------------------------------------
 Version 0.4.0.dev change list and installation procedure:
 ------------------------------------
 Модуль david_user_interface:
@@ -98,25 +104,28 @@ Version 0.4.0.dev change list and installation procedure:
 
 Version 0.4.0 change procedure:
 
-1. Войти в виртуальное окружение для программы и установить библиотеки.
+1. Сделать полную копию папки проекта.
+
+2. Войти в виртуальное окружение проекта, установить библиотеки и сохранить requirements.txt.
 source /home/david/env/bin/activate
 pip freeze --local > requirements.txt
 python --version
 
-2. Поместить в директорию /home/david файлы:
-david_lib.py
-david_user_interface.py
-david_healthcheck.py
+3. Поместить в директорию /home/david файлы:
+(см. git diff --name-only master)
 
-3. Обновить базу данных:
+4. Обновить базу данных:
+source /home/david/env/bin/activate
 python /home/david/david_db_create.py
 
-4. Перезапустить сервис david_web_server
+5. Перезапустить сервис david_web_server
 systemctl stop david.service
 systemctl start david.service
 systemctl status david.service
 
-5.  Перезагрузить папку WEB_UI запустить сервер
+6.  Перезагрузить папку WEB_UI запустить сервер
+Предварительно поменяв путь в файле settings.py
+Если нужно, применить миграции и загрузить недостающие данные в базу данных.
 ./WEB_UI
 sudo screen -ls
 sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
@@ -127,11 +136,14 @@ python manage.py runserver 0.0.0.0:8000
 Ctrl+A -> D
 sudo screen -ls
 
-7. Добавить модуль david_healthcheck.py в crontab
-crontab -e
-0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
+7. Загрузить данные в таблицу children_math_contest01
+sqlite3 david_db.sqlite
+INSERT INTO children_math_contest01
+(task_description, answers_options, answer)
+VALUES('Папе, маме и дочке вместе 70 лет. Сколько лет им будет вместе через 4 года?', '-', '82');
+...
 
-6. Выполнить unit тестирование
+8. Выполнить unit тестирование
 python /home/david/david_unittest.py
 
 ------------------------------------
@@ -475,7 +487,9 @@ sudo systemctl enable foo.service
 systemctl start david.service
 systemctl status david.service
 
-5. Создать Django проект и запустить сервер
+5.  Перезагрузить папку WEB_UI запустить сервер
+Предварительно поменяв путь в файле settings.py
+Если нужно, применить миграции и загрузить недостающие данные в базу данных.
 ./WEB_UI
 sudo screen -ls
 sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
@@ -485,6 +499,13 @@ source /home/david/env/bin/activate
 python manage.py runserver 0.0.0.0:8000
 Ctrl+A -> D
 sudo screen -ls
+
+7. Загрузить данные в таблицу children_math_contest01
+sqlite3 david_db.sqlite
+INSERT INTO children_math_contest01
+(task_description, answers_options, answer)
+VALUES('Папе, маме и дочке вместе 70 лет. Сколько лет им будет вместе через 4 года?', '-', '82');
+...
 
 7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
 crontab -e
