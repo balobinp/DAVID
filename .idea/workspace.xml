@@ -22,8 +22,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="172">
-                <caret line="145" column="1" selection-start-line="145" selection-start-column="1" selection-end-line="145" selection-end-column="1" />
+              <first_editor relative-caret-position="-527">
+                <caret line="23" column="120" selection-start-line="23" selection-start-column="120" selection-end-line="23" selection-end-column="120" />
               </first_editor>
               <second_editor />
             </state>
@@ -139,7 +139,7 @@
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
               <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
-              <item name="mainpage" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -510,16 +510,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="64" column="35" lean-forward="true" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_db_create.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
@@ -557,27 +547,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="111" column="76" selection-start-line="111" selection-start-column="76" selection-end-line="111" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-119">
-          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding>
-            <element signature="e#307#316#0" expanded="true" />
-            <marker date="1562309837596" expanded="true" signature="330:380" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -588,18 +557,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+          <folding>
+            <marker date="1562396849316" expanded="true" signature="328:378" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/david_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        <state relative-caret-position="459">
+          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="119" column="81" lean-forward="true" selection-start-line="119" selection-start-column="81" selection-end-line="119" selection-end-column="81" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="172">
-            <caret line="145" column="1" selection-start-line="145" selection-start-column="1" selection-end-line="145" selection-end-column="1" />
+          <first_editor relative-caret-position="-527">
+            <caret line="23" column="120" selection-start-line="23" selection-start-column="120" selection-end-line="23" selection-end-column="120" />
           </first_editor>
           <second_editor />
         </state>
