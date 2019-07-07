@@ -1,0 +1,32 @@
+@startuml
+
+node "Main server" as main {
+ database "SQlite DB"
+ package "Django WEB UI" {
+ rectangle children_math
+ }
+ package "Working Modules" {
+ rectangle david_web_server
+ rectangle david_user_interface
+ rectangle david_climate_check
+ rectangle david_currency_check
+ rectangle david_gas_check
+ }
+ package "Supporting Modules" {
+ rectangle david_healthcheck
+ rectangle david_unittest
+ rectangle david_lib
+ rectangle david_db_create
+ rectangle voice_recorder
+ }
+}
+
+component NodeMcu01BedRoom
+component NodeMcu02Gas
+component NodeMcu03Door
+
+david_web_server <~~ NodeMcu01BedRoom : Wi-Fi
+david_web_server <~~ NodeMcu02Gas : Wi-Fi
+david_web_server <~~ NodeMcu03Door : Wi-Fi
+
+@enduml

@@ -1,2 +1,4 @@
 /VOICE_SAMPLES
+/UML/plantuml.jar
+/UML/*.png
 david_db.sqlite
