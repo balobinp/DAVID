@@ -395,6 +395,10 @@ sudo systemctl daemon-reload
 sudo systemctl enable foo.service
 systemctl start david.service
 systemctl status david.service
+Проверить, что сервер слушает порт:
+(env) david@david:~$ sudo netstat -ltnp | grep :80
+tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python
+tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      3794/python
 
 5.  Перезагрузить папку WEB_UI запустить сервер
 Предварительно поменяв путь в файле settings.py

@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +20,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="-191">
-                <caret line="90" column="10" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
+              <first_editor relative-caret-position="272">
+                <caret line="42" column="98" selection-start-line="42" selection-start-column="98" selection-end-line="42" selection-end-column="98" />
               </first_editor>
               <second_editor />
             </state>
@@ -99,10 +96,10 @@
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.md" />
         <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -117,6 +114,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -124,16 +122,10 @@
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -544,16 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_web_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="887">
-          <caret line="101" column="34" lean-forward="true" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
-          <folding>
-            <element signature="e#38#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -565,13 +547,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1335">
@@ -579,18 +554,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/david_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1564">
+          <caret line="101" column="34" lean-forward="true" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+          <folding>
+            <element signature="e#38#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="401" column="24" selection-start-line="401" selection-start-column="24" selection-end-line="401" selection-end-column="24" />
+        <state relative-caret-position="269">
+          <caret line="400" column="91" selection-start-line="400" selection-start-column="91" selection-end-line="400" selection-end-column="91" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="-191">
-            <caret line="90" column="10" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
+          <first_editor relative-caret-position="272">
+            <caret line="42" column="98" selection-start-line="42" selection-start-column="98" selection-end-line="42" selection-end-column="98" />
           </first_editor>
           <second_editor />
         </state>
