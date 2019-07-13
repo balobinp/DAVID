@@ -399,6 +399,7 @@ systemctl status david.service
 5.  Перезагрузить папку WEB_UI запустить сервер
 Предварительно поменяв путь в файле settings.py
 Если нужно, применить миграции и загрузить недостающие данные в базу данных.
+python manage.py migrate
 ./WEB_UI
 sudo screen -ls
 sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
