@@ -2,3 +2,4 @@
 /UML/plantuml.jar
 /UML/*.png
 david_db.sqlite
+david_pass.json

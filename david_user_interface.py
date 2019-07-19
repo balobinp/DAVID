@@ -4,11 +4,13 @@
 from os.path import isfile, join
 import logging
 import smtplib, ssl
+import json
 from twilio.rest import Client
 
 import david_lib
 
 dir_david = david_lib.dir_david
+file_pass_path = join(dir_david, 'david_pass.json')
 file_log_user_interface = david_lib.file_log_user_interface
 file_log_user_interface_path = join(dir_david, file_log_user_interface)
 file_sqlite_db = david_lib.file_sqlite_db
@@ -67,7 +69,11 @@ class InformUser:
     def __init__(self):
         check_file(file_sqlite_db_path)
         check_file(file_log_user_interface_path)
+        check_file(file_pass_path)
         print('Class InformUser is constructed')
+
+        with open(file_pass_path, "r") as json_file:
+            self.passwords = json.load(json_file)
 
     def pavel(self):
         result = inform_user_pavel_wa('Hello', 'world')
@@ -78,7 +84,7 @@ class InformUser:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
         gmail_account = "balobin.p@gmail.com"
-        gmail_password = "" # Отв1
+        gmail_password = self.passwords['gmail_password'] # Отв1
         receiver_email = receiver_mail_list # "balobin.p@mail.ru"  # Enter receiver address
         message = message
         # message = """\
