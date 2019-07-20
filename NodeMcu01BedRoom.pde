@@ -5,14 +5,17 @@
 HTTPClient http;
 
 // Uncomment one of the lines below for whatever DHT sensor type you're using!
-#define DHTTYPE DHT11   // DHT 11
+//#define DHTTYPE DHT11   // DHT 11
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
-//#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+#define VER 190720
 
+const char* web_server_ip = "192.168.1.44";
+const char* sensor_id = "1";
 const char* ssid = "Home";
 const char* password = "ASDFGHQWERTY";
 
-// DHT Sensor
+// DHT Sensor D2 Node MCU
 const int DHTPin = 4;
 
 // Initialize DHT sensor.
@@ -40,8 +43,14 @@ void setup()
   Serial.println("Connected with IP: ");
   Serial.println((WiFi.localIP().toString()));
   
-  httpurlconn = "http://192.168.1.44:80/connected;sensor=1&ip=";
+  httpurlconn = "http://";
+  httpurlconn += web_server_ip;
+  httpurlconn += ":80/connected;sensor=";
+  httpurlconn += sensor_id;
+  httpurlconn += "&ip=";
   httpurlconn += WiFi.localIP().toString();
+  httpurlconn += "&ver=";
+  httpurlconn += VER;
   http.begin(httpurlconn);
   http.GET();
   http.end();
@@ -87,6 +96,12 @@ void loop()
     }
        
     httpurldata = "http://192.168.1.44:80/climate;sensor=1&readattempt=";
+
+    httpurldata = "http://";
+    httpurldata += web_server_ip;
+    httpurldata += ":80/climate;sensor=";
+    httpurldata += sensor_id;
+    httpurldata += "&readattempt=";
     httpurldata += i;
     httpurldata += "&temperature=";
     httpurldata += t;
@@ -95,6 +110,8 @@ void loop()
     http.begin(httpurldata);
     http.GET();
     http.end();
+    
+//    delay(15000);
     
     delay(900000);
 }
