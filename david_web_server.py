@@ -79,7 +79,8 @@ class DavidWebServerHandler(Resource):
         elif get_url.path == 'connected':
             sensor_id = get_params.get('sensor')[0]
             ip_addr = get_params.get('ip')[0]
-            web_server_log.info(f'Message=connected;Sensor={sensor_id};IP={ip_addr}')
+            sensor_soft_version = get_params.get('ver', ['unk'])[0]
+            web_server_log.info(f'Message=connected;Sensor={sensor_id};IP={ip_addr};Version={sensor_soft_version}')
         elif get_url.path == 'motion':
             sensor_id = get_params.get('sensor')[0]
             web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id}')
