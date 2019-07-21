@@ -67,7 +67,11 @@ class TestWebServer(unittest.TestCase):
         url_02 = f'http://{server_ip_addr}:{server_port}/connected;sensor=2&ip=192.168.1.64'
         url_03 = f'http://{server_ip_addr}:{server_port}/connected;sensor=3&ip=192.168.1.65'
         url_04 = f'http://{server_ip_addr}:{server_port}/connected;sensor=4&ip=192.168.1.66'
-        urls = [url_01, url_02, url_03, url_04]
+        url_05 = f'http://{server_ip_addr}:{server_port}/connected;sensor=1&ip=192.168.1.63&ver=190720'
+        url_06 = f'http://{server_ip_addr}:{server_port}/connected;sensor=2&ip=192.168.1.64&ver=190720'
+        url_07 = f'http://{server_ip_addr}:{server_port}/connected;sensor=3&ip=192.168.1.65&ver=190720'
+        url_08 = f'http://{server_ip_addr}:{server_port}/connected;sensor=4&ip=192.168.1.66&ver=190720'
+        urls = [url_01, url_02, url_03, url_04,url_05, url_06, url_07, url_08]
         for url in urls:
             r = requests.get(url, timeout=3)
             self.assertEqual(r.status_code, 200)
