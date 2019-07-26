@@ -345,7 +345,7 @@ Ctrl+A -> D
 sudo screen -ls
 
 ------------------------------------
-Initial installation procedure:
+Maini initial installation procedure:
 ------------------------------------
 
 1. Создать пользователя david и директорию /home/david
@@ -429,3 +429,6 @@ crontab -e
 
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py
+cd /home/david/WEB_UI
+python manage.py test children_math.tests
+python manage.py test mainpage.tests
