@@ -2,7 +2,6 @@ import numpy as np
 import sqlite3
 import pandas as pd
 from pandas import DataFrame
-from datetime import date
 
 # This funsction makes groups of cicles and enumerate the raws in each group
 # Input is the DataFrame with columns:
@@ -49,8 +48,7 @@ def math_result_add_groups(df):
 # Input is the original DataFrame from DataBase
 # Output is today_task, solved_tasks
 
-def math_result_estimate(username, db_path):
-    today = date.today()
+def math_result_estimate(username, db_path, today):
 
     # Collect the data from database
     query = f"SELECT REP_DATE, USER_NAME, USER_RESULT FROM V_CHILDREN_MATH_TASK02 WHERE USER_NAME = '{username}';"

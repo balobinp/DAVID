@@ -7,9 +7,9 @@
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/WEB_UI/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEB_UI/children_math/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/WEB_UI/children_math/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +23,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="238">
-                <caret line="98" column="51" lean-forward="true" selection-start-line="98" selection-start-column="51" selection-end-line="98" selection-end-column="51" />
+              <first_editor relative-caret-position="-34">
+                <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
               </first_editor>
               <second_editor />
             </state>
@@ -78,12 +78,9 @@
         <option value="$PROJECT_DIR$/WEB_UI/children_math/admin.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_01_result.html" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_result.html" />
-        <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_main.html" />
-        <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py" />
         <option value="$PROJECT_DIR$/david_db_create.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_task.html" />
-        <option value="$PROJECT_DIR$/WEB_UI/children_math/views.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_get_task_id.py" />
         <option value="$PROJECT_DIR$/REDME_CHANGE_HISTORY.md" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.md" />
@@ -102,8 +99,11 @@
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/tests/test_urls.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/tests/test_views.py" />
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/tests/test_views.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
+        <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py" />
+        <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py" />
+        <option value="$PROJECT_DIR$/WEB_UI/children_math/views.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -124,6 +124,24 @@
             <path>
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math" type="462c0819:PsiDirectoryNode" />
+              <item name="children_math_modules" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -179,8 +197,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="28" width="1366" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20360631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -191,7 +210,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" visible="true" weight="0.35667753" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" visible="true" weight="0.35667753" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003756" side_tool="true" weight="0.35667753" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32899022" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -378,30 +397,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="52" column="24" lean-forward="true" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_task.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="14" lean-forward="true" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -442,16 +441,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_web_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="81" column="61" selection-start-line="81" selection-start-column="61" selection-end-line="81" selection-end-column="61" />
-          <folding>
-            <element signature="e#38#88#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -514,16 +503,6 @@
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/tests/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="108" column="27" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -571,18 +550,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="921">
+          <caret line="81" column="61" selection-start-line="81" selection-start-column="61" selection-end-line="81" selection-end-column="61" />
+          <folding>
+            <element signature="e#38#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math01_result_estimate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="42" column="93" lean-forward="true" selection-start-line="42" selection-start-column="93" selection-end-line="42" selection-end-column="93" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="433" column="36" lean-forward="true" selection-start-line="433" selection-start-column="36" selection-end-line="433" selection-end-column="36" />
+        <state relative-caret-position="6987">
+          <caret line="411" selection-start-line="411" selection-end-line="411" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="238">
-            <caret line="98" column="51" lean-forward="true" selection-start-line="98" selection-start-column="51" selection-end-line="98" selection-end-column="51" />
+          <first_editor relative-caret-position="-34">
+            <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
           </first_editor>
           <second_editor />
         </state>

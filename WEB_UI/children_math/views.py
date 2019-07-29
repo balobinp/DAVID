@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from pandas import DataFrame
 import numpy as np
+from datetime import date
+
 from .models import Task01
 from .models import Task02
 from .models import Contest01
@@ -34,11 +36,13 @@ pd.set_option('display.max_colwidth', -1)
 
 @login_required
 def children_math_main(request):
+    today = date.today()
     df = collect_data_from_db_task01()
     if request.user.username:
         df = df[df.USER_NAME == request.user.username]
-        today_task01, solved_tasks01 = math01_result_estimate.math_result_estimate(df)
-        today_task02, solved_tasks02 = math02_result_estimate.math_result_estimate(request.user.username, file_sqlite_db_path)
+        today_task01, solved_tasks01 = math01_result_estimate.math_result_estimate(df, today)
+        today_task02, solved_tasks02 = math02_result_estimate.math_result_estimate(request.user.username,
+                                                                                   file_sqlite_db_path, today)
         context = {'today_task01': str(today_task01), 'solved_tasks01': str(solved_tasks01),
                    'today_task02': str(today_task02), 'solved_tasks02': str(solved_tasks02)}
     else:

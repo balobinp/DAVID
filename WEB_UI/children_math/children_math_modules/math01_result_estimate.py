@@ -1,8 +1,5 @@
 import numpy as np
 from pandas import DataFrame
-from datetime import date
-
-today = date.today()
 
 # This funsction makes groups of cicles and enumerate the raws in each group
 # Input is the DataFrame with columns:
@@ -49,7 +46,7 @@ def math_result_add_groups(df):
 # Input is the original DataFrame from DataBase
 # Output is today_task, solved_tasks
 
-def math_result_estimate(df):
+def math_result_estimate(df, today):
     df_resampled = math_result_add_groups(df)
     df_grouped = df_resampled.groupby(['USER_NAME', 'GR'], as_index=False).agg({'REP_DATE': max, 'NUM': 'max'})[-1:]
 
