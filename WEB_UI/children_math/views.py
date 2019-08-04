@@ -52,7 +52,7 @@ def children_math_main(request):
 
 @login_required
 def children_math_01_task(request):
-    df = DataFrame(np.random.randint(1, 30, size=10).reshape((5, 2)), columns=['First', 'Second'])
+    df = DataFrame(np.random.randint(1, 100, size=10).reshape((5, 2)), columns=['First', 'Second'])
     df['Sign'] = np.random.choice(['-', '+'], 5)
     list_feedback = []
     for i in range(5):
