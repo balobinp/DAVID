@@ -113,6 +113,7 @@ cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK01 AS
             ,SUM(CASE
             WHEN mt.sign = '+' AND (mt.first + mt.second) = mt.user_answer THEN 1
             WHEN mt.sign = '-' AND (mt.first - mt.second) = mt.user_answer THEN 1
+            WHEN mt.sign = '*' AND (mt.first * mt.second) = mt.user_answer THEN 1
             ELSE 0 END) AS SCORE
             FROM children_math_task01 mt, auth_user au
             WHERE mt.user_id = au.id
@@ -129,6 +130,7 @@ cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK01_DETAILED AS
             ,CASE
             WHEN mt.sign = '+' AND (mt.first + mt.second) = mt.user_answer THEN 1
             WHEN mt.sign = '-' AND (mt.first - mt.second) = mt.user_answer THEN 1
+            WHEN mt.sign = '*' AND (mt.first * mt.second) = mt.user_answer THEN 1
             ELSE 0 END AS ANSWER
             ,mt.first, mt.sign,mt.second
             FROM children_math_task01 mt, auth_user au

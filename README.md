@@ -102,6 +102,7 @@ Version 0.5.0.dev change list and installation procedure:
 /david/WEB_UI>python manage.py test children_math.tests
 /david/WEB_UI>python manage.py test mainpage.tests
 2. Исправлена проблема с неправильным отображением прогресса выполнения задач Math task
+3. Добавлено умножение в math_task01
 
 ************************************************************************************************************************
 Описание проекта (скрипты и контроллеры)

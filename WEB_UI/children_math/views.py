@@ -54,7 +54,7 @@ def children_math_main(request):
 def children_math_01_task(request):
     if request.method == 'GET':
         df = DataFrame(np.random.randint(1, 30, size=10).reshape((5, 2)), columns=['First', 'Second'])
-        df['Sign'] = np.random.choice(['-', '+','*','/'], 5)
+        df['Sign'] = np.random.choice(['-', '+','*'], 5)
         list_feedback = []
         for i in range(5):
             list_feedback.append(f'<input class="form-control" id="feedback-Answer_{i}" type="text" name="Answer_{i}">')
