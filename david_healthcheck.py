@@ -130,65 +130,80 @@ if __name__ == '__main__':
 
     dt_today = dt.date.today()
 
-    message = f"Subject: David report {dt_today}\n"
+    message_subject = f"David report {dt_today}\n"
+    message = """
+<div>
+<table class=MsoNormalTable border=0 cellspacing=5 cellpadding=0
+width="100%" style='width:100.0%;mso-cellspacing:1.5pt;mso-yfti-tbllook:
+1184'>
+<tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+<td style='padding:10.5pt 0cm 0cm 0cm'>
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:15.0pt;font-family:ArialMT;mso-fareast-font-family:"Times New Roman";
+color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
+</td>
+</tr>
+</table>
+</div>
+    """.format(current_date = dt_today)
 
     if healthcheck_report_dict['gas_sensor_data'] is None:
-        message += "No data from Gas sensors.\n"
+        message += "<div>No data from Gas sensors.</div>"
         print("Отсутствуют данные с датчика газа.")
     else:
-        message += f"Gas sensors data: {healthcheck_report_dict['gas_sensor_data']}\n"
+        message += f"<div>Gas sensors data: {healthcheck_report_dict['gas_sensor_data']}</div>"
         print(f"Данные с датчика газа: {healthcheck_report_dict['gas_sensor_data']}")
 
     if healthcheck_report_dict['climate_data'] is None:
-        message += "No data from Climate sensors.\n"
+        message += "<div>No data from Climate sensors.</div>"
         print("Отсутствуют данные с датчика температуры.")
     else:
-        message += f"Climate sensors data: {healthcheck_report_dict['climate_data']}\n"
+        message += f"<div>Climate sensors data: {healthcheck_report_dict['climate_data']}</div>"
         print(f"Данные с датчиов температуры: {healthcheck_report_dict['climate_data']}")
 
     dt_last_currency_check = healthcheck_report_dict['currency_data']['USD']['rep_date'].date()
     dt_diff_currency_check = (dt_last_currency_check - dt_today).days
 
     if dt_last_currency_check != dt_today:
-        message += f"No Currency data. The last update {abs(dt_diff_currency_check)} days ago.\n"
+        message += f"<div>No Currency data. The last update {abs(dt_diff_currency_check)} days ago.</div>"
         print(f"Отсутствуют данные по курсу доллара. Последнее обновление {abs(dt_diff_currency_check)} дней назад.")
     elif healthcheck_report_dict['currency_data']['USD']['currency_check_result'] == 'currency_normal':
-        message += "USD rate is normal.\n"
-        message += f"Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.\n"
+        message += "<div>USD rate is normal.</div>"
+        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"
         print(f"Курс доллара в норме. "
               f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
     else:
-        message +=f"Ubnormal USD rate.\n"
-        message += f"Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.\n"
+        message +=f"<div>Ubnormal USD rate.</div>"
+        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"
         print(f"Превышены пороги изменения курса доллара."
               f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
 
     if healthcheck_report_dict['system_data']['cpu'] < 40:
-        message += f"CPU load is normal. Current value {healthcheck_report_dict['system_data']['cpu']}%.\n"
+        message += f"<div>CPU load is normal. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"
         print(f"Загрузка CPU в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
     else:
-        message += f"Ubnormal CPU load. Current value {healthcheck_report_dict['system_data']['cpu']}%.\n"
+        message += f"<div>Ubnormal CPU load. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"
         print(f"Превышена загрузка CPU. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
 
     if healthcheck_report_dict['system_data']['percent'] < 70:
-        message += f"Memory load is normal. Current value: {healthcheck_report_dict['system_data']['percent']}%.\n"
+        message += f"<div>Memory load is normal. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"
         print(f"Загрузка памяти в норме. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
     else:
-        message += f"Ubnormal memory load. Current value: {healthcheck_report_dict['system_data']['percent']}%.\n"
+        message += f"<div>Ubnormal memory load. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"
         print(f"Превышена загрузка памяти. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
 
     if motion_data:
-        message += "Motion detected:\n"
+        message += "<div>Motion detected:</div>"
         print("Обнаружены движения:")
         for iter, motion in enumerate(motion_data):
-            message += f"{iter}: {motion[0]} - {motion[1]}\n"
+            message += f"<il>{iter}: {motion[0]} - {motion[1]}</il>"
             print(f"{iter}: {motion[0]} - {motion[1]}")
     else:
-        message += "No Motion detected.\n"
+        message += "<div>No Motion detected.</div>"
         print("Движения не обнаружены.")
 
     inform_user_mail = david_user_interface.InformUser()
-    inform_user_mail.mail(message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+    inform_user_mail.mail(message_subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
 
     # import pprint
     # pprint.pprint(message)

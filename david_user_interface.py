@@ -4,8 +4,9 @@
 from os.path import isfile, join
 import logging
 import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import json
-from twilio.rest import Client
 
 import david_lib
 
@@ -50,21 +51,6 @@ def check_file(file_name):
         user_interface_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
     return None
 
-def inform_user_pavel_wa(key, value):
-    try:
-        account_sid = 'AC431b47a9c6b392bc8b5f38ccfe666a96'
-        auth_token = 'df57cfe7d1b42d1eaf492fefc4c848af'
-        client = Client(account_sid, auth_token)
-        body = f'Your {key} code is {value}'
-        message = client.messages.create(body=body,
-                                         from_='whatsapp:+14155238886',
-                                         to='whatsapp:+79217428080')
-        result = 'successful'
-    except Exception as e:
-        user_interface_log.error(f'Message=send_wa_notify;Exception={e}')
-        result = 'unsuccessful'
-    return result
-
 class InformUser:
     def __init__(self):
         check_file(file_sqlite_db_path)
@@ -75,25 +61,38 @@ class InformUser:
         with open(file_pass_path, "r") as json_file:
             self.passwords = json.load(json_file)
 
-    def pavel(self):
-        result = inform_user_pavel_wa('Hello', 'world')
-        print(result)
-        return None
-
-    def mail(self, message, receiver_mail_list):
+    def mail(self, subject, html_message, receiver_mail_list):
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
         gmail_account = "balobin.p@gmail.com"
         gmail_password = self.passwords['gmail_password'] # Отв1
         receiver_email = receiver_mail_list # "balobin.p@mail.ru"  # Enter receiver address
-        message = message
+        message = MIMEMultipart()
+        message["Subject"] = subject
+        message["From"] = gmail_account
+        message["To"] = ", ".join(receiver_email)
+        # message = message
         # message = """\
         # Subject: Hi there
         # This message is sent from Python."""
+        # html_message = """\
+        # <html>
+        #   <body>
+        #     <p>Hi,<br>
+        #        How are you?<br>
+        #        <a href="http://www.realpython.com">Real Python</a>
+        #        has many great tutorials.
+        #     </p>
+        #   </body>
+        # </html>
+        # """
+        html_message_body = MIMEText(html_message, "html")
+        message.attach(html_message_body)
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
             server.login(gmail_account, gmail_password)
-            server.sendmail(gmail_account, receiver_email, message)
+            # server.sendmail(gmail_account, receiver_email, message)
+            server.sendmail(gmail_account, receiver_email, message.as_string())
 
 if __name__ == '__main__':
     pass

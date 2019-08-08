@@ -91,6 +91,7 @@ Version 0.5.0.dev change list and installation procedure:
 
 Модуль david_user_interface:
 1. Пароль от почты вынесен во внешний json файл
+2. Добавлена возможность отправки html в майл.
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Заменен датчик DHT11 на DHT22.
