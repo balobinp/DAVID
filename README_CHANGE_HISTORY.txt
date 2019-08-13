@@ -376,25 +376,35 @@ deactivate
 3. Создать директорию /home/david/log
 mkdir ./log
 
-4. Создать базу данных запустив скрипт david_db_create.py
-python /home/david/david_db_create.py
-
-5. Поместить в директорию /home/david файлы:
-david_lib.py
-david_web_server.py
-david_unittest.py
-david_climate_check.py
+4. Поместить в директорию /home/david файлы:
+david_*
 ./VOICE_SAMPLES/
 
 Пример для ubuntu win10
+cp /mnt/c/Users/balob/Documents/DAVID/david_web_server.py /home/david/david_web_server.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_climate_check.py /home/david/david_climate_check.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_currency_check.py /home/david/david_currency_check.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_db.sqlite /home/david/david_db.sqlite
+cp /mnt/c/Users/balob/Documents/DAVID/david_db_create.py /home/david/david_db_create.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_gas_check.py /home/david/david_gas_check.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_healthcheck.py /home/david/david_healthcheck.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_lib.py /home/david/david_lib.py
 cp /mnt/c/Users/balob/Documents/DAVID/david_unittest.py /home/david/david_unittest.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_user_interface.py /home/david/david_user_interface.py
+cp /mnt/c/Users/balob/Documents/DAVID/david_pass.json /home/david/david_pass.json
+
+5. Создать базу данных запустив скрипт david_db_create.py
+python /home/david/david_db_create.py
 
 9. Запустить сервис для david_web_server.py
 Поместить /etc/systemd/system/david.service
+cp /mnt/c/Users/balob/Documents/DAVID/david.service /etc/systemd/system/david.service
+
 sudo systemctl daemon-reload
-sudo systemctl enable foo.service
+sudo systemctl enable david.service
 systemctl start david.service
 systemctl status david.service
+
 Проверить, что сервер слушает порт:
 (env) david@david:~$ sudo netstat -ltnp | grep :80
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python

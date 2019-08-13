@@ -3,9 +3,7 @@
 
 from flask import Flask, abort # pip install Flask
 from flask_restful import Resource, Api # pip install Flask-RESTful
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
-import re
 import sqlite3
 from os.path import isfile, join
 import logging
@@ -13,9 +11,6 @@ import datetime as dt
 
 import david_lib
 import david_user_interface
-
-#from importlib import reload
-#reload(logging)
 
 # DavidServer
 server_ip_addr = david_lib.ip_addr
@@ -36,11 +31,11 @@ web_server_log.addHandler(file_handler)
 
 # Logger examples
 
-#climate.debug(f'Message=;')
-#climate.info(f'Message=;')
-#climate.warning(f'Message=;')
-#climate.error(f'Message=;')
-#climate.critical(f'Message=;')
+# web_server_log.debug(f'Message=;')
+# web_server_log.info(f'Message=;')
+# web_server_log.warning(f'Message=;')
+# web_server_log.error(f'Message=;')
+# web_server_log.critical(f'Message=;')
 
 def check_file(file_name):
     if isfile(file_name):
@@ -57,6 +52,7 @@ app = Flask(__name__)
 api = Api(app)
 
 class DavidWebServerHandler(Resource):
+
     def get(self, parameters):
         get_url, get_params = get_request_handler(parameters)
 
@@ -122,10 +118,8 @@ class DavidWebServerHandler(Resource):
         return 'OK', 200 # Отклик и Status
 
 
-api.add_resource(DavidWebServerHandler, '/<string:parameters>')
-
-check_file(file_sqlite_db_path)
-check_file(file_log_web_server_path)
-
 if __name__ == '__main__':
+    check_file(file_sqlite_db_path)
+    check_file(file_log_web_server_path)
+    api.add_resource(DavidWebServerHandler, '/<string:parameters>')
     app.run(host=server_ip_addr, port=server_port, debug=False)

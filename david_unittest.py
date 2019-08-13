@@ -25,6 +25,12 @@ file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
 file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
 file_log_climate_check = david_lib.file_log_climate_check
 file_log_climate_check_path = join(dir_david, file_log_climate_check)
+file_log_currency_check = david_lib.file_log_currency_check
+file_log_currency_check_path = join(dir_david, file_log_currency_check)
+file_log_healthcheck = david_lib.file_log_healthcheck
+file_log_healthcheck_path = join(dir_david, file_log_healthcheck)
+file_log_user_interface = david_lib.file_log_user_interface
+file_log_user_interface_path = join(dir_david, file_log_user_interface)
 
 file_log_web_server = david_lib.file_log_web_server
 file_log_web_server_path = join(dir_david, file_log_web_server)
@@ -41,13 +47,16 @@ class TestFiles(unittest.TestCase):
 
     def test_check_file(self):
         self.assertEqual(isdir(dir_david), True)
-        self.assertEqual(isfile(file_sqlite_db_path), True)
         self.assertEqual(isfile(file_climate_hot_bedroom_path), True)
         self.assertEqual(isfile(file_climate_cold_bedroom_path), True)
-        self.assertEqual(isfile(file_log_climate_check_path), True)
-        self.assertEqual(isfile(file_log_web_server_path), True)
-        self.assertEqual(isfile(file_log_gas_check_path), True)
         self.assertEqual(isfile(file_gas_danger_path), True)
+        self.assertEqual(isfile(file_sqlite_db_path), True)
+        self.assertEqual(isfile(file_log_web_server_path), True)
+        self.assertEqual(isfile(file_log_climate_check_path), True)
+        self.assertEqual(isfile(file_log_currency_check_path), True)
+        self.assertEqual(isfile(file_log_gas_check_path), True)
+        self.assertEqual(isfile(file_log_healthcheck_path), True)
+        self.assertEqual(isfile(file_log_user_interface_path), True)
 
 
 class TestWebServer(unittest.TestCase):

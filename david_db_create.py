@@ -91,12 +91,12 @@ cur.execute('DROP VIEW IF EXISTS V_GAS_SENSORS')
 
 cur.execute('''CREATE VIEW V_GAS_SENSORS AS
             SELECT
-            strftime('%Y-%m-%d %H:%M', datetime(ms.REP_DATE, 'localtime')) AS REP_DATE
+            strftime('%Y-%m-%d %H:%M', datetime(gs.REP_DATE, 'localtime')) AS REP_DATE
             ,s.LOCATION
             ,gs.SENSOR_VALUE
             FROM GAS_SENSORS gs, SENSORS s
             WHERE gs.SENSOR_ID = s.SENSOR_ID
-            ORDER BY s.LOCATION, ms.REP_DATE DESC''')
+            ORDER BY s.LOCATION, gs.REP_DATE DESC''')
 
 cur.execute('DROP VIEW IF EXISTS V_CHILDREN_MATH_TASK01')
 

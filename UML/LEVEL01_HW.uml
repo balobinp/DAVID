@@ -1,3 +1,5 @@
+/* http://plantuml.com/ru/component-diagram */
+
 @startuml
 
 node "Main server" as main {
@@ -25,8 +27,8 @@ component NodeMcu01BedRoom
 component NodeMcu02Gas
 component NodeMcu03Door
 
-david_web_server <~~ NodeMcu01BedRoom : Wi-Fi
-david_web_server <~~ NodeMcu02Gas : Wi-Fi
-david_web_server <~~ NodeMcu03Door : Wi-Fi
+NodeMcu01BedRoom ~~> david_web_server : Wi-Fi
+NodeMcu02Gas ~~> david_web_server : Wi-Fi
+NodeMcu03Door ~~> david_web_server : Wi-Fi
 
 @enduml
