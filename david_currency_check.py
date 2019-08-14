@@ -20,7 +20,7 @@ file_log_currency_check = david_lib.file_log_currency_check
 file_log_currency_check_path = join(dir_david, file_log_currency_check)
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
-url_cbrf = 'http://www.cbr.ru/scripts/XML_daily.asp'
+url_cbrf = 'https://www.cbr.ru/scripts/XML_daily.asp'
 currency_threshold_increase_per = david_lib.currency_threshold_increase_per
 currency_usd_threshold_high = david_lib.currency_usd_threshold_high
 currency_usd_threshold_low = david_lib.currency_usd_threshold_low
@@ -71,7 +71,7 @@ def check_file(file_name):
 
 def get_valute(valute_name='USD'):
     try:
-        resp = requests.get(url_cbrf)
+        resp = requests.get(url_cbrf, timeout=3)
         currency_check_log.info(f'Message=http_currency_request;Response_ok={resp.ok};Reason={resp.reason};Status={resp.status_code}')
     except Exception as err:
         currency_check_log.error(f'Message=http_currency_request;Error={err}')

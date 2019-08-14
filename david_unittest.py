@@ -10,6 +10,7 @@ import david_currency_check
 import david_climate_check
 import david_gas_check
 import david_healthcheck
+import david_user_interface
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
@@ -209,6 +210,37 @@ class TestWebServer(unittest.TestCase):
         self.assertIsInstance(result, dict)
         self.assertIsInstance(result['percent'], float)
         self.assertIsInstance(result['cpu'], float)
+
+
+class UserInterface(unittest.TestCase):
+
+    # david_user_interface.py
+    # InformUser.mail
+
+    def test_inform_user_mail(self):
+        message = """\
+        <html>
+          <body>
+            <div>
+                <table class=MsoNormalTable border=0 cellspacing=5 cellpadding=0
+                width="100%" style='width:100.0%;mso-cellspacing:1.5pt;mso-yfti-tbllook:
+                1184'>
+                <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+                <td style='padding:10.5pt 0cm 0cm 0cm'>
+                <p class=MsoNormal align=center style='text-align:center'><span
+                style='font-size:15.0pt;font-family:ArialMT;mso-fareast-font-family:"Times New Roman";
+                color:#0E909A'>This is test message<o:p></o:p></span></p>
+                </td>
+                </tr>
+                </table>
+            </div>
+          </body>
+        </html>
+        """
+        inform_user_mail = david_user_interface.InformUser()
+        result = inform_user_mail.mail("Test message", message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+        self.assertEqual(result, 'successful')
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=1)

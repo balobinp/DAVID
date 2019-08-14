@@ -36,13 +36,13 @@ user_interface_log.addHandler(file_handler)
 # Logger examples
 # Действия (для логирования):
 # а. get_task
-# user_interface_log.debug(f'Message=get_task;')
+# user_interface_log.debug(f'Message=get_task;Class=;')
 #
 # б. inform_user_attempt
-# user_interface_log.debug(f'Message=inform_user_attempt;')
+# user_interface_log.debug(f'Message=inform_user_attempt;Class=;Method=;')
 #
 # в. inform_user_result
-# user_interface_log.debug(f'Message=inform_user_result;')
+# user_interface_log.debug(f'Message=inform_user_result;Class=;Method=;')
 
 def check_file(file_name):
     if isfile(file_name):
@@ -56,12 +56,13 @@ class InformUser:
         check_file(file_sqlite_db_path)
         check_file(file_log_user_interface_path)
         check_file(file_pass_path)
-        print('Class InformUser is constructed')
+        user_interface_log.info(f'Message=get_task;Class=InformUser;Result=constructed.')
 
         with open(file_pass_path, "r") as json_file:
             self.passwords = json.load(json_file)
 
     def mail(self, subject, html_message, receiver_mail_list):
+        user_interface_log.info(f'Message=inform_user_attempt;Class=InformUser;Method=mail;Called with subject: {subject}')
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
         gmail_account = "balobin.p@gmail.com"
@@ -71,28 +72,20 @@ class InformUser:
         message["Subject"] = subject
         message["From"] = gmail_account
         message["To"] = ", ".join(receiver_email)
-        # message = message
-        # message = """\
-        # Subject: Hi there
-        # This message is sent from Python."""
-        # html_message = """\
-        # <html>
-        #   <body>
-        #     <p>Hi,<br>
-        #        How are you?<br>
-        #        <a href="http://www.realpython.com">Real Python</a>
-        #        has many great tutorials.
-        #     </p>
-        #   </body>
-        # </html>
-        # """
         html_message_body = MIMEText(html_message, "html")
         message.attach(html_message_body)
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-            server.login(gmail_account, gmail_password)
-            # server.sendmail(gmail_account, receiver_email, message)
-            server.sendmail(gmail_account, receiver_email, message.as_string())
+        result = 'unsuccessful'
+        try:
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(gmail_account, gmail_password)
+                server.sendmail(gmail_account, receiver_email, message.as_string())
+            result = 'successful'
+            user_interface_log.info(f'Message=inform_user_result;Class=InformUser;Method=mail;Result={result};Subject={subject}')
+        except Exception as e:
+            result = 'unsuccessful'
+            user_interface_log.error(f'Message=inform_user_result;Class=InformUser;Method=mail;Result={result};Subject={subject}')
+        return result
 
 if __name__ == '__main__':
     pass
