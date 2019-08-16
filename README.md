@@ -97,6 +97,9 @@ Version 0.5.0.dev change list and installation procedure:
 2. Вынесены номер сенсора и IP главного компютрера в переменные.
 3. В http запрос connect добавлена версия прошивки.
 
+Микроконтроллер NodeMcu02Gas:
+1. Сделана прошивка для отправки аварийных сообщений и поддержки светодиодов (не прошита)
+
 Модуль Django:
 1. Добавлено тестирование для children_math и mainpage
 /david/WEB_UI>python manage.py test children_math.tests
