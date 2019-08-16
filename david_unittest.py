@@ -89,7 +89,9 @@ class TestWebServer(unittest.TestCase):
 
     def test_01_get_gas(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666'
-        urls = [url_01]
+        url_02 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=0'
+        url_03 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
+        urls = [url_01, url_02, url_03]
         for url in urls:
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)

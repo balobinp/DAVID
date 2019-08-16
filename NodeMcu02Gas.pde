@@ -3,8 +3,8 @@
 
 HTTPClient http;
 
-#define DELAY_READ_SENSOR 5000 //Cicle to check the sensor value
-#define DELAY_HTTP_REPORT 15000 //Cicle to send the http report
+#define DELAY_READ_SENSOR 5000 //Cycle to check the sensor value
+#define DELAY_HTTP_REPORT 15000 //Cycle to send the http report
 #define VER 190816
 
 const char* web_server_ip = "192.168.1.63";

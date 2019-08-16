@@ -91,17 +91,19 @@ class DavidWebServerHandler(Resource):
                 conn.close()
             try:
                 dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                message = f"Subject: Motion detected {dt_now}\n"
-                message += f"David indore motion detected at {dt_now}"
+                subject = f"Motion detected {dt_now}"
+                message = f"David indore motion detected at {dt_now}"
                 inform_user_mail = david_user_interface.InformUser()
-                inform_user_mail.mail(message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
                 web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
             except Exception as e:
                 web_server_log.error(f'Message=inform_user_mail;Exception={e}')
         elif get_url.path == 'gas':
             sensor_id = get_params.get('sensor')[0]
             sensor_value = get_params.get('sensorValue')[0]
-            web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id};GasSensorValue={sensor_value}')
+            gas_report_type_id = get_params.get('type', [0])[0]
+            gas_report_type = 'emergency' if get_params.get('type', [0])[0] == '1' else 'regular'
+            web_server_log.debug(f'Message=read_sensor;Sensor={sensor_id};GasSensorValue={sensor_value};Type={gas_report_type}')
             try:
                 conn = sqlite3.connect(file_sqlite_db_path)
             except Exception as e:
@@ -112,6 +114,16 @@ class DavidWebServerHandler(Resource):
                                 VALUES (datetime(), ?, ?)''', (sensor_id, sensor_value))
                 conn.commit()
                 conn.close()
+            if gas_report_type == 'emergency':
+                try:
+                    dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    subject = f"Gas emergency {dt_now}"
+                    message = f"David gas sensor emergency value detected at {dt_now}"
+                    inform_user_mail = david_user_interface.InformUser()
+                    inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                    web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
+                except Exception as e:
+                    web_server_log.error(f'Message=inform_user_mail;Exception={e}')
         else:
             abort(404)
 
