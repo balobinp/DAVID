@@ -7,12 +7,12 @@ HTTPClient http;
 #define DELAY_HTTP_REPORT 15000 //Cycle to send the http report
 #define VER 190816
 
-const char* web_server_ip = "192.168.1.63";
+const char* web_server_ip = "192.168.1.44";
 const char* sensor_id = "2";
 const char* ssid = "Home";
 const char* password = "ASDFGHQWERTY";
-const float threshold_01 = 2.0;
-const float threshold_02 = 3.0;
+const float threshold_01 = 150.0;
+const float threshold_02 = 500.0;
 
 int pin_out_led1 = 16; // D0
 int pin_out_led2 = 5; // D1
