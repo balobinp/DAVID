@@ -46,32 +46,32 @@ def check_file(file_name):
 def get_climate_data():
     conn = sqlite3.connect(file_sqlite_db_path)
     cur = conn.cursor()
-    sql_str = """SELECT TEMPERATURE FROM CLIMATE_SENSORS
+    sql_str = """SELECT s.LOCATION, TEMPERATURE FROM CLIMATE_SENSORS cs, SENSORS s
     WHERE REP_DATE >= DATETIME('now','-15 minute')
-    AND TIME(REP_DATE) BETWEEN '07:00:00' AND '18:00:00'
-    AND ID = (SELECT MAX(ID) FROM CLIMATE_SENSORS);"""
+    AND TIME(REP_DATE) BETWEEN '05:00:00' AND '18:00:00'
+    AND ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID)
+    AND s.SENSOR_ID = cs.SENSOR_ID;"""
     cur.execute(sql_str)
-    t = None
-    for results in cur:
-        t = results[0]
-    conn.close()
-    return t
+    results = cur.fetchall()
+    return results
 
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)
     check_file(file_log_climate_check_path)
     check_file(file_climate_hot_bedroom_path)
-    t = get_climate_data()
-    climate_check_log.info(f'Message=got_data_from_table_climate_sensors;t={t}')
-    if t and t > climate_hot_threshold:
-        try:
-            os.system("mpg123 " + file_climate_hot_bedroom_path)
-            climate_check_log.debug(f'Message=playing_file;file={file_climate_hot_bedroom_path}')
-        except Exception as e:
-            climate_check_log.error(f'Message=playing_file;Exception={e}')
-    elif t and t < climate_cold_threshold:
-        try:
-            os.system("mpg123 " + file_climate_cold_bedroom_path)
-            climate_check_log.debug(f'Message=playing_file;file={file_climate_cold_bedroom_path}')
-        except Exception as e:
-            climate_check_log.error(f'Message=playing_file;Exception={e}')
+
+    results = get_climate_data()
+    for result in results:
+        climate_check_log.info(f'Message=got_data_from_table_climate_sensors;location={result[0]};t={result[1]}')
+        if result and result[0] == 'bedroom' and result[1] > climate_hot_threshold:
+            try:
+                os.system("mpg123 " + file_climate_hot_bedroom_path)
+                climate_check_log.debug(f'Message=playing_file;file={file_climate_hot_bedroom_path}')
+            except Exception as e:
+                climate_check_log.error(f'Message=playing_file;Exception={e}')
+        elif result and result[0] == 'bedroom' and result[1] < climate_cold_threshold:
+            try:
+                os.system("mpg123 " + file_climate_cold_bedroom_path)
+                climate_check_log.debug(f'Message=playing_file;file={file_climate_cold_bedroom_path}')
+            except Exception as e:
+                climate_check_log.error(f'Message=playing_file;Exception={e}')

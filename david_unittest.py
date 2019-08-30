@@ -126,10 +126,13 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 404)
 
     def test_01_get_climate(self):
-        url_01 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=24.0&humidity=35.0'
-        url_02 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=nan&humidity=35.0'
+        url_01 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=21.0&humidity=31.0'
+        url_02 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=10&temperature=nan&humidity=31.0'
         url_03 = f'http://{server_ip_addr}:{server_port}/climate;sensor=1&readattempt=6&temperature=6.0&humidity=6.0'
-        urls = [url_01, url_02, url_03]
+        url_04 = f'http://{server_ip_addr}:{server_port}/climate;sensor=4&readattempt=10&temperature=22.0&humidity=32.0'
+        url_05 = f'http://{server_ip_addr}:{server_port}/climate;sensor=4&readattempt=10&temperature=nan&humidity=32.0'
+        url_06 = f'http://{server_ip_addr}:{server_port}/climate;sensor=4&readattempt=7&temperature=7.0&humidity=7.0'
+        urls = [url_01, url_02, url_03, url_04, url_05, url_06]
         for url in urls:
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
@@ -139,23 +142,22 @@ class TestWebServer(unittest.TestCase):
         conn = sqlite3.connect(file_sqlite_db_path)
         cur = conn.cursor()
         sql_str = """SELECT SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY FROM CLIMATE_SENSORS
-        WHERE REP_DATE >= DATETIME('now','-1 minute')
-        AND ID = (SELECT MAX(ID) FROM CLIMATE_SENSORS);"""
+        WHERE REP_DATE >= DATETIME('now','-15 minute')
+        AND ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
         cur.execute(sql_str)
-        result = None
-        for results in cur:
-            result = results
+        results = cur.fetchall()
         conn.close()
-        self.assertTupleEqual(result, (1, 6, 6, 6))
+        correct_results = [(1, 6, 6, 6), (4, 7, 7, 7)]
+        for correct_result, result in zip(correct_results, results):
+            self.assertTupleEqual(result, correct_result)
 
     # david_climate_check.py
 
     def test_02_get_climate_data(self):
-        result = david_climate_check.get_climate_data()
-        if result:
-            self.assertEqual(result, 6)
-        else:
-            self.assertIsNone(result)
+        results = david_climate_check.get_climate_data()
+        correct_results = [('bedroom', 6), ('kitchen', 7)]
+        for correct_result, result in zip(correct_results, results):
+            self.assertTupleEqual(result, correct_result)
 
     # david_currency_check.py
 
@@ -201,7 +203,7 @@ class TestWebServer(unittest.TestCase):
 
     def test_02_healthcheck_fetch_climate_data(self):
         result = david_healthcheck.fetch_climate_data()
-        self.assertEqual(result, {'bedroom': 6})
+        self.assertEqual(result, {'bedroom': 6, 'kitchen': 7})
 
     def test_02_healthcheck_fetch_gas_data(self):
         result = david_healthcheck.fetch_gas_data()

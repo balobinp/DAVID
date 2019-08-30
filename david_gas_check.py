@@ -69,7 +69,7 @@ if __name__ == '__main__':
     check_file(file_log_gas_check_path)
     check_file(file_gas_danger_path)
     gas_sensor_value = get_gas_data()
-    gas_check_log.info(f'Message=get_data_from_db;t={gas_sensor_value}')
+    gas_check_log.info(f'Message=get_data_from_db;GasSensorValue={gas_sensor_value}')
     if gas_sensor_value and gas_sensor_value > 900:
         try:
             os.system("mpg123 " + file_gas_danger_path)

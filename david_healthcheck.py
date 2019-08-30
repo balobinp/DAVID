@@ -8,6 +8,7 @@ import psutil
 import datetime as dt
 
 from david_currency_check import currency_check
+from david_climate_check import get_climate_data
 import david_user_interface
 import david_lib
 
@@ -54,20 +55,10 @@ def check_file(file_name):
     return None
 
 def fetch_climate_data():
-    conn = sqlite3.connect(file_sqlite_db_path)
-    cur = conn.cursor()
-    sql_str = """SELECT s.LOCATION, cs.TEMPERATURE
-                FROM CLIMATE_SENSORS cs
-                LEFT JOIN SENSORS s ON cs.SENSOR_ID = s.SENSOR_ID
-                WHERE cs.REP_DATE >= DATETIME('now','-15 minute')
-                AND s.SENSOR_TYPE = 'climate'
-                AND cs.ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
-    cur.execute(sql_str)
+    climate_data_results = get_climate_data()
     result = {}
-    for results in cur:
-        # result = results
+    for results in climate_data_results:
         result.update({results[0]: results[1]})
-    conn.close()
     healthcheck_logger.debug(f'Message=get_data_from_db;climate={result}')
     if not result:
         return None
