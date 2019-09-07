@@ -187,7 +187,7 @@ color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
         message += "<div>Motion detected:</div>"
         print("Обнаружены движения:")
         for iter, motion in enumerate(motion_data):
-            message += f"<il>{iter}: {motion[0]} - {motion[1]}</il>"
+            message += f"<li>{iter}: {motion[0]} - {motion[1]}</li>"
             print(f"{iter}: {motion[0]} - {motion[1]}")
     else:
         message += "<div>No Motion detected.</div>"

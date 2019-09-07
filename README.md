@@ -59,9 +59,10 @@ To Do list:
 2. Добавить Deep sleep для модулей ESP с делью экономии энергии и устранения излучения (???).
 
 Микроконтроллер NodeMcu02Gas:
-1. Сделать.
+1. Заменить DELAY_HTTP_REPORT на переменную типа unsigned long.
+unsigned long delay_http_report = 900000;
+if (millis() - last_time > delay_http_report) {...
 2. Добавить датчик температуры.
-3. В http запрос connect добавить версию прошивки.
 
 Микроконтроллер NodeMcu03Door (датчик между входными дверями)
 1. Увеличить таймер выключения света до 30 секунд.
