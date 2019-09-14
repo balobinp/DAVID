@@ -1,0 +1,18 @@
+{% extends "mainpage/header.html" %}
+{% block content %}
+    <h3>Irregular verbs for {{ user.username }}:</h3>
+    <form method="post" enctype="multipart/form-data" action="irregular_verbs_task">
+        {% csrf_token %}
+        <div>
+            {% for irregular_verb in irregular_verbs %}
+                <p>{{ irregular_verb.inf }}</p>
+            {% endfor %}
+        </div>
+        <br>
+            <input class="form-control" id="feedback-user_answer" type="text" name="user_answer">
+        <div>
+            <input class="form-control" id="feedback-task_id" type="hidden" name="irregular_verbs" value={{ irregular_verbs }}>
+        </div>
+    <br><br>
+    <input id="feedback-submit" type="submit">
+{% endblock %}

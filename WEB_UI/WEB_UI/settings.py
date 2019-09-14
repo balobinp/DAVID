@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import sys
-# sys.path.append(r'c:\Users\balob\Documents\DAVID')
-sys.path.append(r'/home/david')
+sys.path.append(r'c:\Users\balob\Documents\DAVID')
+# sys.path.append(r'/home/david')
 
 import david_lib
 dir_david = david_lib.dir_david
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'children_math.apps.ChildrenMathConfig',
+    'english.apps.EnglishConfig',
     'users.apps.UsersConfig',
     'mainpage.apps.MainpageConfig',
 ]

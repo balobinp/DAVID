@@ -1,0 +1,23 @@
+{% extends "mainpage/header.html" %}
+{% block content %}
+    <div>
+        <table border="1" class="dataframe table table-striped">
+          <thead>
+            <tr style="text-align: center;">
+              <th>#</th>
+              <th>Task name</th>
+              <th>Progress</th>
+              <th>Status for today</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>1</th>
+              <td><a href="{% url 'irregular_verbs_task' %}"> Irregular verbs </a></td>
+              <td>{{ solved_tasks01 }} of 7</td>
+              <td>{{ today_task01 }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+{% endblock %}
