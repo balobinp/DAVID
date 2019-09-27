@@ -1,7 +1,12 @@
 {% extends "mainpage/header.html" %}
 {% block content %}
     <h3>Irregular verbs:</h3>
-    <h3>{{ user.username }}, your answer is {{ user_answer }}.</h3>
+    <h3>{{ user.username }}, your answers are:</h3>
+        <div>
+            {% for user_answer in user_answers %}
+                <p>{{ user_answer }}</p>
+            {% endfor %}
+        </div>
     <h3>{{ user.username }} , your score: {{ score }}</h3>
     {% if score == 5 %}
         <h2>Good Job, {{ user.username }}!</h2>

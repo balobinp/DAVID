@@ -4,14 +4,18 @@
     <form method="post" enctype="multipart/form-data" action="irregular_verbs_task">
         {% csrf_token %}
         <div>
-            {% for irregular_verb in irregular_verbs %}
-                <p>{{ irregular_verb.inf }}</p>
+            {% for irregular_verb in irregular_verbs.irregular_verbs %}
+                <p>{{ irregular_verb }}</p>
             {% endfor %}
         </div>
         <br>
-            <input class="form-control" id="feedback-user_answer" type="text" name="user_answer">
+            <input class="form-control" id="feedback-user_answer01" type="text" name="user_answer01">
+        <br>
+            <input class="form-control" id="feedback-user_answer02" type="text" name="user_answer02">
+        <br>
+            <input class="form-control" id="feedback-user_answer03" type="text" name="user_answer03">
         <div>
-            <input class="form-control" id="feedback-task_id" type="hidden" name="irregular_verbs" value={{ irregular_verbs }}>
+            <input class="form-control" id="feedback-task_id" type="hidden" name="irregular_verbs" value={{ irregular_verbs.irregular_verbs_ids }}>
         </div>
     <br><br>
     <input id="feedback-submit" type="submit">

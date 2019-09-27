@@ -87,6 +87,24 @@ Version 0.6.0.dev change list and installation procedure:
 Модуль david_healthcheck:
 1. Реализована проверка двух и более датчиков температуры.
 
+Модуль Django:
+1. Добавлены неправильные глаголы
+
+Installation procedure:
+cd ./WEB_UI
+python manage.py makemigrations english
+python manage.py sqlmigrate english 0001
+python manage.py migrate english
+
+INSERT INTO english_irregularverbs
+(infinitive, past, participle, "translation")
+VALUES
+('get', 'got', 'gotten', 'получать'),
+('take', 'took', 'taken', 'брать'),
+('go', 'went', 'gone', 'идти'),
+('sit', 'sat', 'sat', 'сидеть'),
+('spend', 'spent', 'spent', 'тратить');
+
 ------------------------------------
 Version 0.5.0 change list and installation procedure:
 ------------------------------------
