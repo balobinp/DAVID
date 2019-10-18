@@ -9,3 +9,13 @@ class IrregularVerbs(models.Model):
         return self.infinitive
     def get_all_fields(self):
         return '{},{},{},{}'.format(self.infinitive, self.past, self.participle, self.translation)
+
+
+class IrregularVerbsResults(models.Model):
+    user_id = models.IntegerField()
+    date = models.DateTimeField(auto_now=True)
+    verb_id = models.IntegerField()
+    user_answer = models.CharField(max_length=255)
+
+    def __str__(self):
+        return '{} {} {} {}'.format(self.user_id, self.date, self.verb_id, self.user_answer)

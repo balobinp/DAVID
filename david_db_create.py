@@ -164,5 +164,39 @@ cur.execute('''CREATE VIEW V_CHILDREN_MATH_TASK02_DETAILED AS
             AND t.user_id = au.id
             ORDER BY REP_DATE DESC''')
 
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_ENG_IRR_VER_DETAILED')
+
+cur.execute('''CREATE VIEW V_CHILDREN_ENG_IRR_VER_DETAILED AS
+            SELECT
+            strftime('%Y-%m-%d %H:%M:%S', vr.date) AS REP_DATE
+            ,au.username AS USER_NAME
+            ,v.infinitive ||','|| v.past ||','|| v.participle ||','|| v.translation AS VERB
+            ,vr.user_answer AS USER_ANSWER
+            ,CASE WHEN v.infinitive ||','|| v.past ||','|| v.participle ||','|| v.translation = vr.user_answer THEN '1' ELSE '0' END AS SCORE
+            FROM english_irregularverbsresults vr
+            INNER JOIN english_irregularverbs v ON vr.verb_id = v.id
+            INNER JOIN auth_user au ON vr.user_id = au.id''')
+
+cur.execute('DROP VIEW IF EXISTS V_CHILDREN_ENG_IRR_VER')
+
+cur.execute('''CREATE VIEW V_CHILDREN_ENG_IRR_VER AS
+            SELECT
+            strftime('%Y-%m-%d', REP_DATE) AS REP_DATE
+            ,USER_NAME
+            ,COUNT(*) AS ATTEMPTS
+            ,SUM(CASE WHEN SCORE = 3 THEN 1 ELSE 0 END) AS SCORE_HIGH FROM
+            (
+            SELECT
+            strftime('%Y-%m-%d %H:%M:%S', vr.date) AS REP_DATE
+            ,au.username AS USER_NAME
+            ,SUM(CASE WHEN v.infinitive ||','|| v.past ||','|| v.participle ||','|| v.translation = vr.user_answer THEN '1' ELSE '0' END) AS SCORE
+            FROM english_irregularverbsresults vr
+            INNER JOIN english_irregularverbs v ON vr.verb_id = v.id
+            INNER JOIN auth_user au ON vr.user_id = au.id
+            GROUP BY 1,2
+            )
+            GROUP BY 1,2
+            ORDER BY USER_NAME, REP_DATE DESC''')
+
 conn.commit()
 conn.close()

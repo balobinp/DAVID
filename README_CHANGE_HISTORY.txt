@@ -1,3 +1,61 @@
+
+------------------------------------
+Version 0.6.0.dev change list and installation procedure:
+------------------------------------
+
+Модуль david_gas_check:
+1. В логгере заменен t на GasSensorValue
+
+Модуль david_healthcheck:
+1. Реализована проверка двух и более датчиков температуры.
+
+Модуль Django:
+1. Добавлены неправильные глаголы
+
+Installation procedure:
+cd ./WEB_UI
+python manage.py makemigrations english
+python manage.py sqlmigrate english 0001
+python manage.py migrate english
+
+INSERT INTO english_irregularverbs
+(infinitive, past, participle, "translation")
+VALUES
+('get', 'got', 'gotten', 'получать'),
+('take', 'took', 'taken', 'брать'),
+('go', 'went', 'gone', 'идти'),
+('sit', 'sat', 'sat', 'сидеть'),
+('spend', 'spent', 'spent', 'тратить');
+
+------------------------------------
+Version 0.5.0 change list and installation procedure:
+------------------------------------
+
+Модуль david_web_server:
+1. Сделана обработка получения версии прошивки от датчиков
+2. Сделана обработка получения аварийных сообщений от датчика газа с оповещением по мэйлу.
+
+Модуль david_user_interface:
+1. Пароль от почты вынесен во внешний json файл
+2. Добавлена возможность отправки html в майл.
+
+Микроконтроллер NodeMcu01BedRoom:
+1. Заменен датчик DHT11 на DHT22.
+2. Вынесены номер сенсора и IP главного компютрера в переменные.
+3. В http запрос connect добавлена версия прошивки.
+
+Микроконтроллер NodeMcu02Gas:
+1. Добавлена отправки аварийных сообщений и поддержка светодиодов
+2. Вынесены номер сенсора и IP главного компютрера в переменные.
+3. В http запрос connect добавлена версия прошивки.
+
+Модуль Django:
+1. Добавлено тестирование для children_math и mainpage
+/david/WEB_UI>python manage.py test children_math.tests
+/david/WEB_UI>python manage.py test mainpage.tests
+2. Исправлена проблема с неправильным отображением прогресса выполнения задач Math task
+3. Добавлено умножение в math_task01
+
 ------------------------------------
 Version 0.4.0.dev change list and installation procedure:
 ------------------------------------
