@@ -184,7 +184,7 @@ cur.execute('''CREATE VIEW V_CHILDREN_ENG_IRR_VER AS
             strftime('%Y-%m-%d', REP_DATE) AS REP_DATE
             ,USER_NAME
             ,COUNT(*) AS ATTEMPTS
-            ,SUM(CASE WHEN SCORE = 3 THEN 1 ELSE 0 END) AS SCORE_HIGH FROM
+            ,SUM(CASE WHEN SCORE = 3 THEN 1 ELSE 0 END) AS SCORE_FIVE FROM
             (
             SELECT
             strftime('%Y-%m-%d %H:%M:%S', vr.date) AS REP_DATE

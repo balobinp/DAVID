@@ -33,7 +33,6 @@ def english_main(request):
         if request.user.username:
             df = df[df.USER_NAME == request.user.username]
             today_task01, solved_tasks01 = math01_result_estimate.math_result_estimate(df, today)
-
             context = {'today_task01': str(today_task01), 'solved_tasks01': str(solved_tasks01),}
         else:
             context = {'today_task01': '-', 'solved_tasks01': '-',}
