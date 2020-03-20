@@ -6,6 +6,8 @@ import logging
 import sqlite3
 import psutil
 import datetime as dt
+import subprocess
+import re
 
 from david_currency_check import currency_check
 from david_climate_check import get_climate_data
@@ -98,7 +100,14 @@ def fetch_motion_data():
 def get_system_data():
     system_data_dict = dict(psutil.virtual_memory()._asdict())
     system_data_dict.update({'cpu': psutil.cpu_percent()})
-    healthcheck_logger.debug(f"Message=system_check;cpu={system_data_dict['cpu']}%;mem:{system_data_dict['percent']}%")
+    try:
+        vcgencmd_output = subprocess.check_output(r'vcgencmd measure_temp', shell=True).strip().decode("utf-8")
+        cpu_temp = float(re.search(r'[0-9]*\.[0-9]*', vcgencmd_output).group())
+    except:
+        cpu_temp = 0
+    system_data_dict.update({'cpu_temp': cpu_temp})
+    message = f"Message=system_check;cpu={system_data_dict['cpu']}%;mem:{system_data_dict['percent']}%;cpu_temp:{system_data_dict['cpu_temp']}C"
+    healthcheck_logger.debug(message)
     return system_data_dict
 
 if __name__ == '__main__':
@@ -182,6 +191,13 @@ color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
     else:
         message += f"<div>Ubnormal memory load. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"
         print(f"Превышена загрузка памяти. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
+
+    if healthcheck_report_dict['system_data']['cpu_temp'] < 55:
+        message += f"<div>CPU temperature is normal. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"
+        print(f"Температура процессора в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")
+    else:
+        message += f"<div>Ubnormal CPU temperature. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"
+        print(f"Превышена температура процессора. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")
 
     if motion_data:
         message += "<div>Motion detected:</div>"
