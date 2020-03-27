@@ -564,6 +564,8 @@ crontab -e
 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
 0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
 
+7. Установить часовой пояс в системе
+
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py
 cd /home/david/WEB_UI

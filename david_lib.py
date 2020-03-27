@@ -11,6 +11,7 @@ climate_hot_threshold = 25
 
 # ip_addr = '192.168.1.44'
 # port = 80
+# ftp_ip_addr = '192.168.1.52'
 # dir_david = r'/home/david'
 # file_climate_hot_bedroom = r'./VOICE_SAMPLES/climate_hot_bedroom.mp3'
 # file_climate_cold_bedroom = r'./VOICE_SAMPLES/climate_cold_bedroom.mp3'
@@ -27,6 +28,7 @@ climate_hot_threshold = 25
 
 ip_addr = '192.168.1.52'
 port = 80
+ftp_ip_addr = '192.168.1.52'
 dir_david = r'c:\Users\balob\Downloads\DAVID'
 file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'
 file_climate_cold_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_cold_bedroom.mp3'

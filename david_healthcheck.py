@@ -8,6 +8,8 @@ import psutil
 import datetime as dt
 import subprocess
 import re
+import json
+import ftplib
 
 from david_currency_check import currency_check
 from david_climate_check import get_climate_data
@@ -15,6 +17,8 @@ import david_user_interface
 import david_lib
 
 dir_david = david_lib.dir_david
+ftp_ip_addr = david_lib.ftp_ip_addr
+file_pass_path = join(dir_david, 'david_pass.json')
 file_log_healthcheck = david_lib.file_log_healthcheck
 file_log_healthcheck_path = join(dir_david, file_log_healthcheck)
 file_sqlite_db = david_lib.file_sqlite_db
@@ -48,6 +52,9 @@ healthcheck_logger.addHandler(file_handler)
 #
 # г. healthcheck_report
 # healthcheck_logger.debug(f'Message=healthcheck_report;')
+#
+# д. db_backup
+# healthcheck_logger.debug(f'Message=db_backup;')
 
 def check_file(file_name):
     if isfile(file_name):
@@ -110,21 +117,51 @@ def get_system_data():
     healthcheck_logger.debug(message)
     return system_data_dict
 
+def make_db_backup_ftp():
+    ftp_backup_dir = r'/david/db_backup'
+    with open(file_pass_path, "r") as json_file:
+        passwords = json.load(json_file)
+    ftp_user = passwords['ftp_user']
+    ftp_pass = passwords['ftp_pass']
+    try:
+        ftp = ftplib.FTP(ftp_ip_addr)
+        ftp.login(ftp_user, ftp_pass)
+        file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
+        ftp.storbinary('STOR ' + f'{ftp_backup_dir}/{file_sqlite_db_backup}', open(file_sqlite_db_path, 'rb'))
+        ftp.cwd(ftp_backup_dir)
+        db_backups = ftp.nlst()
+        db_backups.sort()
+        for db_backup in db_backups[:-3]:
+            ftp.delete(db_backup)
+        db_backups = ftp.nlst()
+        db_backups.sort()
+        ftp.quit()
+        message = f"Message=db_backup;result=OK;last_backup={db_backups[-1:]}"
+        healthcheck_logger.debug(message)
+    except Exception as e:
+        db_backups = None
+        message = f"Message=db_backup;result=NOK;error={e}"
+        healthcheck_logger.error(message)
+    return db_backups
+
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)
     check_file(file_log_healthcheck_path)
+    check_file(file_pass_path)
     gas_sensor_value = fetch_gas_data()
     climate_data = fetch_climate_data()
     currency_check_result, currency_rate, currency_name, rep_date = currency_check()
     system_data_dict = get_system_data()
     motion_data = fetch_motion_data()
+    db_backups = make_db_backup_ftp()
 
     healthcheck_report_dict = {'gas_sensor_data': gas_sensor_value,
                                'climate_data': climate_data,
                                'currency_data': {currency_name: {'rep_date': rep_date,
                                                                  'currency_check_result': currency_check_result,
                                                                  'currency_rate': currency_rate,} },
-                               'system_data': system_data_dict}
+                               'system_data': system_data_dict,
+                               'db_backups': db_backups}
 
     healthcheck_logger.debug(f'Message=healthcheck_report;report={healthcheck_report_dict}')
 
@@ -198,6 +235,13 @@ color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
     else:
         message += f"<div>Ubnormal CPU temperature. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"
         print(f"Превышена температура процессора. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")
+
+    if healthcheck_report_dict['db_backups'] is None:
+        message += "<div>DB backup was not created.</div>"
+        print("Бэкап базы данных не был выполнен.")
+    else:
+        message += f"<div>The last DB backup: {healthcheck_report_dict['db_backups'][-1:]}</div>"
+        print(f"Последний бэкап базы данных: {healthcheck_report_dict['db_backups'][-1:]}")
 
     if motion_data:
         message += "<div>Motion detected:</div>"
