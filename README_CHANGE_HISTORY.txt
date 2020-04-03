@@ -537,7 +537,7 @@ systemctl status david.service
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python
 tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      3794/python
 
-5.  Перезагрузить папку WEB_UI запустить сервер
+5. Перезагрузить папку WEB_UI запустить сервер
 Предварительно поменяв путь в файле settings.py
 Если нужно, применить миграции и загрузить недостающие данные в базу данных.
 python manage.py migrate
@@ -571,3 +571,12 @@ sudo python /home/david/david_unittest.py
 cd /home/david/WEB_UI
 python manage.py test children_math.tests
 python manage.py test mainpage.tests
+
+Known issues
+-------------------
+1. Проблема с numpy
+Original error was: libf77blas.so.3: cannot open shared object file: No such file or directory
+
+Решение:
+sudo apt-get install libatlas-base-dev
+(https://github.com/numpy/numpy/issues/14772)
