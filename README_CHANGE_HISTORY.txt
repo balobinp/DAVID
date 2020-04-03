@@ -425,9 +425,9 @@ source /home/david/env/bin/activate
 python /home/david/david_db_create.py
 
 5. Перезапустить сервис david_web_server
-systemctl stop david.service
-systemctl start david.service
-systemctl status david.service
+sudo systemctl stop david.service
+sudo systemctl start david.service
+sudo systemctl status david.service
 
 6.  Перезапустить Web сервер django
 Предварительно поменяв путь в файле settings.py
