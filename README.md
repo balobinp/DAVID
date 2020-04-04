@@ -95,10 +95,14 @@ if (millis() - last_time > delay_http_report) {...
 Version 0.7.0.dev change list and installation procedure:
 ------------------------------------
 
+Главный Компьютер:
 1. Добавлены VIEW для неправильных глаговов в базу данных.
 2. Добавлена информация о прогрессе выполнения задания для неправильных глаголов.
 3. Добавлено измерение температуры процессора Raspberry Pi в david_healthcheck.py
 4. Добавлены бэкапы базы данных на ftp сервер.
+
+Микроконтроллер NodeMcu01BedRoom:
+1. Работа над переходом на MicroPython
 
 Version installation procedure:
 1. Указать юзернейм и пароль ftp сервера в david_pass.json
