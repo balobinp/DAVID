@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.docx" beforeDir="false" afterPath="$PROJECT_DIR$/README.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +20,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="192">
-                <caret line="104" column="38" lean-forward="true" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
+              <first_editor relative-caret-position="17">
+                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
               </first_editor>
               <second_editor />
             </state>
@@ -56,7 +56,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/WEB_UI/mainpage/templates/mainpage/mainpage.html" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_01.html" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/models.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/admin.py" />
@@ -67,7 +66,6 @@
         <option value="$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_get_task_id.py" />
         <option value="$PROJECT_DIR$/REDME_CHANGE_HISTORY.md" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.md" />
-        <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/tests/__init__.py" />
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/views.py" />
@@ -107,6 +105,8 @@
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
+        <option value="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" />
       </list>
     </option>
   </component>
@@ -235,16 +235,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WEB_UI/mainpage/tests/test_urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -277,11 +267,6 @@
         <state relative-caret-position="225">
           <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom.pde">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu03Door.pde">
@@ -623,18 +608,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom.pde">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-806">
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_boot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="62" column="7" selection-start-line="62" selection-start-column="7" selection-end-line="62" selection-end-column="7" />
+          <folding>
+            <element signature="e#253#262#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="119">
+          <caret line="112" column="62" selection-start-line="112" selection-start-column="57" selection-end-line="112" selection-end-column="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="192">
-            <caret line="104" column="38" lean-forward="true" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
+          <first_editor relative-caret-position="17">
+            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
           </first_editor>
           <second_editor />
         </state>

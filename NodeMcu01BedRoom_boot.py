@@ -17,6 +17,7 @@ from time import sleep
 import urequests
 import ssd1306
 
+version = 200404
 ssid = 'Home'
 passwd = 'ASDFGHQWERTY'
 sensor_id = 1
@@ -50,12 +51,14 @@ oled.text('Connected:'.format(ip_addr), 0, 20)
 oled.text('{}'.format(ip_addr), 0, 30)
 oled.show()
 sleep(3)
-r = urequests.get('http://{0}:{1}/connected;sensor={2}&ip={3}'.format(ip_server, port_server, sensor_id, ip_addr))
+r = urequests.get('http://{0}:{1}/connected;sensor={2}&ip={3}&ver={4}'.format(ip_server, port_server,
+                                                                           sensor_id, ip_addr, version))
 
 clear_screen(oled)
 oled.text('Server response', 0, 10)
 oled.text('status: {}'.format(r.status_code), 0, 20)
+oled.text('Ver. : {}'.format(version), 0, 40)
 oled.show()
 r.close()
-sleep(2)
+sleep(3)
 clear_screen(oled)

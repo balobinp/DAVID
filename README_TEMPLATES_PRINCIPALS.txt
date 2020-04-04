@@ -108,9 +108,9 @@ climate_check.error(f'Message=playing_file;File={file_climate_hot_bedroom};Resul
 2. Передача информации.
 
 1. Подключение
-http://<IP address>:80/connected;sensor=<sensor_num>&ip=<ip_address_of_the_module>
+http://<IP address>:80/connected;sensor=<sensor_num>&ip=<ip_address_of_the_module>&ver=<version>
 Пример:
-http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66
+http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66&ver=190720
 
 2. Передача информации
 http://<IP address>:80/<information_type>;sensor=<sensor_num>&<key1>=<value1>&<key2>=<value2>...
