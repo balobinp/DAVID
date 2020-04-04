@@ -1,13 +1,17 @@
-# OLED - NodeMcu connection:
+# Connections:
 # OLED     NodeMcu
 #  SDA <-> D2 (4)
 #  SCL <-> D1 (5)
+
+# DHT11     NodeMcu
+#   OUT <-> D3 (0)
 
 # boot.py
 # This file is executed on every boot (including wake-boot from deepsleep)
 # Actions:
 # Connecting to the WiFi network
 # Send the notification to the server
+# Display the status on the OLED
 
 import os
 import uos
@@ -47,7 +51,7 @@ while not sta_if.isconnected():
     sleep(1)
 ip_addr = sta_if.ifconfig()[0]
 clear_screen(oled)
-oled.text('Connected:'.format(ip_addr), 0, 20)
+oled.text('Connected:', 0, 20)
 oled.text('{}'.format(ip_addr), 0, 30)
 oled.show()
 sleep(3)

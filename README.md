@@ -102,8 +102,9 @@ Version 0.7.0.dev change list and installation procedure:
 4. Добавлены бэкапы базы данных на ftp сервер.
 
 Микроконтроллер NodeMcu01BedRoom:
-1. Работа над переходом на MicroPython
+1. Перевод на MicroPython
 
 Version installation procedure:
 1. Указать юзернейм и пароль ftp сервера в david_pass.json
 2. Указать ftp ip адрес в david_lib.py
+3. Сделать прошивку модуля NodeMcu01BedRoom

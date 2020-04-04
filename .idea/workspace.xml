@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/NodeMcu01BedRoom_ssd1306.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoom_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu01BedRoom_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.docx" beforeDir="false" afterPath="$PROJECT_DIR$/README.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +24,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="17">
-                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+              <first_editor relative-caret-position="243">
+                <caret line="109" column="43" selection-start-line="109" selection-start-column="43" selection-end-line="109" selection-end-column="43" />
               </first_editor>
               <second_editor />
             </state>
@@ -56,8 +60,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_01.html" />
-        <option value="$PROJECT_DIR$/WEB_UI/children_math/models.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/admin.py" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_01_result.html" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_result.html" />
@@ -104,9 +106,11 @@
         <option value="$PROJECT_DIR$/david_lib.py" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
         <option value="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" />
+        <option value="$PROJECT_DIR$/NodeMcu01BedRoom_main.py" />
+        <option value="$PROJECT_DIR$/NodeMcu01BedRoom_ssd1306.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -141,19 +145,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\balob\Documents\DAVID" />
+      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english\templates\english" />
+      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english\templates" />
+      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english" />
+      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\children_math" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english\templates\english" />
       <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\mainpage" />
       <recent name="C:\Users\balob\Documents\DAVID\WEB_UI" />
       <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\children_math\children_math_modules" />
       <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\children_math\templates\children_math\includes" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english\templates\english" />
-      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english\templates" />
-      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\english" />
-      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\children_math" />
-      <recent name="C:\Users\balob\Documents\DAVID\WEB_UI\children_math\children_math_modules" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -235,23 +239,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/children_math_modules/math02_result_estimate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_01_result.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/tests/test_urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -610,33 +597,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom.pde">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-806">
-          <caret line="53" column="6" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="6" />
+        <state relative-caret-position="255">
+          <caret line="115" column="10" lean-forward="true" selection-start-line="115" selection-start-column="10" selection-end-line="115" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="116" column="80" lean-forward="true" selection-start-line="116" selection-end-line="116" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_ssd1306.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="143" column="23" selection-start-line="143" selection-start-column="23" selection-end-line="143" selection-end-column="23" />
+          <folding>
+            <element signature="e#77#88#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_boot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="62" column="7" selection-start-line="62" selection-start-column="7" selection-end-line="62" selection-end-column="7" />
+        <state relative-caret-position="255">
+          <caret line="21" column="14" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="14" />
           <folding>
             <element signature="e#253#262#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt">
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="112" column="62" selection-start-line="112" selection-start-column="57" selection-end-line="112" selection-end-column="62" />
+        <state relative-caret-position="442">
+          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="17">
-            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <first_editor relative-caret-position="243">
+            <caret line="109" column="43" selection-start-line="109" selection-start-column="43" selection-end-line="109" selection-end-column="43" />
           </first_editor>
           <second_editor />
         </state>
