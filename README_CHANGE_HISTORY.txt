@@ -564,6 +564,20 @@ crontab -e
 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
 0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
 
+8. Установить postfix чтобы cron работал.
+"Linux uses mail for sending notifications to the user.
+Most Linux distributions have a mail service including an MTA (Mail Transfer Agent) installed."
+(https://askubuntu.com/questions/222512/cron-info-no-mta-installed-discarding-output-error-in-the-syslog)
+sudo apt-get install postfix
+
+9. Добавить права на запись для файлов логов
+sudo chmod 666 /home/david/log/climate_check.log
+sudo chmod 666 /home/david/log/currency_check.log
+sudo chmod 666 /home/david/log/david_web_server.log
+sudo chmod 666 /home/david/log/gas_check.log
+sudo chmod 666 /home/david/log/healthcheck.log
+sudo chmod 666 /home/david/log/user_interface.log
+
 7. Установить часовой пояс в системе
 
 7. Выполнить unit тестирование
