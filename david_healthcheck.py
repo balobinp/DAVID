@@ -108,7 +108,7 @@ def get_system_data():
     system_data_dict = dict(psutil.virtual_memory()._asdict())
     system_data_dict.update({'cpu': psutil.cpu_percent()})
     try:
-        vcgencmd_output = subprocess.check_output(r'vcgencmd measure_temp', shell=True).strip().decode("utf-8")
+        vcgencmd_output = subprocess.check_output(r'sudo vcgencmd measure_temp', shell=True).strip().decode("utf-8")
         cpu_temp = float(re.search(r'[0-9]*\.[0-9]*', vcgencmd_output).group())
     except:
         cpu_temp = 0

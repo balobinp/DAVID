@@ -537,6 +537,22 @@ systemctl status david.service
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python
 tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      3794/python
 
+9. Запустить сервис для david_climate_check.py
+
+Поместить в /etc/systemd/system файлы
+david_climate_check.timer
+david_climate_check.service
+
+systemctl status david_climate_check.service
+systemctl start david_climate_check.service
+
+sudo systemctl start david_climate_check.timer
+sudo systemctl enable david_climate_check.timer # для того, чтобы сервис стартовал при старте системы
+
+Проверить выполнение
+systemctl list-timers
+sudo journalctl -u david_climate_check.service  # view the logs for a specific service
+
 5. Перезагрузить папку WEB_UI запустить сервер
 Предварительно поменяв путь в файле settings.py
 Если нужно, применить миграции и загрузить недостающие данные в базу данных.
@@ -560,7 +576,7 @@ VALUES('Папе, маме и дочке вместе 70 лет. Сколько 
 
 7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
 crontab -e
-*/15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
+# */15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
 0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
 
