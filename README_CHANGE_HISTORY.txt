@@ -616,6 +616,15 @@ sudo chmod 666 /home/david/log/user_interface.log
 
 7. Установить часовой пояс в системе
 
+8. Создать директорию на ftp сервере для загрузки бэкапов базы данных
+IP адрес и путь должен быть записан в david_lib.py в переменных:
+ftp_ip_addr = '192.168.1.1'
+ftp_db_backup_dir = 'Transcend/david/db_backup'
+
+Пароль и юзер для доступа по ftp должен быть записан в david_pass.json в переменных
+ftp_user
+ftp_pass
+
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py
 cd /home/david/WEB_UI
