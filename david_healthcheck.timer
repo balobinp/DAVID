@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs every day at 18:00.
+RefuseManualStart=no # I can manually start the timer
+RefuseManualStop=no # I can manually stop the timer
+
+[Timer]
+OnBootSec=30 # How many seconds after the boot should it run the first time
+OnCalendar=*-*-* 18:00:00
+Unit=david_healthcheck.service
+
+[Install]
+WantedBy=timers.target

@@ -539,15 +539,35 @@ tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      
 
 9. Запустить сервис для david_climate_check.py
 
-Поместить в /etc/systemd/system файлы
+Поместить в папку /home/david файлы:
 david_climate_check.timer
 david_climate_check.service
+david_currency_check.timer
+david_currency_check.service
+david_healthcheck.timer
+david_healthcheck.service
 
-systemctl status david_climate_check.service
-systemctl start david_climate_check.service
+Переместить эти файлы в /etc/systemd/system
+sudo mv /home/david/david_climate_check.timer /etc/systemd/system/david_climate_check.timer
+sudo mv /home/david/david_climate_check.service /etc/systemd/system/david_climate_check.service
+sudo mv /home/david/david_currency_check.timer /etc/systemd/system/david_currency_check.timer
+sudo mv /home/david/david_currency_check.service /etc/systemd/system/david_currency_check.service
+sudo mv /home/david/david_healthcheck.timer /etc/systemd/system/david_healthcheck.timer
+sudo mv /home/david/david_healthcheck.service /etc/systemd/system/david_healthcheck.service
+
+sudo systemctl status david_climate_check.service
+sudo systemctl start david_climate_check.service
+sudo systemctl status david_currency_check.service
+sudo systemctl start david_currency_check.service
+sudo systemctl status david_healthcheck.service
+sudo systemctl start david_healthcheck.service
 
 sudo systemctl start david_climate_check.timer
 sudo systemctl enable david_climate_check.timer # для того, чтобы сервис стартовал при старте системы
+sudo systemctl start david_currency_check.timer
+sudo systemctl enable david_currency_check.timer
+sudo systemctl start david_healthcheck.timer
+sudo systemctl enable david_healthcheck.timer
 
 Проверить выполнение
 systemctl list-timers
@@ -577,8 +597,8 @@ VALUES('Папе, маме и дочке вместе 70 лет. Сколько 
 7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
 crontab -e
 # */15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
-0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
-0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
+# 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
+# 0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
 
 8. Установить postfix чтобы cron работал.
 "Linux uses mail for sending notifications to the user.

@@ -18,6 +18,7 @@ import david_lib
 
 dir_david = david_lib.dir_david
 ftp_ip_addr = david_lib.ftp_ip_addr
+ftp_db_backup_dir = david_lib.ftp_db_backup_dir
 file_pass_path = join(dir_david, 'david_pass.json')
 file_log_healthcheck = david_lib.file_log_healthcheck
 file_log_healthcheck_path = join(dir_david, file_log_healthcheck)
@@ -118,7 +119,6 @@ def get_system_data():
     return system_data_dict
 
 def make_db_backup_ftp():
-    ftp_backup_dir = r'/david/db_backup'
     with open(file_pass_path, "r") as json_file:
         passwords = json.load(json_file)
     ftp_user = passwords['ftp_user']
@@ -127,8 +127,8 @@ def make_db_backup_ftp():
         ftp = ftplib.FTP(ftp_ip_addr)
         ftp.login(ftp_user, ftp_pass)
         file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
-        ftp.storbinary('STOR ' + f'{ftp_backup_dir}/{file_sqlite_db_backup}', open(file_sqlite_db_path, 'rb'))
-        ftp.cwd(ftp_backup_dir)
+        ftp.storbinary('STOR ' + f'{ftp_db_backup_dir}/{file_sqlite_db_backup}', open(file_sqlite_db_path, 'rb'))
+        ftp.cwd(ftp_db_backup_dir)
         db_backups = ftp.nlst()
         db_backups.sort()
         for db_backup in db_backups[:-3]:

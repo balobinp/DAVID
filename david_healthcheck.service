@@ -1,0 +1,9 @@
+[Unit]
+Description=David healthcheck service. Runs every day at 18:00.
+
+[Service]
+Type=simple
+ExecStart=/home/david/env/bin/python /home/david/david_healthcheck.py
+
+[Install]
+WantedBy=default.target
