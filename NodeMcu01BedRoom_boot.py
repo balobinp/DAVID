@@ -16,7 +16,7 @@
 import os
 import uos
 import network
-from machine import Pin, I2C
+from machine import Pin, I2C, ADC
 from time import sleep
 import urequests
 import ssd1306
@@ -28,15 +28,21 @@ sensor_id = 1
 ip_server = '192.168.1.44'
 port_server = 80
 
-def clear_screen(oled):
-    oled.fill(0)
-    oled.show()
-
 # Setup OLED
 i2c = I2C(-1, scl=Pin(5), sda=Pin(4))
 oled_width = 128
 oled_height = 64
 oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
+
+def clear_screen(oled):
+    oled.fill(0)
+    oled.show()
+
+def clear_str(oled, pos=0, fill=0):
+    for x in range(oled_width):
+        for y in range(pos, pos+10):
+            oled.pixel(x, y, fill)
+    oled.show()
 
 # Connect to WiFi
 sta_if = network.WLAN(network.STA_IF) 
