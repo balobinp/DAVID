@@ -19,12 +19,18 @@ import network
 from machine import Pin, I2C, ADC
 from time import sleep
 import urequests
-import ssd1306
+import ujson
 import webrepl
 
+import ssd1306
+
+with open('david_pass.json', "r") as json_file:
+    passwords = ujson.load(json_file)
+
+ssid = passwords['ssid']
+passwd = passwords['wifi_passwd']
+
 version = 200404
-ssid = 'Home'
-passwd = 'ASDFGHQWERTY'
 sensor_id = 1
 ip_server = '192.168.1.44'
 port_server = 80
@@ -42,12 +48,13 @@ def clear_screen(oled):
     oled.show()
 
 def clear_str(oled, pos=0, fill=0):
+    'OLED display pos=[0-50]'
     for x in range(oled_width):
         for y in range(pos, pos+10):
             oled.pixel(x, y, fill)
     oled.show()
 
-def clear_sym(oled, pos_x=0, pos_y=0, num=1, fill=1):
+def clear_sym(oled, pos_x=0, pos_y=0, num=1, fill=0):
     'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
     for x in range(8*num):
         for y in range(pos_y, pos_y+10):
@@ -58,17 +65,17 @@ def draw_bulet(oled, pos_x=3, pos_y=0):
     'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
     bul = [
     [0,0,0,0,0,0,0,0],
-    [0,0,0,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0],
     [0,0,1,1,1,1,0,0],
     [0,1,1,1,1,1,1,0],
     [0,1,1,1,1,1,1,0],
     [0,1,1,1,1,1,1,0],
     [0,1,1,1,1,1,1,0],
     [0,0,1,1,1,1,0,0],
-    [0,0,0,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],]
-    for x, line in enumerate(bul):
-        for y, fill in enumerate(line):
+    for y, line in enumerate(bul):
+        for x, fill in enumerate(line):
             oled.pixel(x+pos_x*8, y+pos_y, fill)
     oled.show()
 

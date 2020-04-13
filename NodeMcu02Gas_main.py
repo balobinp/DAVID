@@ -23,16 +23,16 @@ pos_mot = 40
 
 delay_dht = 900000
 delay_gaz = 5000
-delay_mot = 1000 # Read delay for motion sensor
+delay_mot = 1000
 
-# Read DHT sensor, update the screen and send the data to server
 def dht_meas(deadline):
+    """Read DHT sensor, update the screen and send the data to server"""
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
         s_dht.measure()
         dht_tem = s_dht.temperature()
         dht_hum = s_dht.humidity()
         clear_sym(oled, pos_x=7, pos_y=pos_tem, num=2, fill=0)
-        clear_sym(oled, pos_x=7, pos_y=dht_hum, num=2, fill=0)
+        clear_sym(oled, pos_x=7, pos_y=pos_hum, num=2, fill=0)
         oled.text('Temp.: {:>2} C'.format(dht_tem), 0, pos_tem)
         oled.text('Hum.:  {:>2} %'.format(dht_hum), 0, pos_hum)
         oled.show()
@@ -45,8 +45,8 @@ def dht_meas(deadline):
         deadline = utime.ticks_add(utime.ticks_ms(), delay_dht)
     return deadline
 
-# Read Gaz sensor, update the screen, LGB and buzzer and send the emergency data to server
 def gaz_meas(deadline):
+    """Read Gaz sensor, update the screen, LGB and buzzer and send the emergency data to server"""
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
         gaz_val = s_gaz.read()
         if gaz_val > mq_th_2:
@@ -54,7 +54,7 @@ def gaz_meas(deadline):
             led_r.on()
             buzz.on()
             r = urequests.get(
-                'http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type=0'.format(
+                'http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type=1'.format(
                     ip_server, port_server, sensor_id, gaz_val))
         elif gaz_val > mq_th_1:
             buzz.off()
@@ -64,8 +64,7 @@ def gaz_meas(deadline):
             buzz.off()
             led_r.off()
             led_g.on()
-        clear_str(oled, pos=pos_gaz)
-        clear_sym(oled, pos_x=6, pos_y=pos_gaz, num=3, fill=0)
+        clear_sym(oled, pos_x=6, pos_y=pos_gaz, num=3)
         oled.text('Gaz:  {:>3}'.format(gaz_val), 0, pos_gaz)
         oled.show()
         deadline = utime.ticks_add(utime.ticks_ms(), delay_gaz)
@@ -74,22 +73,24 @@ def gaz_meas(deadline):
 # Read motion sensor
 def mot_read(deadline):
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
-        clear_str(oled, pos=pos_mot)
+        clear_sym(oled, pos_x=1, pos_y=pos_mot, num=1)
         if s_mot.value():
-            clear_str(oled, pos=pos_mot)
-            oled.text('Motion detected', 0, pos_mot)
-            oled.show()
+            draw_bulet(oled, pos_x=1, pos_y=pos_mot)
         deadline = utime.ticks_add(utime.ticks_ms(), delay_dht)
     return deadline
 
-deadline_dh = utime.ticks_add(utime.ticks_ms(), delay_dht)
-deadline_mq = utime.ticks_add(utime.ticks_ms(), delay_gaz)
-deadline_mo = utime.ticks_add(utime.ticks_ms(), delay_mot)
+# deadline_dh = utime.ticks_add(utime.ticks_ms(), delay_dht)
+# deadline_mq = utime.ticks_add(utime.ticks_ms(), delay_gaz)
+# deadline_mo = utime.ticks_add(utime.ticks_ms(), delay_mot)
+
+deadline_dh = 0
+deadline_mq = 0
+deadline_mo = 0
 
 clear_screen(oled)
 
 # while True:
-for _ in range(210):
+for _ in range(600):
     deadline_dh = dht_meas(deadline_dh)
     deadline_mq = gaz_meas(deadline_mq)
     deadline_mo = mot_read(deadline_mo)
