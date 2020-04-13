@@ -16,10 +16,10 @@ buzz.off()
 mq_th_1 = 250 # Gaz threshold level 1
 mq_th_2 = 500 # Gaz threshold level 2
 
-pos_tem = 20
-pos_hum = 30
-pos_gaz = 40
-pos_mot = 50
+pos_tem = 10
+pos_hum = 20
+pos_gaz = 30
+pos_mot = 40
 
 delay_dht = 900000
 delay_gaz = 5000
@@ -31,11 +31,17 @@ def dht_meas(deadline):
         s_dht.measure()
         dht_tem = s_dht.temperature()
         dht_hum = s_dht.humidity()
-        clear_str(oled, pos=pos_tem)
-        clear_str(oled, pos=pos_hum)
-        oled.text('Temp.: {} C'.format(dht_tem), 0, pos_tem)
-        oled.text('Hum.: {} %'.format(dht_hum), 0, pos_hum)
+        clear_sym(oled, pos_x=7, pos_y=pos_tem, num=2, fill=0)
+        clear_sym(oled, pos_x=7, pos_y=dht_hum, num=2, fill=0)
+        oled.text('Temp.: {:>2} C'.format(dht_tem), 0, pos_tem)
+        oled.text('Hum.:  {:>2} %'.format(dht_hum), 0, pos_hum)
         oled.show()
+        r = urequests.get(
+            'http://{0}:{1}/climate;sensor={2}&readattempt=0&temperature={3}&humidity={4}'.format(
+                ip_server, port_server, sensor_id, dht_tem, dht_hum))
+        if r.status_code == 200:
+            draw_bulet(oled, pos_x=13, pos_y=pos_tem)
+            draw_bulet(oled, pos_x=13, pos_y=pos_hum)
         deadline = utime.ticks_add(utime.ticks_ms(), delay_dht)
     return deadline
 
@@ -47,6 +53,9 @@ def gaz_meas(deadline):
             led_g.off()
             led_r.on()
             buzz.on()
+            r = urequests.get(
+                'http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type=0'.format(
+                    ip_server, port_server, sensor_id, gaz_val))
         elif gaz_val > mq_th_1:
             buzz.off()
             led_g.off()
@@ -56,7 +65,8 @@ def gaz_meas(deadline):
             led_r.off()
             led_g.on()
         clear_str(oled, pos=pos_gaz)
-        oled.text('MQ-4.: {}'.format(gaz_val), 0, pos_gaz)
+        clear_sym(oled, pos_x=6, pos_y=pos_gaz, num=3, fill=0)
+        oled.text('Gaz:  {:>3}'.format(gaz_val), 0, pos_gaz)
         oled.show()
         deadline = utime.ticks_add(utime.ticks_ms(), delay_gaz)
     return deadline

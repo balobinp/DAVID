@@ -20,6 +20,7 @@ from machine import Pin, I2C, ADC
 from time import sleep
 import urequests
 import ssd1306
+import webrepl
 
 version = 200404
 ssid = 'Home'
@@ -27,6 +28,8 @@ passwd = 'ASDFGHQWERTY'
 sensor_id = 1
 ip_server = '192.168.1.44'
 port_server = 80
+
+webrepl.start()
 
 # Setup OLED
 i2c = I2C(-1, scl=Pin(5), sda=Pin(4))
@@ -42,6 +45,31 @@ def clear_str(oled, pos=0, fill=0):
     for x in range(oled_width):
         for y in range(pos, pos+10):
             oled.pixel(x, y, fill)
+    oled.show()
+
+def clear_sym(oled, pos_x=0, pos_y=0, num=1, fill=1):
+    'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
+    for x in range(8*num):
+        for y in range(pos_y, pos_y+10):
+            oled.pixel(pos_x*8+x, y, fill)
+    oled.show()
+
+def draw_bulet(oled, pos_x=3, pos_y=0):
+    'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
+    bul = [
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,0,0,0],
+    [0,0,1,1,1,1,0,0],
+    [0,1,1,1,1,1,1,0],
+    [0,1,1,1,1,1,1,0],
+    [0,1,1,1,1,1,1,0],
+    [0,1,1,1,1,1,1,0],
+    [0,0,1,1,1,1,0,0],
+    [0,0,0,1,1,0,0,0],
+    [0,0,0,0,0,0,0,0],]
+    for x, line in enumerate(bul):
+        for y, fill in enumerate(line):
+            oled.pixel(x+pos_x*8, y+pos_y, fill)
     oled.show()
 
 # Connect to WiFi
