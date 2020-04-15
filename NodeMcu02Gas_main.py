@@ -20,16 +20,19 @@ led_buzz()
 mq_th_1 = 250 # Gaz threshold level 1
 mq_th_2 = 500 # Gaz threshold level 2
 
+tm_th_1 = 30 # temperature oven alert threshold
+
 pos_tem = 10
 pos_hum = 20
 pos_gas = 30
 pos_mot = 40
 
-delay_rep = 900000 # delay for regular climate and gas sensors report
+delay_rep = 900000 # Regular climate and gas sensors report interval
 delay_gas = 5000
-delay_mot = 1000
-delay_swh = 300000 # delay for the switch
+delay_mot = 1000 # Check motion sensor interval
+delay_swh = 300000 # Delay for the light to switch off
 delay_ovn = 60000 # Delay to check the oven
+delay_fir = 600000 # No motion and high temperature near oven emergency delay
 
 def dht_meas(deadline):
     """Read DHT sensor, update the screen and send the data to server"""
@@ -78,7 +81,7 @@ def gas_meas(deadline_gas, deadline_rep):
         deadline_gas = utime.ticks_add(utime.ticks_ms(), delay_gas)
     return deadline_gas, deadline_rep
 
-def read_mot(deadline_mot, deadline_swh):
+def read_mot(deadline_mot, deadline_swh, deadline_fir):
     """Read the motion sensor"""
     if utime.ticks_diff(utime.ticks_ms(), deadline_mot) > 0:
         clear_sym(oled, pos_x=1, pos_y=pos_mot, num=1)
@@ -86,21 +89,25 @@ def read_mot(deadline_mot, deadline_swh):
             draw_bulet(oled, pos_x=1, pos_y=pos_mot)
             swh_1.on()
             deadline_swh = utime.ticks_add(utime.ticks_ms(), delay_swh)
+            deadline_fir = utime.ticks_add(utime.ticks_ms(), delay_fir)
         elif utime.ticks_diff(utime.ticks_ms(), deadline_swh) > 0:
             swh_1.off()
         deadline_mot = utime.ticks_add(utime.ticks_ms(), delay_rep)
-    return deadline_mot, deadline_swh
+    return deadline_mot, deadline_swh, deadline_fir
 
-def check_oven():
+def check_oven(deadline_fir):
     s_dht.measure()
     dht_tem = s_dht.temperature()
-    pass
+    if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0 and dht_tem > tm_th_1:
+        led_buzz(red=0, grn=0, buz=1)
+        # send http request to the server
 
 deadline_rp = 0 # Report deadline
 deadline_gs = 0 # Gas sensor deadline
-deadline_mo = 0 # change to max Motion
-deadline_sw = 0 # change to max Switching off the light
-deadline_ov = 0 # change to max Oven alert deadline
+deadline_mo = 10000 # change to max Motion
+deadline_sw = 10000 # change to max Switching off the light
+deadline_ov = 10000 # change to max Oven alert deadline
+deadline_fr = 10000 # Oven alarm deadline
 
 clear_screen(oled)
 
@@ -116,9 +123,10 @@ for _ in range(600):
 
     # Read the motion sensor every delay_mot interval. Update the screen.
     # Switch on the light for the delay_swh period in case if motion detected
-    deadline_mo, deadline_sw = read_mot(deadline_mo, deadline_sw)
+    deadline_mo, deadline_sw, deadline_fr = read_mot(deadline_mo, deadline_sw, deadline_fr)
 
     # Check motion and the temperature and send the report to the server
     # Switch on the buzzer
+    check_oven(deadline_fr)
 
     utime.sleep(0.1)
