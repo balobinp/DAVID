@@ -11,6 +11,7 @@ buz_1 = Pin(16, Pin.OUT) # 16|D0 Buzzer
 swh_1 = Pin(2, Pin.OUT) # 2|D4 switch
 
 def led_buzz(red=0, grn=0, buz=0):
+    print("led_buzz red={}, grn={}, buz={}".format(red, grn, buz))
     led_r.on() if red == 1 else led_r.off()
     led_g.on() if grn == 1 else led_g.off()
     buz_1.on() if buz == 1 else buz_1.off()
@@ -34,20 +35,35 @@ delay_swh = 300000 # Delay for the light to switch off
 delay_ovn = 10000 # Delay to check the oven
 delay_fir = 600000 # No motion and high temperature near oven emergency delay
 
+def read_dht(dht, att=10):
+    for i in range(1, att+1):
+        print("Read DHT attempt: {}".format(i))
+        try:
+            dht.measure()
+            dht_tem = dht.temperature()
+            dht_hum = dht.humidity()
+            if dht_tem and dht_hum:
+                return dht_tem, dht_hum, i
+        except:
+            sleep(0.1)
+    return None, None, att
+
 def dht_meas(deadline):
     """Read DHT sensor, update the screen and send the data to server"""
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
-        s_dht.measure()
-        dht_tem = s_dht.temperature()
-        dht_hum = s_dht.humidity()
+        dht_tem, dht_hum, att = read_dht(s_dht, att=10)
+        print("DHT result in dht_meas: t={}, h={}, att={}".format(dht_tem, dht_hum, att))
+        # s_dht.measure()
+        # dht_tem = s_dht.temperature()
+        # dht_hum = s_dht.humidity()
         clear_sym(oled, pos_x=7, pos_y=pos_tem, num=2, fill=0)
         clear_sym(oled, pos_x=7, pos_y=pos_hum, num=2, fill=0)
         oled.text('Temp.: {:>2} C'.format(dht_tem), 0, pos_tem)
         oled.text('Hum.:  {:>2} %'.format(dht_hum), 0, pos_hum)
         oled.show()
         r = urequests.get(
-            'http://{0}:{1}/climate;sensor={2}&readattempt=0&temperature={3}&humidity={4}'.format(
-                ip_server, port_server, sensor_id, dht_tem, dht_hum))
+            'http://{0}:{1}/climate;sensor={2}&readattempt={3}&temperature={4}&humidity={5}'.format(
+                ip_server, port_server, sensor_id, att, dht_tem, dht_hum))
         if r.status_code == 200:
             draw_bulet(oled, pos_x=13, pos_y=pos_tem)
             draw_bulet(oled, pos_x=13, pos_y=pos_hum)
@@ -83,6 +99,7 @@ def gas_meas(deadline_gas, deadline_rep):
 
 def read_mot(deadline_mot, deadline_swh, deadline_fir):
     """Read the motion sensor"""
+    print("read_mot")
     if utime.ticks_diff(utime.ticks_ms(), deadline_mot) > 0:
         clear_sym(oled, pos_x=1, pos_y=pos_mot, num=1)
         if s_mot.value():
@@ -96,21 +113,26 @@ def read_mot(deadline_mot, deadline_swh, deadline_fir):
     return deadline_mot, deadline_swh, deadline_fir
 
 def check_oven(deadline_fir):
-    s_dht.measure()
-    dht_tem = s_dht.temperature()
+    dht_tem, dht_hum, att = read_dht(s_dht, att=10)
+    print("DHT result in check_oven: t={}, h={}, att={}".format(dht_tem, dht_hum, att))
     if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0 and dht_tem > tm_th_1:
         led_buzz(red=0, grn=0, buz=1)
         # send http request to the server
         r = urequests.get(
-            'http://{0}:{1}/oven;sensor={2}&temperature={}&type=1'.format(
+            'http://{0}:{1}/oven;sensor={2}&temperature={3}&type=1'.format(
                 ip_server, port_server, sensor_id_tmo_1, dht_tem))
+    deadline_fir = utime.ticks_add(utime.ticks_ms(), delay_fir)
+    print("DHT result in check_oven: t={}, h={}, att={}, deadline_fir={}, ticks={}".format(dht_tem, dht_hum, att,
+                                                                                           deadline_fir,
+                                                                                           utime.ticks_ms()))
+    return deadline_fir
 
 deadline_rp = 0 # Report deadline
 deadline_gs = 0 # Gas sensor deadline
-deadline_mo = 10000 # change to max Motion
+deadline_mo = 0 # Motion sensor deadline
 deadline_sw = 10000 # change to max Switching off the light
 deadline_ov = 10000 # change to max Oven alert deadline
-deadline_fr = 10000 # Oven alarm deadline
+deadline_fr = 0 # Oven alarm deadline
 
 clear_screen(oled)
 
@@ -130,6 +152,6 @@ for _ in range(600):
 
     # Check motion and the temperature and send the report to the server
     # Switch on the buzzer
-    check_oven(deadline_fr)
+    deadline_fr = check_oven(deadline_fr)
 
-    utime.sleep(0.1)
+    utime.sleep(0.05)
