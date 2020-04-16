@@ -31,7 +31,9 @@ ssid = passwords['ssid']
 passwd = passwords['wifi_passwd']
 
 version = 200404
-sensor_id = 1
+sensor_id = 1 # main sensor
+sensor_id_gas_1 = 2 # gas sensor in the kitchen
+sensor_id_tmo_1 = 4 # temperature and motion sensors in the kitchen
 ip_server = '192.168.1.44'
 port_server = 80
 

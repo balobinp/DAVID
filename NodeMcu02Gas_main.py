@@ -31,7 +31,7 @@ delay_rep = 900000 # Regular climate and gas sensors report interval
 delay_gas = 5000
 delay_mot = 1000 # Check motion sensor interval
 delay_swh = 300000 # Delay for the light to switch off
-delay_ovn = 60000 # Delay to check the oven
+delay_ovn = 10000 # Delay to check the oven
 delay_fir = 600000 # No motion and high temperature near oven emergency delay
 
 def dht_meas(deadline):
@@ -101,6 +101,9 @@ def check_oven(deadline_fir):
     if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0 and dht_tem > tm_th_1:
         led_buzz(red=0, grn=0, buz=1)
         # send http request to the server
+        r = urequests.get(
+            'http://{0}:{1}/oven;sensor={2}&temperature={}&type=1'.format(
+                ip_server, port_server, sensor_id_tmo_1, dht_tem))
 
 deadline_rp = 0 # Report deadline
 deadline_gs = 0 # Gas sensor deadline
