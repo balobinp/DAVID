@@ -11,7 +11,7 @@ buz_1 = Pin(16, Pin.OUT) # 16|D0 Buzzer
 swh_1 = Pin(2, Pin.OUT) # 2|D4 switch
 
 def led_buzz(red=0, grn=0, buz=0):
-    print("led_buzz red={}, grn={}, buz={}".format(red, grn, buz))
+    print("00 led_buzz red={}, grn={}, buz={}".format(red, grn, buz))
     led_r.on() if red == 1 else led_r.off()
     led_g.on() if grn == 1 else led_g.off()
     buz_1.on() if buz == 1 else buz_1.off()
@@ -114,17 +114,19 @@ def read_mot(deadline_mot, deadline_swh, deadline_fir):
 
 def check_oven(deadline_fir):
     dht_tem, dht_hum, att = read_dht(s_dht, att=10)
-    print("DHT result in check_oven: t={}, h={}, att={}".format(dht_tem, dht_hum, att))
+    print("01 check_oven in DHT result: dht_tem={}, att={}, t={}, d={}, diff={}".format(dht_tem, att,
+                                                                    utime.ticks_ms(), deadline_fir,
+                                                                    utime.ticks_diff(utime.ticks_ms(), deadline_fir)))
     if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0 and dht_tem > tm_th_1:
+        print("02 check_oven in inside if cicle")
         led_buzz(red=0, grn=0, buz=1)
         # send http request to the server
         r = urequests.get(
             'http://{0}:{1}/oven;sensor={2}&temperature={3}&type=1'.format(
-                ip_server, port_server, sensor_id_tmo_1, dht_tem))
+                ip_server, port_server, sensor_id_tmo_1, dht_tem), timeout=0.1)
     deadline_fir = utime.ticks_add(utime.ticks_ms(), delay_fir)
-    print("DHT result in check_oven: t={}, h={}, att={}, deadline_fir={}, ticks={}".format(dht_tem, dht_hum, att,
-                                                                                           deadline_fir,
-                                                                                           utime.ticks_ms()))
+    print("03 check_oven in after if cicle: t={}, d={}, diff={}".format(utime.ticks_ms(), deadline_fir,
+                                                             utime.ticks_diff(utime.ticks_ms(), deadline_fir)))
     return deadline_fir
 
 deadline_rp = 0 # Report deadline
@@ -137,7 +139,7 @@ deadline_fr = 0 # Oven alarm deadline
 clear_screen(oled)
 
 # while True:
-for _ in range(600):
+for _ in range(10):
 
     # Read DHT sensor every delay_dht interval,  update the screen and send the data to server
     deadline_rp = dht_meas(deadline_rp)
@@ -152,6 +154,10 @@ for _ in range(600):
 
     # Check motion and the temperature and send the report to the server
     # Switch on the buzzer
+    print("00 check_oven before: t={}, d={}, diff={}".format(
+        utime.ticks_ms(), deadline_fr, utime.ticks_diff(utime.ticks_ms(), deadline_fr)))
     deadline_fr = check_oven(deadline_fr)
+    print("04 check_oven after: t={}, d={}, diff={}".format(
+        utime.ticks_ms(), deadline_fr, utime.ticks_diff(utime.ticks_ms(), deadline_fr)))
 
-    utime.sleep(0.05)
+    utime.sleep(0.1)
