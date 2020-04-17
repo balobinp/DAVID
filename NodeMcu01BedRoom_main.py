@@ -8,20 +8,32 @@
 
 import dht
 
-d = dht.DHT11(Pin(0))
+s_dht = dht.DHT11(Pin(0))
+d_rep = 900
+
+def read_dht(dht, att=10):
+    for i in range(1, att+1):
+        try:
+            dht.measure()
+            dht_tem = dht.temperature()
+            dht_hum = dht.humidity()
+            if dht_tem and dht_hum:
+                return dht_tem, dht_hum, i
+        except:
+            sleep(0.1)
+    return None, None, att
 
 while True:
-    d.measure()
-    r = urequests.get(
-        'http://{0}:{1}/climate;sensor={2}&readattempt=0&temperature={3}&humidity={4}'.format(
-            ip_server, port_server, sensor_id, d.temperature(), d.humidity()))
+    dht_tem, dht_hum, att = read_dht(s_dht, att=10)
+    r = get_req(
+        'http://{0}:{1}/climate;sensor={2}&readattempt={3}&temperature={4}&humidity={5}'.format(
+            ip_server, port_server, sensor_id, att, dht_tem, dht_hum))
     clear_screen(oled)
-    oled.text('Temp.:  {} C'.format(d.temperature()), 0, 20)
-    oled.text('Hum.:   {} %'.format(d.humidity()), 0, 30)
-    if r.status_code == 200:
+    oled.text('Temp.:  {} C'.format(dht_tem), 0, 20)
+    oled.text('Hum.:   {} %'.format(dht_hum), 0, 30)
+    if r == 200:
         oled.text('Server: OK', 0, 50)
     else:
-        oled.text('Server: {}'.format(r.status_code), 0, 50)
+        oled.text('Server: {}'.format(r), 0, 50)
     oled.show()
-    r.close()
-    sleep(900)
+    sleep(d_rep)

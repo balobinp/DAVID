@@ -50,6 +50,15 @@ def clear_screen(oled):
     oled.fill(0)
     oled.show()
 
+def get_req(url):
+    try:
+        urequests.get(url)
+        st_cd = r.status_code
+        r.close()
+        return st_cd
+    except:
+        return None
+
 def clear_str(oled, pos=0, fill=0):
     'OLED display pos=[0-50]'
     for x in range(oled_width):
@@ -99,14 +108,15 @@ oled.text('Connected:', 0, 20)
 oled.text('{}'.format(ip_addr), 0, 30)
 oled.show()
 sleep(3)
-r = urequests.get('http://{0}:{1}/connected;sensor={2}&ip={3}&ver={4}'.format(ip_server, port_server,
-                                                                           sensor_id, ip_addr, version))
-
+r = get_req('http://{0}:{1}/connected;sensor={2}&ip={3}&ver={4}'.format(
+    ip_server, port_server, sensor_id, ip_addr, version))
 clear_screen(oled)
 oled.text('Server response', 0, 10)
-oled.text('status: {}'.format(r.status_code), 0, 20)
+if r:
+    oled.text('status: {}'.format(r), 0, 20)
+else:
+    oled.text('status: {}'.format(r), 0, 20)
 oled.text('Ver. : {}'.format(version), 0, 40)
 oled.show()
-r.close()
 sleep(3)
 clear_screen(oled)
