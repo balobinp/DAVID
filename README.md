@@ -118,3 +118,6 @@ Version installation procedure:
 1. Указать юзернейм и пароль ftp сервера в david_pass.json
 2. Указать ftp ip адрес в david_lib.py
 3. Сделать прошивку модуля NodeMcu01BedRoom
+4. Обновить psutil from 5.6.2 to 5.6.6
+5. Обновить werkzeug from 0.15.2 to 0.15.3
+6. Upgrade urllib3 to version 1.24.2
