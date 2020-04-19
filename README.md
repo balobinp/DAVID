@@ -121,3 +121,4 @@ Version installation procedure:
 4. Обновить psutil from 5.6.2 to 5.6.6
 5. Обновить werkzeug from 0.15.2 to 0.15.3
 6. Upgrade urllib3 to version 1.24.2
+7. В файле NodeMcu02Gas_main установить бесконечный цикл while True:

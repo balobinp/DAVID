@@ -27,6 +27,7 @@ pos_hum = 20
 pos_gas = 30
 pos_mot = 40
 
+# Prod delays
 d_rep = 900000 # Regular climate and gas sensors report interval to server
 d_gas = 5000 # Gas check interval
 d_mot = 1000 # Check motion sensor interval
@@ -111,10 +112,10 @@ def read_mot(deadline_mot, deadline_swh, deadline_fir):
             buz_1.off() if buz_1.value() == 1 else None
         elif utime.ticks_diff(utime.ticks_ms(), deadline_swh) > 0:
             swh_1.off()
-        deadline_mot = utime.ticks_add(utime.ticks_ms(), d_rep)
+        deadline_mot = utime.ticks_add(utime.ticks_ms(), d_mot)
     return deadline_mot, deadline_swh, deadline_fir
 
-def check_oven(deadline_fir):
+def check_oven(deadline_fir, deadline_ovn):
     if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0:
         dht_tem, dht_hum, att = read_dht(s_dht, att=10)
         if dht_tem > tm_th_1:
@@ -122,27 +123,28 @@ def check_oven(deadline_fir):
             # send http request to the server
             get_req('http://{0}:{1}/oven;sensor={2}&temperature={3}&type=1'.format(
                     ip_server, port_server, s_id_tmo_1, dht_tem))
-    deadline_fir = utime.ticks_add(utime.ticks_ms(), d_fir)
-    return deadline_fir
+    deadline_ovn = utime.ticks_add(utime.ticks_ms(), d_ovn)
+    return deadline_ovn
 
-dl_rp = 0 # Report deadline
+dl_tr = 0 # Report temperature deadline
+dl_gr = 0 # Report gas deadline
 dl_gs = 0 # Gas sensor deadline
 dl_mo = 0 # Motion sensor deadline
 dl_sw = 100000 # Switching off the light
-dl_ov = 100000 # Oven check deadline
+dl_ov = 0 # Oven check deadline
 dl_fr = 0 # Oven fire alarm deadline
 
 clear_screen(oled)
 
 # while True:
-for _ in range(10):
+for _ in range(600):
 
     # Read DHT sensor every delay_dht interval,  update the screen and send the data to server
-    dl_rp = dht_meas(dl_rp)
+    dl_tr = dht_meas(dl_tr)
 
     # Read MQ-4 sensor every delay_gas interval, update the screen, LGB and buzzer
     # Send the report to data server in case of emergency and each delay_rep interval
-    dl_gs, dl_rp = gas_meas(dl_gs, dl_rp)
+    dl_gs, dl_gr = gas_meas(dl_gs, dl_gr)
 
     # Read the motion sensor every delay_mot interval. Update the screen.
     # Switch on the light for the delay_swh period in case if motion detected
@@ -150,6 +152,6 @@ for _ in range(10):
 
     # Check motion and the temperature and send the report to the server
     # Switch on the buzzer
-    dl_fr = check_oven(dl_fr)
+    dl_ov = check_oven(dl_fr, dl_ov)
 
     utime.sleep(0.1)

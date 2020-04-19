@@ -21,19 +21,19 @@ import webrepl
 import ssd1306
 
 s_id_tmp_1 = 1 # temperature in NodeMcu01BedRoom (main sensor)
-s_id_tmp_2 = 1 # temperature in NodeMcu02Gas
+s_id_tmp_2 = 5 # temperature in NodeMcu02Gas
 s_id_gas_1 = 2 # gas in NodeMcu02Gas (main sensor)
 s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 ### SET VARIABLES HERE ###
 
-version = 200404
+version = 200419
 
-# ip_server = '192.168.1.44'
-ip_server = '192.168.1.63'
+ip_server = '192.168.1.44'
+# ip_server = '192.168.1.63'
 port_server = 80
 
-s_id_ctr = s_id_tmp_1 # NodeMcu01BedRoom
+s_id_ctr = s_id_gas_1 # NodeMcu02Gas
 
 oled_width = 128
 oled_height = 64
@@ -130,6 +130,7 @@ if r:
     oled.text('status: {}'.format(r), 0, 20)
 else:
     oled.text('status: {}'.format(r), 0, 20)
+
 oled.text('Ver. : {}'.format(version), 0, 40)
 oled.show()
 sleep(3)
