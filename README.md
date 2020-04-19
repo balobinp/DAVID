@@ -34,6 +34,7 @@ To Do list:
 29. Перевести все пароли в david_pass.json
 
 Главный Компьютер:
+1. Добавить обработку get запроса от контроллера NodeMcu02Gas о стоящей на газу посуде.
 27. Добавить API на базе flask и flask_sqlalchemy для получения данных из базы данных.
 30. Настроить звук и колонки
 
@@ -74,6 +75,9 @@ To Do list:
 unsigned long delay_http_report = 900000;
 if (millis() - last_time > delay_http_report) {...
 2. Добавить датчик температуры.
+3. Добавить датчик освещенности.
+4. Добавить отображения кол-ва секунд до выключения освещения.
+5. Сделать пересчет уровня газа в проценты по формуле.
 
 Микроконтроллер NodeMcu03Door (датчик между входными дверями)
 1. Увеличить таймер выключения света до 30 секунд.
@@ -105,6 +109,9 @@ Version 0.7.0.dev change list and installation procedure:
 5. Все модули из Cron переведены на systemd
 
 Микроконтроллер NodeMcu01BedRoom:
+1. Перевод на MicroPython
+
+Микроконтроллер NodeMcu02Gas:
 1. Перевод на MicroPython
 
 Version installation procedure:

@@ -8,13 +8,9 @@
 
 # boot.py
 # This file is executed on every boot (including wake-boot from deepsleep)
-# Actions:
-# Connecting to the WiFi network
-# Send the notification to the server
-# Display the status on the OLED
 
-import os
-import uos
+# import os
+# import uos
 import network
 from machine import Pin, I2C, ADC
 from time import sleep
@@ -24,26 +20,38 @@ import webrepl
 
 import ssd1306
 
+### SET VARIABLES HERE ###
+
+version = 200404
+
+# ip_server = '192.168.1.44'
+ip_server = '192.168.1.63'
+port_server = 80
+
+s_id_ctr = s_id_tmp_1 # NodeMcu01BedRoom
+# s_id_ctr = s_id_tmp_2 # NodeMcu02Gas
+
+oled_width = 128
+oled_height = 64
+
+###########################
+
 with open('david_pass.json', "r") as json_file:
     passwords = ujson.load(json_file)
 
 ssid = passwords['ssid']
 passwd = passwords['wifi_passwd']
 
-version = 200404
-sensor_id = 1 # main sensor
-sensor_id_gas_1 = 2 # gas sensor in the kitchen
-sensor_id_tmo_1 = 4 # temperature and motion sensors in the kitchen
-# ip_server = '192.168.1.44'
-ip_server = '192.168.1.63'
-port_server = 80
+s_id_tmp_1 = 1 # temperature in NodeMcu01BedRoom (main sensor)
+s_id_tmp_2 = 1 # temperature in NodeMcu02Gas
+s_id_gas_1 = 2 # gas in NodeMcu02Gas (main sensor)
+s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 webrepl.start()
 
 # Setup OLED
+
 i2c = I2C(-1, scl=Pin(5), sda=Pin(4))
-oled_width = 128
-oled_height = 64
 oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
 
 def clear_screen(oled):
@@ -91,7 +99,8 @@ def draw_bulet(oled, pos_x=3, pos_y=0):
             oled.pixel(x+pos_x*8, y+pos_y, fill)
     oled.show()
 
-# Connect to WiFi
+# Connecting to WiFi network
+
 sta_if = network.WLAN(network.STA_IF) 
 sta_if.active(True) # Activate WiFi
 sta_if.connect(ssid, passwd)
@@ -108,8 +117,14 @@ oled.text('Connected:', 0, 20)
 oled.text('{}'.format(ip_addr), 0, 30)
 oled.show()
 sleep(3)
+
+# Send the notification to the server
+
 r = get_req('http://{0}:{1}/connected;sensor={2}&ip={3}&ver={4}'.format(
-    ip_server, port_server, sensor_id, ip_addr, version))
+    ip_server, port_server, s_id_ctr, ip_addr, version))
+
+# Display the status on the OLED
+
 clear_screen(oled)
 oled.text('Server response', 0, 10)
 if r:

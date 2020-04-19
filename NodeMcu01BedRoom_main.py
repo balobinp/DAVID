@@ -27,7 +27,7 @@ while True:
     dht_tem, dht_hum, att = read_dht(s_dht, att=10)
     r = get_req(
         'http://{0}:{1}/climate;sensor={2}&readattempt={3}&temperature={4}&humidity={5}'.format(
-            ip_server, port_server, sensor_id, att, dht_tem, dht_hum))
+            ip_server, port_server, s_id_tmp_1, att, dht_tem, dht_hum))
     clear_screen(oled)
     oled.text('Temp.:  {} C'.format(dht_tem), 0, 20)
     oled.text('Hum.:   {} %'.format(dht_hum), 0, 30)
