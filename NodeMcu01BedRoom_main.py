@@ -21,7 +21,7 @@ def read_dht(dht, att=10):
                 return dht_tem, dht_hum, i
         except:
             sleep(0.1)
-    return None, None, att
+    return 0, 0, att
 
 while True:
     dht_tem, dht_hum, att = read_dht(s_dht, att=10)

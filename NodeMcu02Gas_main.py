@@ -53,7 +53,7 @@ def read_dht(dht, att=10):
                 return dht_tem, dht_hum, i
         except:
             sleep(0.1)
-    return None, None, att
+    return 0, 0, att
 
 def dht_meas(deadline):
     """Read DHT sensor, update the screen and send the data to server"""
