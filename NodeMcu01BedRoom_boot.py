@@ -3,7 +3,7 @@
 #  SDA <-> D2 (4)
 #  SCL <-> D1 (5)
 
-# DHT11     NodeMcu
+# DHT22     NodeMcu
 #   OUT <-> D3 (0)
 
 # boot.py
@@ -27,10 +27,10 @@ s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 ### SET VARIABLES HERE ###
 
-version = 200404
+version = 200508
 
-# ip_server = '192.168.1.44'
-ip_server = '192.168.1.63'
+ip_server = '192.168.1.44'
+# ip_server = '192.168.1.63'
 port_server = 80
 
 s_id_ctr = s_id_tmp_1 # NodeMcu01BedRoom

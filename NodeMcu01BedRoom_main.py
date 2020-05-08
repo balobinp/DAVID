@@ -8,7 +8,7 @@
 
 import dht
 
-s_dht = dht.DHT11(Pin(0))
+s_dht = dht.DHT22(Pin(0))
 d_rep = 900
 
 def read_dht(dht, att=10):
