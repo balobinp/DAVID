@@ -577,15 +577,15 @@ sudo journalctl -u david_climate_check.service  # view the logs for a specific s
 Предварительно поменяв путь в файле settings.py
 Если нужно, применить миграции и загрузить недостающие данные в базу данных.
 python manage.py migrate
-./WEB_UI
-sudo screen -ls
-sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
-sudo screen -S david_web_server # создать скрин
-cd /home/david/WEB_UI
-source /home/david/env/bin/activate
-python manage.py runserver 0.0.0.0:8000
-Ctrl+A -> D
-sudo screen -ls
+
+Поместить /etc/systemd/system/david_web_ui.service
+sudo mv david_web_ui.service /etc/systemd/system/david_web_ui.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable david_web_ui.service
+
+sudo systemctl start david_web_ui.service
+sudo systemctl -l status david_web_ui.service
 
 7. Загрузить данные в таблицу children_math_contest01
 sqlite3 david_db.sqlite
@@ -593,18 +593,6 @@ INSERT INTO children_math_contest01
 (task_description, answers_options, answer)
 VALUES('Папе, маме и дочке вместе 70 лет. Сколько лет им будет вместе через 4 года?', '-', '82');
 ...
-
-7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
-crontab -e
-# */15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
-# 0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
-# 0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
-
-8. Установить postfix чтобы cron работал.
-"Linux uses mail for sending notifications to the user.
-Most Linux distributions have a mail service including an MTA (Mail Transfer Agent) installed."
-(https://askubuntu.com/questions/222512/cron-info-no-mta-installed-discarding-output-error-in-the-syslog)
-sudo apt-get install postfix
 
 9. Добавить права на запись для файлов логов
 sudo chmod 666 /home/david/log/climate_check.log

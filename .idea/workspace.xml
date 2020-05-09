@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.docx" beforeDir="false" afterPath="$PROJECT_DIR$/README.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,10 +21,19 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="238">
-                <caret line="71" column="103" selection-start-line="71" selection-start-column="103" selection-end-line="71" selection-end-column="103" />
+              <first_editor relative-caret-position="187">
+                <caret line="11" column="49" lean-forward="true" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1487">
+              <caret line="595" selection-start-line="595" selection-end-line="595" />
             </state>
           </provider>
         </entry>
@@ -40,12 +50,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>message =</find>
       <find>test_get_connect</find>
       <find>inform_user_mail</find>
       <find>twilio</find>
       <find>Client</find>
-      <find>test_02_healthcheck_fetch_climate_data</find>
       <find>test_02_get_climate_data</find>
       <find>david@raspberrypi:~ $</find>
       <find>ftp_db_backup_dir</find>
@@ -69,6 +77,9 @@
       <find>d_gas</find>
       <find>dl_tr</find>
       <find>dl_ov</find>
+      <find>test_02_healthcheck_fetch_climate_data</find>
+      <find>fetch_climate_data</find>
+      <find>get_climate_data</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,7 +88,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/WEB_UI/children_math/tests/__init__.py" />
         <option value="$PROJECT_DIR$/WEB_UI/mainpage/views.py" />
@@ -120,14 +130,15 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/david_healthcheck.py" />
         <option value="$PROJECT_DIR$/david_lib.py" />
-        <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
         <option value="$PROJECT_DIR$/david_pass.json" />
         <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
         <option value="$PROJECT_DIR$/NodeMcu02Gas_boot.py" />
         <option value="$PROJECT_DIR$/NodeMcu02Gas_main.py" />
         <option value="$PROJECT_DIR$/NodeMcu01BedRoom_boot.py" />
         <option value="$PROJECT_DIR$/NodeMcu01BedRoom_main.py" />
+        <option value="$PROJECT_DIR$/david_web_ui.service" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
       </list>
     </option>
   </component>
@@ -142,6 +153,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,11 +161,15 @@
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB_UI" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -256,13 +272,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_task.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WEB_UI/children_math/templates/children_math/children_math_02_result.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -471,32 +480,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_unittest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="20" column="81" lean-forward="true" selection-start-line="20" selection-end-line="20" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_ssd1306.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
           <caret line="143" column="23" selection-start-line="143" selection-start-column="23" selection-end-line="143" selection-end-column="23" />
           <folding>
             <element signature="e#77#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_climate_check.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-210">
-          <caret line="51" column="43" lean-forward="true" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
-          <folding>
-            <element signature="e#12#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -508,13 +497,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_climate_check.service">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_currency_check.timer">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -522,24 +504,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_currency_check.service">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="67" selection-start-line="1" selection-start-column="67" selection-end-line="1" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_healthcheck.timer">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_healthcheck.service">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="63" lean-forward="true" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="63" />
         </state>
       </provider>
     </entry>
@@ -553,27 +521,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david.service">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_lib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" selection-start-line="13" selection-end-line="14" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_healthcheck.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="124" column="36" lean-forward="true" selection-start-line="121" selection-start-column="4" selection-end-line="124" selection-end-column="36" />
-          <folding>
-            <element signature="e#39#71#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -591,13 +542,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="824">
           <caret line="115" column="10" lean-forward="true" selection-start-line="115" selection-start-column="10" selection-end-line="115" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="585" selection-start-line="585" selection-end-line="585" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -652,11 +596,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/david_climate_check.service">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_currency_check.service">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="67" selection-start-line="1" selection-start-column="67" selection-end-line="1" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_climate_check.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="51" column="43" lean-forward="true" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
+          <folding>
+            <element signature="e#12#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_healthcheck.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="14" column="48" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_unittest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="204" column="53" selection-start-line="204" selection-start-column="35" selection-end-line="204" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_ui.service">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_healthcheck.service">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david.service">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1487">
+          <caret line="595" selection-start-line="595" selection-end-line="595" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="238">
-            <caret line="71" column="103" selection-start-line="71" selection-start-column="103" selection-end-line="71" selection-end-column="103" />
+          <first_editor relative-caret-position="187">
+            <caret line="11" column="49" lean-forward="true" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
           </first_editor>
           <second_editor />
         </state>
