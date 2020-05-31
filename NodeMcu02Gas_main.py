@@ -47,7 +47,7 @@ def read_dht(dht, att=10):
     for i in range(1, att+1):
         try:
             dht.measure()
-            dht_tem = dht.temperature()
+            dht_tem = dht.temperature()-2
             dht_hum = dht.humidity()
             if dht_tem and dht_hum:
                 return dht_tem, dht_hum, i
@@ -136,8 +136,8 @@ dl_fr = 0 # Oven fire alarm deadline
 
 clear_screen(oled)
 
-# while True:
-for _ in range(600):
+while True:
+# for _ in range(600):
 
     # Read DHT sensor every delay_dht interval,  update the screen and send the data to server
     dl_tr = dht_meas(dl_tr)

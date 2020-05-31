@@ -1,3 +1,34 @@
+------------------------------------
+Version 0.7.0.dev change list and installation procedure:
+------------------------------------
+
+Главный Компьютер:
+1. Добавлены VIEW для неправильных глаговов в базу данных.
+2. Добавлена информация о прогрессе выполнения задания для неправильных глаголов.
+3. Добавлено измерение температуры процессора Raspberry Pi в david_healthcheck.py
+4. Добавлены бэкапы базы данных на ftp сервер.
+5. Все модули из Cron переведены на systemd
+6. Все пароли в david_pass.json
+7. WEB_UI переведен на systemd
+
+Модуль david_healthcheck:
+1. Исправлена дату с учетом часового пояса для "Motion detected".
+
+Микроконтроллер NodeMcu01BedRoom:
+1. Выполнен перевод на MicroPython с добавлением дисплея (Ver.02)
+2. Сделана поправка температуры -3.6 С.
+
+Микроконтроллер NodeMcu02Gas:
+1. Выполнен перевод на MicroPython с добавлением дисплея и дополнительных датчиков (Ver.02)
+2. Сделана поправка температуры -2 С
+
+Version installation procedure:
+1. Указать юзернейм и пароль ftp сервера в david_pass.json
+2. Указать ftp ip адрес в david_lib.py
+3. Сделать прошивку модуля NodeMcu01BedRoom
+4. Обновить psutil from 5.6.2 to 5.6.6
+5. Обновить werkzeug from 0.15.2 to 0.15.3
+6. Upgrade urllib3 to version 1.24.2
 
 ------------------------------------
 Version 0.6.0.dev change list and installation procedure:

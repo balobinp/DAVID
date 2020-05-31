@@ -44,14 +44,31 @@ Variations - варианты успешных сценариев.
 Основные принципы
 ************************************************************************************************************************
 ------------------------------------
-Принцип наименования версий (снизу вверх)
+Принцип наименования версий
 ------------------------------------
 
+(снизу вверх)
 Version 0.2.0.dev - Начало работы над новой версией.
 Version 0.1.1 - Изменения ошибок версии, обнаруженных в продакшн после применения.
 Version 0.1.0 - Версия, применяемая в продакшн. Выполняется миграция в ветку master.
 190504 - Изменения в рамках работы над новой версией в ветке develop.
 Version 0.1.0.dev - означает начало разработки новой версии. Работы ведутся в ветке develop.
+
+Методика миграции в ветку master:
+1. Изменить в README.md версию на продакшн. Например: Version 0.1.0.dev -> Version 0.1.0
+2. Поставит текущую дату в README.md. Например: Date 31.05.20
+3. Проверить, что все изменения занесены в README.md в "Version 0.1.0.dev change list and installation procedure"
+4. Выполнить сохранение версии в ветке develop:
+git add .
+git commit -m "Version 0.1.0"
+git push origin develop
+git diff --name-only master
+git checkout master
+git merge develop
+git diff --name-only master
+git log --graph --all --decorate --oneline
+5. Перенести раздел "Version 0.1.0.dev change list and installation procedure" из README.md в README_CHANGE_HISTORY.txt
+6. Создать новый раздел в README.md "Version 0.2.0.dev change list and installation procedure"
 
 ------------------------------------
 Принцип логирования

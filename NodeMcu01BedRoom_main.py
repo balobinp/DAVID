@@ -15,7 +15,7 @@ def read_dht(dht, att=10):
     for i in range(1, att+1):
         try:
             dht.measure()
-            dht_tem = dht.temperature()
+            dht_tem = dht.temperature()-3.6
             dht_hum = dht.humidity()
             if dht_tem and dht_hum:
                 return dht_tem, dht_hum, i
