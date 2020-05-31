@@ -60,15 +60,23 @@ Version 0.1.0.dev - означает начало разработки ново�
 3. Проверить, что все изменения занесены в README.md в "Version 0.1.0.dev change list and installation procedure"
 4. Выполнить сохранение версии в ветке develop:
 git add .
-git commit -m "Version 0.1.0"
+git commit -m "200531"
 git push origin develop
 git diff --name-only master
 git checkout master
 git merge develop
+git add .
+git commit -m "Version 0.1.0"
+git push origin master
 git diff --name-only master
 git log --graph --all --decorate --oneline
+git checkout develop
 5. Перенести раздел "Version 0.1.0.dev change list and installation procedure" из README.md в README_CHANGE_HISTORY.txt
 6. Создать новый раздел в README.md "Version 0.2.0.dev change list and installation procedure"
+7. Сделать первый commit для новой версии
+git add .
+git commit -m "Version 0.2.0.dev"
+git push origin develop
 
 ------------------------------------
 Принцип логирования
