@@ -5,8 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoomCover.FCStd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoomStand.FCStd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoomStand.gcode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu01BedRoomStand.stl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasCover.FCStd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasCover.gcode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasCover.stl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasStand.FCStd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasStand.gcode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02GasStand.stl" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/LEVEL01_HW.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/NodeMcu01BedRoomConnect.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/NodeMcu01ChildrenRoomConnect.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/NodeMcu02GasConnect.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/NodeMcu02GasConnectVer2.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/NodeMcu03DoorConnect.uml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +36,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="17">
-                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+              <first_editor relative-caret-position="221">
+                <caret line="79" column="73" selection-start-line="79" selection-start-column="73" selection-end-line="79" selection-end-column="73" />
               </first_editor>
               <second_editor />
             </state>
@@ -127,8 +143,8 @@
         <option value="$PROJECT_DIR$/NodeMcu01BedRoom_main.py" />
         <option value="$PROJECT_DIR$/NodeMcu02Gas_main.py" />
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -609,29 +625,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_boot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1334">
           <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
           <folding>
             <element signature="e#222#236#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NodeMcu02Gas_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="49" column="41" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -650,11 +649,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu01BedRoom_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu02Gas_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-467">
+          <caret line="71" column="20" lean-forward="true" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="17">
-            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <first_editor relative-caret-position="221">
+            <caret line="79" column="73" selection-start-line="79" selection-start-column="73" selection-end-line="79" selection-end-column="73" />
           </first_editor>
           <second_editor />
         </state>
