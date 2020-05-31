@@ -155,7 +155,7 @@ class TestWebServer(unittest.TestCase):
 
     def test_02_get_climate_data(self):
         results = david_climate_check.get_climate_data()
-        correct_results = [('bedroom', 6), ('kitchen', 7)]
+        correct_results = [('bedroom', 6), ('childrenroom', 7)]
         for correct_result, result in zip(correct_results, results):
             self.assertTupleEqual(result, correct_result)
 
@@ -203,7 +203,7 @@ class TestWebServer(unittest.TestCase):
 
     def test_02_healthcheck_fetch_climate_data(self):
         result = david_healthcheck.fetch_climate_data()
-        self.assertEqual(result, {'bedroom': 6, 'kitchen': 7})
+        self.assertEqual(result, {'bedroom': 6, 'childrenroom': 7})
 
     def test_02_healthcheck_fetch_gas_data(self):
         result = david_healthcheck.fetch_gas_data()

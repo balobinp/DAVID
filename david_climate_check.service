@@ -1,0 +1,9 @@
+[Unit]
+Description=David climate check service. Runs every 15 min.
+
+[Service]
+Type=simple
+ExecStart=/home/david/env/bin/python /home/david/david_climate_check.py
+
+[Install]
+WantedBy=default.target

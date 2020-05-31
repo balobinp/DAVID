@@ -42,6 +42,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS SENSORS (SENSOR_ID INTEGER NOT NULL UN
 cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (1, 'climate', 'bedroom'))
 cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (2, 'gas', 'kitchen'))
 cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (3, 'motion', 'indoor'))
+cur.execute('''INSERT INTO SENSORS (SENSOR_ID, SENSOR_TYPE, LOCATION) VALUES (?, ?, ?)''', (4, 'climate', 'childrenroom'))
 
 #cur.execute('DROP TABLE IF EXISTS MOTION_SENSORS')
 
@@ -75,7 +76,7 @@ cur.execute('''CREATE VIEW V_CLIMATE_SENSORS AS
             ,cs.HUMIDITY
             FROM CLIMATE_SENSORS cs, SENSORS s
             WHERE cs.SENSOR_ID = s.SENSOR_ID
-            ORDER BY s.LOCATION, cs.REP_DATE DESC''')
+            ORDER BY cs.REP_DATE DESC, s.LOCATION''')
 
 cur.execute('DROP VIEW IF EXISTS V_MOTION_SENSORS')
 
@@ -184,7 +185,7 @@ cur.execute('''CREATE VIEW V_CHILDREN_ENG_IRR_VER AS
             strftime('%Y-%m-%d', REP_DATE) AS REP_DATE
             ,USER_NAME
             ,COUNT(*) AS ATTEMPTS
-            ,SUM(CASE WHEN SCORE = 3 THEN 1 ELSE 0 END) AS SCORE_HIGH FROM
+            ,SUM(CASE WHEN SCORE = 3 THEN 1 ELSE 0 END) AS SCORE_FIVE FROM
             (
             SELECT
             strftime('%Y-%m-%d %H:%M:%S', vr.date) AS REP_DATE

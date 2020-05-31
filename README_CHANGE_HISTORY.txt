@@ -1,3 +1,34 @@
+------------------------------------
+Version 0.7.0.dev change list and installation procedure:
+------------------------------------
+
+Главный Компьютер:
+1. Добавлены VIEW для неправильных глаговов в базу данных.
+2. Добавлена информация о прогрессе выполнения задания для неправильных глаголов.
+3. Добавлено измерение температуры процессора Raspberry Pi в david_healthcheck.py
+4. Добавлены бэкапы базы данных на ftp сервер.
+5. Все модули из Cron переведены на systemd
+6. Все пароли в david_pass.json
+7. WEB_UI переведен на systemd
+
+Модуль david_healthcheck:
+1. Исправлена дату с учетом часового пояса для "Motion detected".
+
+Микроконтроллер NodeMcu01BedRoom:
+1. Выполнен перевод на MicroPython с добавлением дисплея (Ver.02)
+2. Сделана поправка температуры -3.6 С.
+
+Микроконтроллер NodeMcu02Gas:
+1. Выполнен перевод на MicroPython с добавлением дисплея и дополнительных датчиков (Ver.02)
+2. Сделана поправка температуры -2 С
+
+Version installation procedure:
+1. Указать юзернейм и пароль ftp сервера в david_pass.json
+2. Указать ftp ip адрес в david_lib.py
+3. Сделать прошивку модуля NodeMcu01BedRoom
+4. Обновить psutil from 5.6.2 to 5.6.6
+5. Обновить werkzeug from 0.15.2 to 0.15.3
+6. Upgrade urllib3 to version 1.24.2
 
 ------------------------------------
 Version 0.6.0.dev change list and installation procedure:
@@ -407,6 +438,7 @@ Main Version change procedure
 ------------------------------------
 
 0. Проверить, что все обновляемые скрипты имеют актуальные версии в заголовках.
+README.md
 david_lib.py
 
 1. Сделать полную копию папки проекта.
@@ -424,9 +456,9 @@ source /home/david/env/bin/activate
 python /home/david/david_db_create.py
 
 5. Перезапустить сервис david_web_server
-systemctl stop david.service
-systemctl start david.service
-systemctl status david.service
+sudo systemctl stop david.service
+sudo systemctl start david.service
+sudo systemctl status david.service
 
 6.  Перезапустить Web сервер django
 Предварительно поменяв путь в файле settings.py
@@ -536,19 +568,55 @@ systemctl status david.service
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python
 tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      3794/python
 
-5.  Перезагрузить папку WEB_UI запустить сервер
+9. Запустить сервис для david_climate_check.py
+
+Поместить в папку /home/david файлы:
+david_climate_check.timer
+david_climate_check.service
+david_currency_check.timer
+david_currency_check.service
+david_healthcheck.timer
+david_healthcheck.service
+
+Переместить эти файлы в /etc/systemd/system
+sudo mv /home/david/david_climate_check.timer /etc/systemd/system/david_climate_check.timer
+sudo mv /home/david/david_climate_check.service /etc/systemd/system/david_climate_check.service
+sudo mv /home/david/david_currency_check.timer /etc/systemd/system/david_currency_check.timer
+sudo mv /home/david/david_currency_check.service /etc/systemd/system/david_currency_check.service
+sudo mv /home/david/david_healthcheck.timer /etc/systemd/system/david_healthcheck.timer
+sudo mv /home/david/david_healthcheck.service /etc/systemd/system/david_healthcheck.service
+
+sudo systemctl status david_climate_check.service
+sudo systemctl start david_climate_check.service
+sudo systemctl status david_currency_check.service
+sudo systemctl start david_currency_check.service
+sudo systemctl status david_healthcheck.service
+sudo systemctl start david_healthcheck.service
+
+sudo systemctl start david_climate_check.timer
+sudo systemctl enable david_climate_check.timer # для того, чтобы сервис стартовал при старте системы
+sudo systemctl start david_currency_check.timer
+sudo systemctl enable david_currency_check.timer
+sudo systemctl start david_healthcheck.timer
+sudo systemctl enable david_healthcheck.timer
+
+Проверить выполнение
+systemctl list-timers
+sudo journalctl -u david_climate_check.service  # view the logs for a specific service
+
+5. Перезагрузить папку WEB_UI запустить сервер
 Предварительно поменяв путь в файле settings.py
 Если нужно, применить миграции и загрузить недостающие данные в базу данных.
 python manage.py migrate
-./WEB_UI
-sudo screen -ls
-sudo screen -d -r  30158.david_climate_check # вернуть скрин на передний план
-sudo screen -S david_web_server # создать скрин
-cd /home/david/WEB_UI
-source /home/david/env/bin/activate
-python manage.py runserver 0.0.0.0:8000
-Ctrl+A -> D
-sudo screen -ls
+
+Поместить /etc/systemd/system/david_web_ui.service
+sudo mv david_web_ui.service /etc/systemd/system/david_web_ui.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable david_web_ui.service
+
+sudo systemctl start david_web_ui.service
+sudo systemctl -l status david_web_ui.service
 
 7. Загрузить данные в таблицу children_math_contest01
 sqlite3 david_db.sqlite
@@ -557,14 +625,36 @@ INSERT INTO children_math_contest01
 VALUES('Папе, маме и дочке вместе 70 лет. Сколько лет им будет вместе через 4 года?', '-', '82');
 ...
 
-7. Добавить модули david_currency_check.py, david_healthcheck.py и david_climate_check.py в crontab
-crontab -e
-*/15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
-0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
-0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
+9. Добавить права на запись для файлов логов
+sudo chmod 666 /home/david/log/climate_check.log
+sudo chmod 666 /home/david/log/currency_check.log
+sudo chmod 666 /home/david/log/david_web_server.log
+sudo chmod 666 /home/david/log/gas_check.log
+sudo chmod 666 /home/david/log/healthcheck.log
+sudo chmod 666 /home/david/log/user_interface.log
+
+7. Установить часовой пояс в системе
+
+8. Создать директорию на ftp сервере для загрузки бэкапов базы данных
+IP адрес и путь должен быть записан в david_lib.py в переменных:
+ftp_ip_addr = '192.168.1.1'
+ftp_db_backup_dir = 'Transcend/david/db_backup'
+
+Пароль и юзер для доступа по ftp должен быть записан в david_pass.json в переменных
+ftp_user
+ftp_pass
 
 7. Выполнить unit тестирование
 sudo python /home/david/david_unittest.py
 cd /home/david/WEB_UI
 python manage.py test children_math.tests
 python manage.py test mainpage.tests
+
+Known issues
+-------------------
+1. Проблема с numpy
+Original error was: libf77blas.so.3: cannot open shared object file: No such file or directory
+
+Решение:
+sudo apt-get install libatlas-base-dev
+(https://github.com/numpy/numpy/issues/14772)

@@ -44,14 +44,31 @@ Variations - варианты успешных сценариев.
 Основные принципы
 ************************************************************************************************************************
 ------------------------------------
-Принцип наименования версий (снизу вверх)
+Принцип наименования версий
 ------------------------------------
 
+(снизу вверх)
 Version 0.2.0.dev - Начало работы над новой версией.
 Version 0.1.1 - Изменения ошибок версии, обнаруженных в продакшн после применения.
 Version 0.1.0 - Версия, применяемая в продакшн. Выполняется миграция в ветку master.
 190504 - Изменения в рамках работы над новой версией в ветке develop.
 Version 0.1.0.dev - означает начало разработки новой версии. Работы ведутся в ветке develop.
+
+Методика миграции в ветку master:
+1. Изменить в README.md версию на продакшн. Например: Version 0.1.0.dev -> Version 0.1.0
+2. Поставит текущую дату в README.md. Например: Date 31.05.20
+3. Проверить, что все изменения занесены в README.md в "Version 0.1.0.dev change list and installation procedure"
+4. Выполнить сохранение версии в ветке develop:
+git add .
+git commit -m "Version 0.1.0"
+git push origin develop
+git diff --name-only master
+git checkout master
+git merge develop
+git diff --name-only master
+git log --graph --all --decorate --oneline
+5. Перенести раздел "Version 0.1.0.dev change list and installation procedure" из README.md в README_CHANGE_HISTORY.txt
+6. Создать новый раздел в README.md "Version 0.2.0.dev change list and installation procedure"
 
 ------------------------------------
 Принцип логирования
@@ -100,6 +117,24 @@ climate_check.debug(f'Message=playing_file;File={file_climate_hot_bedroom};Resul
 climate_check.error(f'Message=playing_file;File={file_climate_hot_bedroom};Result={e}')
 
 ------------------------------------
+Принцип наименования и нумерации контроллеров и сенсоров
+------------------------------------
+
+Контроллеры именуются в Camel формате по принципу <Тип_контроллера><ID_контроллера><Комментарий>.
+У контроллера может быть несколько подключенных датчиков и комбинированные датчики.
+У контроллера есть главный сенсор. ID этого сенсора является ID контроллера.
+Остальным сенсорам присваиваются собственные ID, уникальные во всем проекте.
+Все ID сенсоров записаны в таблице SENSORS в базе данных. Также они записаны в разделе Sensors описания.
+
+Пример:
+Контроллер NodeMcu02Gas. Его ID = 2. Он указан в названии.
+У контроллера NodeMcu02Gas есть три сенсора:
+- MQ-4 - датчик газа (sendor_id = 2). Главный сенсор. Его ID является ID конотоллера.
+- DHT22 - датчик температуры влажности (sendor_id = 5). Дополнительный сенсор.
+- AM312 - датчик движения (sendor_id = 6). Дополнительный сенсор.
+- DHT22 + AM312 - комбинированный датчик для детекции оставленной на плите посуды (sendor_id = 7).
+
+------------------------------------
 Принцип формирования get запросов
 ------------------------------------
 
@@ -108,9 +143,9 @@ climate_check.error(f'Message=playing_file;File={file_climate_hot_bedroom};Resul
 2. Передача информации.
 
 1. Подключение
-http://<IP address>:80/connected;sensor=<sensor_num>&ip=<ip_address_of_the_module>
+http://<IP address>:80/connected;sensor=<sensor_num>&ip=<ip_address_of_the_module>&ver=<version>
 Пример:
-http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66
+http://192.168.1.44:80/connected;sensor=1&ip=192.168.1.66&ver=190720
 
 2. Передача информации
 http://<IP address>:80/<information_type>;sensor=<sensor_num>&<key1>=<value1>&<key2>=<value2>...

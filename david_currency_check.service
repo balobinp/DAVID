@@ -1,0 +1,9 @@
+[Unit]
+Description=David currency check service. Runs on weekdays at 17:00
+
+[Service]
+Type=simple
+ExecStart=/home/david/env/bin/python /home/david/david_currency_check.py
+
+[Install]
+WantedBy=default.target

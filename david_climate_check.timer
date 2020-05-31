@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs every 15 min.
+RefuseManualStart=no # I can manually start the timer
+RefuseManualStop=no # I can manually stop the timer
+
+[Timer]
+OnBootSec=30 # How many seconds after the boot should it run the first time
+OnCalendar=*:0/15
+Unit=david_climate_check.service
+
+[Install]
+WantedBy=timers.target

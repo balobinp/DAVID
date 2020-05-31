@@ -1,0 +1,11 @@
+[Unit]
+Description=Web user interface service (WEB_UI)
+After=network.target
+
+[Service]
+ExecStart=/home/david/env/bin/python /home/david/WEB_UI/manage.py runserver 0.0.0.0:8000
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -5,7 +5,6 @@ from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
 import logging
-from twilio.rest import Client
 import datetime as dt
 
 import david_lib

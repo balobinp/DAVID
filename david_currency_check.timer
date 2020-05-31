@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs on weekdays at 17:00
+RefuseManualStart=no # I can manually start the timer
+RefuseManualStop=no # I can manually stop the timer
+
+[Timer]
+OnBootSec=30 # How many seconds after the boot should it run the first time
+OnCalendar=Mon..Fri 17:00
+Unit=david_currency_check.service
+
+[Install]
+WantedBy=timers.target
