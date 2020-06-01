@@ -560,8 +560,8 @@ cp /mnt/c/Users/balob/Documents/DAVID/david.service /etc/systemd/system/david.se
 
 sudo systemctl daemon-reload
 sudo systemctl enable david.service
-systemctl start david.service
-systemctl status david.service
+sudo systemctl start david.service
+sudo systemctl status david.service
 
 Проверить, что сервер слушает порт:
 (env) david@david:~$ sudo netstat -ltnp | grep :80

@@ -107,6 +107,7 @@ def read_mot(deadline_mot, deadline_swh, deadline_fir):
         if s_mot.value():
             draw_bulet(oled, pos_x=1, pos_y=pos_mot)
             swh_1.on()
+            get_req('http://{0}:{1}/motion;sensor=6'.format(ip_server, port_server))
             deadline_swh = utime.ticks_add(utime.ticks_ms(), d_swh)
             deadline_fir = utime.ticks_add(utime.ticks_ms(), d_fir)
             buz_1.off() if buz_1.value() == 1 else None

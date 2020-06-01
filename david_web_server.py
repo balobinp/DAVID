@@ -89,15 +89,16 @@ class DavidWebServerHandler(Resource):
                 cur.execute('''INSERT INTO MOTION_SENSORS (REP_DATE, SENSOR_ID) VALUES (datetime(), ?)''', (sensor_id))
                 conn.commit()
                 conn.close()
-            try:
-                dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                subject = f"Motion detected {dt_now}"
-                message = f"David indore motion detected at {dt_now}"
-                inform_user_mail = david_user_interface.InformUser()
-                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
-            except Exception as e:
-                web_server_log.error(f'Message=inform_user_mail;Exception={e}')
+            if sensor_id == '3': # NodeMcu03Door
+                try:
+                    dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    subject = f"Motion detected {dt_now}"
+                    message = f"David indore motion detected at {dt_now}"
+                    inform_user_mail = david_user_interface.InformUser()
+                    inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                    web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
+                except Exception as e:
+                    web_server_log.error(f'Message=inform_user_mail;Exception={e}')
         elif get_url.path == 'gas':
             sensor_id = get_params.get('sensor')[0]
             sensor_value = get_params.get('sensorValue')[0]
