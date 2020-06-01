@@ -7,8 +7,8 @@ s_gaz = ADC(0) # Gaz sensor
 s_mot = Pin(14, Pin.IN) # 14|D5 Motion sensor
 led_r = Pin(13, Pin.OUT) # 13|D7 RGB LED red
 led_g = Pin(15, Pin.OUT) # 15|D8 RGB LED green
-buz_1 = Pin(16, Pin.OUT) # 16|D0 Buzzer
-swh_1 = Pin(2, Pin.OUT) # 2|D4 switch
+buz_1 = Pin(2, Pin.OUT) # 2|D4 Buzzer
+swh_1 = Pin(16, Pin.OUT) # 16|D0 switch
 
 def led_buzz(red=0, grn=0, buz=0):
     led_r.on() if red == 1 else led_r.off()

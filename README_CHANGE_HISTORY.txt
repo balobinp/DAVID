@@ -506,6 +506,9 @@ exit
 Main initial installation procedure:
 ------------------------------------
 
+Главный Компьютер
+------------------------------------
+
 1. Создать пользователя david и директорию /home/david
 su
 adduser david
@@ -658,3 +661,32 @@ Original error was: libf77blas.so.3: cannot open shared object file: No such fil
 Решение:
 sudo apt-get install libatlas-base-dev
 (https://github.com/numpy/numpy/issues/14772)
+
+NodeMcu02Gas
+------------------------------------
+
+esptool --chip esp8266 --port COM9 erase_flash
+esptool --chip esp8266 --port COM9 --baud 115200 write_flash --flash_size=detect 0 c:\Users\balobin.p\Downloads\MicroPython\esp8266-20191220-v1.12.bin
+
+import esp
+esp.check_fw()
+
+rshell
+connect serial COM9 115200
+ls /pyboard
+cp ./Downloads/MicroPython/ftp.py /pyboard/ftp.py
+cp ./Downloads/MicroPython/david_pass.json /pyboard/david_pass.json
+cp ./Downloads/MicroPython/main.py /pyboard/main.py
+cp ./Downloads/MicroPython/boot.py /pyboard/boot.py
+cp ./Downloads/MicroPython/ssd1306.py /pyboard/ssd1306.py
+cp ./Downloads/MicroPython/upysh.py /pyboard/upysh.py
+
+repl
+
+import webrepl_setup
+# Выбрать E и установить пароль
+import webrepl
+webrepl.start()
+
+from upysh import *
+ls
