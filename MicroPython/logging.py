@@ -1,12 +1,14 @@
 import sys
+import urequests
 from machine import RTC
 
+rtc = RTC()
+
 CRITICAL = 50
-ERROR    = 40
-WARNING  = 30
-INFO     = 20
-DEBUG    = 10
-NOTSET   = 0
+ERROR = 40
+WARNING = 30
+INFO = 20
+DEBUG = 10
 
 _level_dict = {
     CRITICAL: "CRIT",
@@ -16,83 +18,75 @@ _level_dict = {
     DEBUG: "DEBG",
 }
 
-_stream = sys.stderr
-rtc = RTC()
+_ip=None
+_port=None
+_stream = 'std'
+# _stream = sys.stderr
 
 class Logger:
 
-    level = NOTSET
-
     def __init__(self, name):
+        self.level = INFO
+        self.handlers = []
         self.name = name
-
-    def _level_str(self, level):
-        l = _level_dict.get(level)
-        if l is not None:
-            return l
-        return "LVL%s" % level
 
     def setLevel(self, level):
         self.level = level
 
-    def isEnabledFor(self, level):
-        return level >= (self.level or _level)
+    def addHandler(self, hdlr):
+        try:
+            if not (hdlr in self.handlers):
+                self.handlers.append(hdlr)
+        except:
+            raise
 
-    def log(self, level, msg, *args):
-        if level >= (self.level or _level):
+    def log(self, level, msg):
+        if level >= self.level:
             t = rtc.datetime()
-            _stream.write("{}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}:{:03d};{};{};".format(t[0],t[1],t[2],t[4],t[5],t[6],t[7],
-                self._level_str(level), self.name))
-            if not args:
-                print(msg, file=_stream)
-            else:
-                print(msg % args, file=_stream)
+            t_frm = "{}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}:{:03d};"\
+                    .format(t[0], t[1], t[2], t[4], t[5], t[6], t[7])
+            l_msg = "{};{};{}".format(_level_dict.get(level), self.name, msg)
+            sys.stderr.write(t_frm)
+            print(l_msg, file=sys.stderr)
+            for hdlr in self.handlers:
+                hdlr.emit(t_frm, l_msg)
 
-    def debug(self, msg, *args):
-        self.log(DEBUG, msg, *args)
+    def debug(self, msg):
+        self.log(DEBUG, msg)
 
-    def info(self, msg, *args):
-        self.log(INFO, msg, *args)
+    def info(self, msg):
+        self.log(INFO, msg)
 
-    def warning(self, msg, *args):
-        self.log(WARNING, msg, *args)
+    def warning(self, msg):
+        self.log(WARNING, msg)
 
-    def error(self, msg, *args):
-        self.log(ERROR, msg, *args)
+    def error(self, msg):
+        self.log(ERROR, msg)
 
-    def critical(self, msg, *args):
-        self.log(CRITICAL, msg, *args)
+    def critical(self, msg):
+        self.log(CRITICAL, msg)
 
-    def exc(self, e, msg, *args):
-        self.log(ERROR, msg, *args)
+    def exc(self, e, msg):
+        self.log(ERROR, msg)
         sys.print_exception(e, _stream)
 
-    def exception(self, msg, *args):
-        self.exc(sys.exc_info()[1], msg, *args)
+    def exception(self, msg):
+        self.exc(sys.exc_info()[1], msg)
 
 
-_level = INFO
-_loggers = {}
+class FileHandler:
+    def __init__(self):
+        pass
 
-def getLogger(name):
-    if name in _loggers:
-        return _loggers[name]
-    l = Logger(name)
-    _loggers[name] = l
-    return l
 
-def info(msg, *args):
-    getLogger(None).info(msg, *args)
+class HttpHandler:
+    def __init__(self, ip, port):
+        self.ip = ip
+        self.port = port
 
-def debug(msg, *args):
-    getLogger(None).debug(msg, *args)
-
-def basicConfig(level=INFO, filename=None, stream=None, format=None):
-    global _level, _stream
-    _level = level
-    if stream:
-        _stream = stream
-    if filename is not None:
-        print("logging.basicConfig: filename arg is not supported")
-    if format is not None:
-        print("logging.basicConfig: format arg is not supported")
+    def emit(self, t, record):
+        try:
+            r = urequests.get('http://{0}:{1}/{2}'.format(self.ip, self.port, record.replace(" ", '')))
+            r.close()
+        except:
+            raise
