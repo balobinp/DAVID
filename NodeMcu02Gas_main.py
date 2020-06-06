@@ -1,21 +1,18 @@
 import dht
 import utime
 
-# Define pins for sensors and outputs
 s_dht = dht.DHT11(Pin(0)) # 0|D3 DHT sensor
 s_gaz = ADC(0) # Gaz sensor
 s_mot = Pin(14, Pin.IN) # 14|D5 Motion sensor
 led_r = Pin(13, Pin.OUT) # 13|D7 RGB LED red
 led_g = Pin(15, Pin.OUT) # 15|D8 RGB LED green
-buz_1 = Pin(2, Pin.OUT) # 2|D4 Buzzer
 swh_1 = Pin(16, Pin.OUT) # 16|D0 switch
 
-def led_buzz(red=0, grn=0, buz=0):
+def led_sw(red=0, grn=0):
     led_r.on() if red == 1 else led_r.off()
     led_g.on() if grn == 1 else led_g.off()
-    buz_1.on() if buz == 1 else buz_1.off()
 
-led_buzz()
+led_sw()
 
 mq_th_1 = 250 # Gaz threshold level 1
 mq_th_2 = 500 # Gaz threshold level 2
@@ -35,7 +32,7 @@ d_swh = 300000 # Delay for the light to switch off
 d_ovn = 10000 # Delay to check the oven
 d_fir = 600000 # No motion and high temperature near oven emergency delay
 
-# Testing delays
+# Test delays
 # d_rep = 6000 # Regular climate and gas sensors report interval to server
 # d_gas = 3000 # Gas check interval
 # d_mot = 1000 # Check motion sensor interval
@@ -56,12 +53,8 @@ def read_dht(dht, att=10):
     return 0, 0, att
 
 def dht_meas(deadline):
-    """Read DHT sensor, update the screen and send the data to server"""
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
         dht_tem, dht_hum, att = read_dht(s_dht, att=10)
-        # s_dht.measure()
-        # dht_tem = s_dht.temperature()
-        # dht_hum = s_dht.humidity()
         clear_sym(oled, pos_x=7, pos_y=pos_tem, num=2, fill=0)
         clear_sym(oled, pos_x=7, pos_y=pos_hum, num=2, fill=0)
         oled.text('Temp.: {:>2} C'.format(dht_tem), 0, pos_tem)
@@ -73,6 +66,7 @@ def dht_meas(deadline):
             draw_bulet(oled, pos_x=13, pos_y=pos_tem)
             draw_bulet(oled, pos_x=13, pos_y=pos_hum)
         deadline = utime.ticks_add(utime.ticks_ms(), d_rep)
+        gc.collect()
     return deadline
 
 def gas_meas(deadline_gas, deadline_rep):
@@ -82,11 +76,11 @@ def gas_meas(deadline_gas, deadline_rep):
         rep_type = 0
         if gaz_val > mq_th_2:
             rep_type = 1
-            led_buzz(red=1, grn=0, buz=1)
+            led_sw(red=1, grn=0)
         elif gaz_val > mq_th_1:
-            led_buzz(red=1, grn=0, buz=0)
+            led_sw(red=1, grn=0)
         elif gaz_val <= mq_th_1:
-            led_buzz(red=0, grn=1, buz=0)
+            led_sw(red=0, grn=1)
         clear_sym(oled, pos_x=6, pos_y=pos_gas, num=3)
         oled.text('Gaz:  {:>3}'.format(gaz_val), 0, pos_gas)
         oled.show()
@@ -110,7 +104,7 @@ def read_mot(deadline_mot, deadline_swh, deadline_fir):
             get_req('http://{0}:{1}/motion;sensor=6'.format(ip_server, port_server))
             deadline_swh = utime.ticks_add(utime.ticks_ms(), d_swh)
             deadline_fir = utime.ticks_add(utime.ticks_ms(), d_fir)
-            buz_1.off() if buz_1.value() == 1 else None
+            # buz_1.off() if buz_1.value() == 1 else None
         elif utime.ticks_diff(utime.ticks_ms(), deadline_swh) > 0:
             swh_1.off()
         deadline_mot = utime.ticks_add(utime.ticks_ms(), d_mot)
@@ -120,7 +114,7 @@ def check_oven(deadline_fir, deadline_ovn):
     if utime.ticks_diff(utime.ticks_ms(), deadline_fir) > 0:
         dht_tem, dht_hum, att = read_dht(s_dht, att=10)
         if dht_tem > tm_th_1:
-            buz_1.on()
+            # buz_1.on()
             # send http request to the server
             get_req('http://{0}:{1}/oven;sensor={2}&temperature={3}&type=1'.format(
                     ip_server, port_server, s_id_tmo_1, dht_tem))
@@ -138,7 +132,6 @@ dl_fr = 0 # Oven fire alarm deadline
 clear_screen(oled)
 
 while True:
-# for _ in range(600):
 
     # Read DHT sensor every delay_dht interval,  update the screen and send the data to server
     dl_tr = dht_meas(dl_tr)
