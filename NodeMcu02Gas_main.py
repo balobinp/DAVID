@@ -1,7 +1,8 @@
 import dht
 import utime
+import math
 
-s_dht = dht.DHT11(Pin(0)) # 0|D3 DHT sensor
+s_dht = dht.DHT22(Pin(0)) # 0|D3 DHT sensor
 s_gaz = ADC(0) # Gaz sensor
 s_mot = Pin(14, Pin.IN) # 14|D5 Motion sensor
 led_r = Pin(13, Pin.OUT) # 13|D7 RGB LED red
@@ -14,8 +15,8 @@ def led_sw(red=0, grn=0):
 
 led_sw()
 
-mq_th_1 = 250 # Gaz threshold level 1
-mq_th_2 = 500 # Gaz threshold level 2
+mq_th_1 = 100 # Gaz threshold level 1
+mq_th_2 = 150 # Gaz threshold level 2
 
 tm_th_1 = 30 # temperature oven alert threshold
 
@@ -55,24 +56,37 @@ def read_dht(dht, att=10):
 def dht_meas(deadline):
     if utime.ticks_diff(utime.ticks_ms(), deadline) > 0:
         dht_tem, dht_hum, att = read_dht(s_dht, att=10)
-        clear_sym(oled, pos_x=7, pos_y=pos_tem, num=2, fill=0)
-        clear_sym(oled, pos_x=7, pos_y=pos_hum, num=2, fill=0)
-        oled.text('Temp.: {:>2} C'.format(dht_tem), 0, pos_tem)
-        oled.text('Hum.:  {:>2} %'.format(dht_hum), 0, pos_hum)
+        clear_sym(oled, pos_x=7, pos_y=pos_tem, num=8, fill=0)
+        clear_sym(oled, pos_x=7, pos_y=pos_hum, num=8, fill=0)
+        oled.text('Temp.: {:.1f} C'.format(dht_tem), 0, pos_tem)
+        oled.text('Hum.:  {:.1f} %'.format(dht_hum), 0, pos_hum)
         oled.show()
         r = get_req('http://{0}:{1}/climate;sensor={2}&readattempt={3}&temperature={4}&humidity={5}'.format(
                 ip_server, port_server, s_id_tmp_2, att, dht_tem, dht_hum))
         if r == 200:
-            draw_bulet(oled, pos_x=13, pos_y=pos_tem)
-            draw_bulet(oled, pos_x=13, pos_y=pos_hum)
+            draw_bulet(oled, pos_x=14, pos_y=pos_tem)
+            draw_bulet(oled, pos_x=14, pos_y=pos_hum)
         deadline = utime.ticks_add(utime.ticks_ms(), d_rep)
         gc.collect()
     return deadline
+
+def gas_ppm(val):
+    m = -0.318
+    b = 1.133
+    R0 = 40 # for val 55
+    sensor_volt = val * (5 / 1023.0)
+    RS_gas = ((5 * 10.0) / sensor_volt) - 10.0
+    ratio = RS_gas / R0
+    ppm_log = (math.log(ratio, 10) - b) / m
+    ppm = pow(10, ppm_log)
+    percentage = round(ppm * 100 / 10000, 1)
+    return str(percentage)[0:5]
 
 def gas_meas(deadline_gas, deadline_rep):
     """Read Gaz sensor, update the screen, LGB and buzzer and send the emergency data to server"""
     if utime.ticks_diff(utime.ticks_ms(), deadline_gas) > 0:
         gaz_val = s_gaz.read()
+        ppm = gas_ppm(gaz_val)
         rep_type = 0
         if gaz_val > mq_th_2:
             rep_type = 1
@@ -81,15 +95,17 @@ def gas_meas(deadline_gas, deadline_rep):
             led_sw(red=1, grn=0)
         elif gaz_val <= mq_th_1:
             led_sw(red=0, grn=1)
-        clear_sym(oled, pos_x=6, pos_y=pos_gas, num=3)
-        oled.text('Gaz:  {:>3}'.format(gaz_val), 0, pos_gas)
+        clear_sym(oled, pos_x=6, pos_y=pos_gas, num=9)
+        oled.text('Gaz:  {:>5} %'.format(ppm), 0, pos_gas)
         oled.show()
         if rep_type == 1:
             get_req('http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type={4}'.format(
                     ip_server, port_server, s_id_gas_1, gaz_val, rep_type))
         elif utime.ticks_diff(utime.ticks_ms(), deadline_rep) > 0:
-            get_req('http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type={4}'.format(
+            r = get_req('http://{0}:{1}/gas;sensor={2}&sensorValue={3}&type={4}'.format(
                     ip_server, port_server, s_id_gas_1, gaz_val, rep_type))
+            if r == 200:
+                draw_bulet(oled, pos_x=14, pos_y=pos_gas)
             deadline_rep = utime.ticks_add(utime.ticks_ms(), d_rep)
         deadline_gas = utime.ticks_add(utime.ticks_ms(), d_gas)
     return deadline_gas, deadline_rep

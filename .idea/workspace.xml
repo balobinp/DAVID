@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.docx" beforeDir="false" afterPath="$PROJECT_DIR$/README.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02Gas_boot.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu02Gas_boot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeMcu02Gas_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu02Gas_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SCHEMAS/NodeMcu02GasVer2Sensors.png" beforeDir="false" afterPath="$PROJECT_DIR$/SCHEMAS/NodeMcu02GasVer2Sensors.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SCHEMAS/NodeMcu02GasVer2Sensors.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SCHEMAS/NodeMcu02GasVer2Sensors.svg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +22,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="221">
-                <caret line="76" column="1" selection-start-line="76" selection-start-column="1" selection-end-line="76" selection-end-column="1" />
+              <first_editor relative-caret-position="870">
+                <caret line="116" column="69" selection-start-line="116" selection-start-column="69" selection-end-line="116" selection-end-column="69" />
               </first_editor>
               <second_editor />
             </state>
@@ -128,10 +127,10 @@
         <option value="$PROJECT_DIR$/README_CHANGE_HISTORY.txt" />
         <option value="$PROJECT_DIR$/MicroPython/logging.py" />
         <option value="$PROJECT_DIR$/MicroPython/logging_usecases.py" />
-        <option value="$PROJECT_DIR$/NodeMcu02Gas_boot.py" />
-        <option value="$PROJECT_DIR$/NodeMcu02Gas_main.py" />
         <option value="$PROJECT_DIR$/NodeMcu02GasTestBed/main.py" />
+        <option value="$PROJECT_DIR$/NodeMcu02Gas_boot.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/NodeMcu02Gas_main.py" />
       </list>
     </option>
   </component>
@@ -153,6 +152,11 @@
             <path>
               <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAVID" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAVID" type="462c0819:PsiDirectoryNode" />
+              <item name="NodeMcu02GasTestBed" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -632,16 +636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeMcu02GasTestBed/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="122" column="12" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_currency_check.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -652,9 +646,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/NodeMcu02GasTestBed/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="835">
+          <caret line="122" column="12" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu02Gas_boot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="391">
           <caret line="29" column="16" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="16" />
           <folding>
             <element signature="e#222#236#0" expanded="true" />
@@ -664,10 +668,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeMcu02Gas_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="595">
+          <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
+            <marker date="1594023300892" expanded="true" signature="941:1261" ph="..." />
           </folding>
         </state>
       </provider>
@@ -675,8 +680,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="221">
-            <caret line="76" column="1" selection-start-line="76" selection-start-column="1" selection-end-line="76" selection-end-column="1" />
+          <first_editor relative-caret-position="870">
+            <caret line="116" column="69" selection-start-line="116" selection-start-column="69" selection-end-line="116" selection-end-column="69" />
           </first_editor>
           <second_editor />
         </state>
