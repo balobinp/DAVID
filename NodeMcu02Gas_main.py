@@ -15,8 +15,8 @@ def led_sw(red=0, grn=0):
 
 led_sw()
 
-mq_th_1 = 100 # Gaz threshold level 1
-mq_th_2 = 150 # Gaz threshold level 2
+mq_th_1 = 200 # Gaz threshold level 1
+mq_th_2 = 250 # Gaz threshold level 2
 
 tm_th_1 = 30 # temperature oven alert threshold
 
@@ -73,7 +73,7 @@ def dht_meas(deadline):
 def gas_ppm(val):
     m = -0.318
     b = 1.133
-    R0 = 40 # for val 55
+    R0 = 17 # for val 120
     sensor_volt = val * (5 / 1023.0)
     RS_gas = ((5 * 10.0) / sensor_volt) - 10.0
     ratio = RS_gas / R0
