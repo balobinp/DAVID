@@ -29,7 +29,7 @@ s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 ### SET VARIABLES HERE ###
 
-version = 200712
+version = 200717
 
 ip_server = '192.168.1.44'
 # ip_server = '192.168.1.63'
@@ -103,7 +103,7 @@ def draw_bulet(oled, pos_x=3, pos_y=0):
 def strftime(t, t_form='full', type='utime', utc_sh=0):
     '''
     :param t: time tuple
-    :param t_form: time format 'date' / 'time' / 'full'
+    :param t_form: time format 'date' / 'time' / 'full' /  'time_hm' / 'full_hm'
     :param type: time tuple 'rtc' or 'utime'
     :param utc_sh: utc time shift
     :return: time string
@@ -118,10 +118,14 @@ def strftime(t, t_form='full', type='utime', utc_sh=0):
             return '{}-{:02d}-{:02d}'.format(t[0], t[1], t[2])
         elif t_form == 'time':
             return '{:02d}:{:02d}:{:02d}'.format(t[3], t[4], t[5])
+        elif t_form == 'time_hm':
+            return '{:02d}:{:02d}'.format(t[3], t[4], t[5])
+        elif t_form == 'full_hm':
+            return '{}-{:02d}-{:02d} {:02d}:{:02d}'.format(t[0], t[1], t[2], t[3], t[4])
 
 # Connecting to WiFi network
 
-sta_if = network.WLAN(network.STA_IF) 
+sta_if = network.WLAN(network.STA_IF)
 sta_if.active(True) # Activate WiFi
 sta_if.connect(ssid, passwd)
 clear_screen(oled)
