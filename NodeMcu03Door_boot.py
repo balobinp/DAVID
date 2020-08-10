@@ -1,14 +1,3 @@
-# Connections:
-# OLED     NodeMcu
-#  SDA <-> D2 (4)
-#  SCL <-> D1 (5)
-
-# DHT22     NodeMcu
-#   OUT <-> D3 (0)
-
-# boot.py
-# This file is executed on every boot (including wake-boot from deepsleep)
-
 # import os
 # import uos
 import network
