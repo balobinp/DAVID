@@ -1,6 +1,6 @@
 # NodeMcu03Door_main
 
-version = 200810
+version = 200814
 
 from utime import ticks_diff, ticks_ms, ticks_add, sleep
 
@@ -10,11 +10,11 @@ t_sw2 = 30000
 t_sw3 = 60000
 
 # Test delays
-# t_sw1 = 3000
-# t_sw2 = 3000
-# t_sw3 = 6000
+# t_sw1 = 5000
+# t_sw2 = 5000
+# t_sw3 = 9000
 
-ldr_th = 100  # Light Resistor value threshold
+ldr_th = 800  # Light Resistor value threshold
 
 # Switches
 sw1 = Pin(16, Pin.OUT)  # D0 Out of the door
@@ -31,22 +31,23 @@ cam = Pin(15, Pin.OUT, value=0)  # D8
 
 # Light Resistor
 ldr = ADC(0)
-ldr.read()
 
 def sw(s_id, mt, sw, ldr, cam, dl, t):
-    if s_id == 1 and mt.value():
-        cam.on()
-        if ldr.read() > ldr_th:
+    if ticks_diff(ticks_ms(), dl) > 0:
+        if s_id == s_id_drm_1 and mt.value():
+            cam.on()
+            if ldr.read() > ldr_th:
+                sw.on()
+            dl = ticks_add(ticks_ms(), t)
+            get_req('http://{0}:{1}/motion;sensor={2}'.format(ip_server, port_server, s_id))
+        elif mt.value():
             sw.on()
             dl = ticks_add(ticks_ms(), t)
-        get_req('http://{0}:{1}/motion;sensor={2}'.format(ip_server, port_server, s_id))
-    elif mt.value():
-        sw.on()
-        dl = ticks_add(ticks_ms(), t)
-        get_req('http://{0}:{1}/motion;sensor={2}'.format(ip_server, port_server, s_id))
-    if ticks_diff(ticks_ms(), dl) > 0:
-        sw.off()
-        cam.off()
+            get_req('http://{0}:{1}/motion;sensor={2}'.format(ip_server, port_server, s_id))
+        else:
+            sw.off()
+            if s_id == s_id_drm_1:
+                cam.off()
     return dl
 
 # deadlines
@@ -54,12 +55,14 @@ dl_sw1 = 0
 dl_sw2 = 0
 dl_sw3 = 0
 
-sw_mt_d = {1:[mt1, sw1, dl_sw1, t_sw1], 2:[mt2, sw2, dl_sw2, t_sw2], 3:[mt3, sw3, dl_sw3, t_sw3]}
+sw_mt_d = {s_id_drm_1:[mt1, sw1, dl_sw1, t_sw1],
+           s_id_drm_2:[mt2, sw2, dl_sw2, t_sw2],
+           s_id_drm_3:[mt3, sw3, dl_sw3, t_sw3]}
 
-# while True:
-for _ in range(100):
+while True:
+# for _ in range(100):
     for s_id, v in sw_mt_d.items():
-        sw(s_id, v[0], v[1], ldr, cam, v[2], v[3])
+        v[2] = sw(s_id, v[0], v[1], ldr, cam, v[2], v[3])
 
     # Test printouts
     # clear_screen(oled)
@@ -69,4 +72,4 @@ for _ in range(100):
     # oled.text(m, 8, 30)
     # oled.show()
 
-    sleep(1)
+    sleep(0.5)
