@@ -18,7 +18,7 @@ led_sw()
 mq_th_1 = 200 # Gaz threshold level 1
 mq_th_2 = 400 # Gaz threshold level 2
 
-tm_th_1 = 30 # temperature oven alert threshold
+tm_th_1 = 28 # temperature oven alert threshold
 
 pos_tem = 10
 pos_hum = 20
