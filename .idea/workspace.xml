@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="732560c7-f6ac-41e4-89ff-77ee0450d756" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeMcu02Gas_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/NodeMcu02Gas_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/david_unittest.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_unittest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/david_web_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/david_web_server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +21,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="17">
-                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+              <first_editor relative-caret-position="124">
+                <caret line="112" column="87" selection-start-line="112" selection-start-column="87" selection-end-line="112" selection-end-column="87" />
               </first_editor>
               <second_editor />
             </state>
@@ -128,11 +125,11 @@
         <option value="$PROJECT_DIR$/NodeMcu03Door_boot.py" />
         <option value="$PROJECT_DIR$/NodeMcu03Door_main.py" />
         <option value="$PROJECT_DIR$/NodeMcu02Gas_main.py" />
-        <option value="$PROJECT_DIR$/david_web_server.py" />
         <option value="$PROJECT_DIR$/david_unittest.py" />
-        <option value="$PROJECT_DIR$/david_lib.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/README_TEMPLATES_PRINCIPALS.txt" />
+        <option value="$PROJECT_DIR$/david_web_server.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/david_lib.py" />
       </list>
     </option>
   </component>
@@ -147,7 +144,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -164,6 +160,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -227,7 +224,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" visible="true" weight="0.35667753" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49962434" weight="0.35667753" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003756" side_tool="true" weight="0.35667753" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32899022" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -587,16 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david_web_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
-          <folding>
-            <element signature="e#38#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/david_user_interface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -615,13 +602,6 @@
             <element signature="e#0#10#0" expanded="true" />
             <marker date="1599198445298" expanded="true" signature="941:1261" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/david_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -644,16 +624,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README_CHANGE_HISTORY.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11050">
-          <caret line="650" column="5" lean-forward="true" selection-start-line="650" selection-start-column="5" selection-end-line="650" selection-end-column="41" />
+        <state relative-caret-position="221">
+          <caret line="495" column="36" lean-forward="true" selection-start-line="495" selection-start-column="19" selection-end-line="495" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_web_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1628">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="e#38#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/david_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8">
+          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="17">
-            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <first_editor relative-caret-position="124">
+            <caret line="112" column="87" selection-start-line="112" selection-start-column="87" selection-end-line="112" selection-end-column="87" />
           </first_editor>
           <second_editor />
         </state>

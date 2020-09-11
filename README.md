@@ -110,6 +110,7 @@ Version 0.8.0.dev change list and installation procedure:
 Главный Компьютер:
 1. david_web_server.py отправка нотификации по мэйлу только для sensor_id == '3': # NodeMcu03Door
 2. Добавлена обработка get запроса от контроллера NodeMcu02Gas о стоящей на газу посуде (200904)
+3. david_web_server.py методы обработки GET запросов выведены в отдельный класс (200911)
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Сделана синхронизация времени в boot (200712)
