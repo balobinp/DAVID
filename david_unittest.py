@@ -150,7 +150,7 @@ class TestWebServer(unittest.TestCase):
         conn = sqlite3.connect(file_sqlite_db_path)
         cur = conn.cursor()
         sql_str = """SELECT SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY FROM CLIMATE_SENSORS
-        WHERE REP_DATE >= DATETIME('now','-15 minute')
+        WHERE REP_DATE >= DATETIME('now','-1 minute')
         AND ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
         cur.execute(sql_str)
         results = cur.fetchall()
