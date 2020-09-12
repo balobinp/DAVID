@@ -441,7 +441,9 @@ Main Version change procedure
 README.md
 david_lib.py
 
-1. Сделать полную копию папки проекта.
+1. Сделать копию файлов проекта на сервере.
+david_*
+WEB_UI/*
 
 2. Войти в виртуальное окружение проекта, установить библиотеки и сохранить requirements.txt.
 source /home/david/env/bin/activate
@@ -461,36 +463,13 @@ sudo systemctl start david.service
 sudo systemctl status david.service
 
 6.  Перезапустить Web сервер django
-Предварительно поменяв путь в файле settings.py
-Если нужно, применить миграции и загрузить недостающие данные в базу данных.
-cd ./WEB_UI
-sudo screen -ls
-sudo screen -d -r 4932.david_web_server # вернуть скрин на передний план
-sudo screen -S david_web_server # создать скрин, если нужно
-cd /home/david/WEB_UI
-Остановить Django
-Перезагрузить папку ./WEB_UI
 Выполнить миграции:
 python manage.py makemigrations english
 python manage.py sqlmigrate english 0001
 python manage.py migrate english
-source /home/david/env/bin/activate
-python manage.py runserver 0.0.0.0:8000
-Ctrl+A -> D
-sudo screen -ls
 
-7. Загрузить данные в таблицы, если нужно
-sqlite3 david_db.sqlite
-INSERT INTO children_math_contest01
-(task_description, answers_options, answer)
-VALUES('Папе, маме и дочке вместе 70 лет. Сколько лет им будет вместе через 4 года?', '-', '82');
-
-7. Добавить модули в crontab
-crontab -e
-*/15 * * * * /home/david/env/bin/python /home/david/david_climate_check.py
-0 17 */1 * 1-5 /home/david/env/bin/python /home/david/david_currency_check.py
-*/15 * * * * /home/david/env/bin/python /home/david/david_gas_check.py
-0 18 */1 * * /home/david/env/bin/python /home/david/david_healthcheck.py
+sudo systemctl restart david_web_ui.service
+sudo systemctl -l status david_web_ui.service
 
 8. Выполнить unit тестирование
 python /home/david/david_unittest.py
@@ -504,6 +483,9 @@ exit
 
 ------------------------------------
 Main initial installation procedure:
+------------------------------------
+
+Главный Компьютер
 ------------------------------------
 
 1. Создать пользователя david и директорию /home/david
@@ -560,15 +542,15 @@ cp /mnt/c/Users/balob/Documents/DAVID/david.service /etc/systemd/system/david.se
 
 sudo systemctl daemon-reload
 sudo systemctl enable david.service
-systemctl start david.service
-systemctl status david.service
+sudo systemctl start david.service
+sudo systemctl status david.service
 
 Проверить, что сервер слушает порт:
 (env) david@david:~$ sudo netstat -ltnp | grep :80
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3570/python
 tcp        0      0 192.168.1.44:80         0.0.0.0:*               LISTEN      3794/python
 
-9. Запустить сервис для david_climate_check.py
+9. Запустить сервисы для david_climate_check / david_currency_check / david_healthcheck
 
 Поместить в папку /home/david файлы:
 david_climate_check.timer
@@ -588,8 +570,10 @@ sudo mv /home/david/david_healthcheck.service /etc/systemd/system/david_healthch
 
 sudo systemctl status david_climate_check.service
 sudo systemctl start david_climate_check.service
+
 sudo systemctl status david_currency_check.service
 sudo systemctl start david_currency_check.service
+
 sudo systemctl status david_healthcheck.service
 sudo systemctl start david_healthcheck.service
 
@@ -658,3 +642,32 @@ Original error was: libf77blas.so.3: cannot open shared object file: No such fil
 Решение:
 sudo apt-get install libatlas-base-dev
 (https://github.com/numpy/numpy/issues/14772)
+
+NodeMcu02Gas
+------------------------------------
+
+esptool --chip esp8266 --port COM9 erase_flash
+esptool --chip esp8266 --port COM9 --baud 115200 write_flash --flash_size=detect 0 c:\Users\balobin.p\Downloads\MicroPython\esp8266-20191220-v1.12.bin
+
+import esp
+esp.check_fw()
+
+rshell
+connect serial COM9 115200
+ls /pyboard
+cp ./Downloads/MicroPython/ftp.py /pyboard/ftp.py
+cp ./Downloads/MicroPython/david_pass.json /pyboard/david_pass.json
+cp ./Downloads/MicroPython/main.py /pyboard/main.py
+cp ./Downloads/MicroPython/boot.py /pyboard/boot.py
+cp ./Downloads/MicroPython/ssd1306.py /pyboard/ssd1306.py
+cp ./Downloads/MicroPython/upysh.py /pyboard/upysh.py
+
+repl
+
+import webrepl_setup
+# Выбрать E и установить пароль
+import webrepl
+webrepl.start()
+
+from upysh import *
+ls

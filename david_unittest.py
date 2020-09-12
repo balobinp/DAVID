@@ -118,6 +118,14 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
+    def test_get_oven(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/oven;sensor=7&temperature=66&type=1'
+        urls = [url_01]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
     def test_get_not_found(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/any_text'
         urls = [url_01]
@@ -142,7 +150,7 @@ class TestWebServer(unittest.TestCase):
         conn = sqlite3.connect(file_sqlite_db_path)
         cur = conn.cursor()
         sql_str = """SELECT SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY FROM CLIMATE_SENSORS
-        WHERE REP_DATE >= DATETIME('now','-15 minute')
+        WHERE REP_DATE >= DATETIME('now','-1 minute')
         AND ID IN (SELECT MAX(ID) FROM CLIMATE_SENSORS GROUP BY SENSOR_ID);"""
         cur.execute(sql_str)
         results = cur.fetchall()

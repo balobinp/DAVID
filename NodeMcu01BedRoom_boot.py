@@ -14,9 +14,11 @@
 import network
 from machine import Pin, I2C, ADC
 from time import sleep
+from ntptime import settime
 import urequests
 import ujson
 import webrepl
+import utime
 
 import ssd1306
 
@@ -27,7 +29,7 @@ s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 ### SET VARIABLES HERE ###
 
-version = 200508
+version = 200717
 
 ip_server = '192.168.1.44'
 # ip_server = '192.168.1.63'
@@ -98,9 +100,32 @@ def draw_bulet(oled, pos_x=3, pos_y=0):
             oled.pixel(x+pos_x*8, y+pos_y, fill)
     oled.show()
 
+def strftime(t, t_form='full', type='utime', utc_sh=0):
+    '''
+    :param t: time tuple
+    :param t_form: time format 'date' / 'time' / 'full' /  'time_hm' / 'full_hm'
+    :param type: time tuple 'rtc' or 'utime'
+    :param utc_sh: utc time shift
+    :return: time string
+    '''
+    if type == 'rtc':
+        return '{}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:03d}'.format(t[0], t[1], t[2], t[4], t[5], t[6], t[7])
+    elif type == 'utime':
+        t = utime.localtime(utime.mktime(t) + utc_sh * 3600)
+        if t_form == 'full':
+            return '{}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}'.format(t[0], t[1], t[2], t[3], t[4], t[5])
+        elif t_form == 'date':
+            return '{}-{:02d}-{:02d}'.format(t[0], t[1], t[2])
+        elif t_form == 'time':
+            return '{:02d}:{:02d}:{:02d}'.format(t[3], t[4], t[5])
+        elif t_form == 'time_hm':
+            return '{:02d}:{:02d}'.format(t[3], t[4], t[5])
+        elif t_form == 'full_hm':
+            return '{}-{:02d}-{:02d} {:02d}:{:02d}'.format(t[0], t[1], t[2], t[3], t[4])
+
 # Connecting to WiFi network
 
-sta_if = network.WLAN(network.STA_IF) 
+sta_if = network.WLAN(network.STA_IF)
 sta_if.active(True) # Activate WiFi
 sta_if.connect(ssid, passwd)
 clear_screen(oled)
@@ -114,6 +139,21 @@ ip_addr = sta_if.ifconfig()[0]
 clear_screen(oled)
 oled.text('Connected:', 0, 20)
 oled.text('{}'.format(ip_addr), 0, 30)
+oled.show()
+sleep(3)
+
+# Time syncro
+
+clear_screen(oled)
+
+try:
+    settime()
+    t = utime.localtime()
+    oled.text('Time set:', 24, 20)
+    oled.text(strftime(t, t_form='date', type='utime', utc_sh=3), 24, 30)
+    oled.text(strftime(t, t_form='time', type='utime', utc_sh=3), 24, 40)
+except:
+    oled.text('Time not set.', 16, 30)
 oled.show()
 sleep(3)
 
