@@ -11,6 +11,7 @@ import david_climate_check
 import david_gas_check
 import david_healthcheck
 import david_user_interface
+import time
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
@@ -97,6 +98,14 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
+    def test_01_get_gas_check_timer(self):
+        url = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
+        for _ in range(10):
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+            time.sleep(1)
+
     def test_02_fetch_gas_data(self):
         conn = sqlite3.connect(file_sqlite_db_path)
         cur = conn.cursor()
@@ -125,6 +134,14 @@ class TestWebServer(unittest.TestCase):
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
+
+    def test_get_oven_check_timer(self):
+        url = f'http://{server_ip_addr}:{server_port}/oven;sensor=7&temperature=66&type=1'
+        for _ in range(10):
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+            time.sleep(1)
 
     def test_get_not_found(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/any_text'
