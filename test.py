@@ -1,38 +1,42 @@
-import ftplib
-import json
-from os.path import join
+from fastapi import BackgroundTasks, FastAPI, HTTPException
+import uvicorn
 import datetime as dt
+from time import sleep
+from urllib.parse import parse_qs, urlparse
 
-import david_lib
+import david_user_interface
 
-dir_david = david_lib.dir_david
-ftp_ip_addr = david_lib.ftp_ip_addr
-file_pass_path = join(dir_david, 'david_pass.json')
-file_sqlite_db = david_lib.file_sqlite_db
-file_sqlite_db_path = join(dir_david, file_sqlite_db)
+inform_user_mail = david_user_interface.InformUser()
 
-def make_db_backup_ftp():
-    ftp_backup_dir = r'Transcend/david/db_backup'
-    with open(file_pass_path, "r") as json_file:
-        passwords = json.load(json_file)
-    ftp_user = passwords['ftp_user']
-    ftp_pass = passwords['ftp_pass']
+def send_mail():
     try:
-        ftp = ftplib.FTP(ftp_ip_addr)
-        ftp.login(ftp_user, ftp_pass)
-        file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
-        ftp.storbinary('STOR ' + f'{ftp_backup_dir}/{file_sqlite_db_backup}', open(file_sqlite_db_path, 'rb'))
-        ftp.cwd(ftp_backup_dir)
-        db_backups = ftp.nlst()
-        db_backups.sort()
-        for db_backup in db_backups[:-3]:
-            ftp.delete(db_backup)
-        db_backups = ftp.nlst()
-        db_backups.sort()
-        ftp.quit()
+        dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        subject = f"Test message {dt_now}"
+        message = f"Test message {dt_now}"
+        inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+        print(f'Message=inform_user_mail;Sensor=1;Sent=done')
+        sleep(1)
     except Exception as e:
-        db_backups = None
-    return db_backups
+        print(f'Message=inform_user_mail;Exception={e}')
 
-if __name__ == '__main__':
-    db_backups = make_db_backup_ftp()
+def get_request_handler(url_parameters):
+    get_url = urlparse(url_parameters)
+    get_params = parse_qs(get_url.params, keep_blank_values=True)
+    return get_url, get_params
+
+app = FastAPI()
+
+@app.get("/{parameters}")  # to read data.
+async def get(parameters: str, background_tasks: BackgroundTasks):
+    get_url, get_params = get_request_handler(parameters)
+    # print(get_url, get_params)
+    # if item_id == 4:
+    #     raise HTTPException(status_code=404)
+    # else:
+    #     pass
+    #     # background_tasks.add_task( send_mail )
+    # return 'OK', 200
+    return {"message": "OK", "get_url": get_url.path, "get_params": get_params, "sensor": get_params.get('sensor')[0]}
+
+if __name__ == "__main__":
+    uvicorn.run("test:app", host="127.0.0.1", port=8000, log_level="info")

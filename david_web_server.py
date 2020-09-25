@@ -1,8 +1,12 @@
 # python3.6
 # Version 0.8.0.dev 200911
 
-from flask import Flask, abort # pip install Flask
-from flask_restful import Resource, Api # pip install Flask-RESTful
+from fastapi import BackgroundTasks, FastAPI, HTTPException
+import uvicorn
+
+# from flask import Flask, abort  # pip install Flask
+# from flask_restful import Resource, Api  # pip install Flask-RESTful
+
 from urllib.parse import parse_qs, urlparse
 import sqlite3
 from os.path import isfile, join
@@ -86,7 +90,6 @@ class Timer:
 
 
 class GetActions:
-
     timer_gas = Timer(delay=timer_gas_mail_delay)
     timer_oven = Timer(delay=timer_oven_mail_delay)
 
@@ -104,7 +107,8 @@ class GetActions:
         else:
             cur = conn.cursor()
             cur.execute('''INSERT INTO CLIMATE_SENSORS (REP_DATE, SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY)
-                                        VALUES (datetime(), ?, ?, ?, ?)''', (sensor_id, attempt, temperature, humidity))
+                                        VALUES (datetime(), ?, ?, ?, ?)''',
+                        (sensor_id, attempt, temperature, humidity))
             conn.commit()
             conn.close()
 
@@ -180,41 +184,77 @@ class GetActions:
                 web_server_log.error(f'Message=inform_user_mail;Sensor={sensor_id};Exception={e}')
 
 
-app = Flask(__name__)
-api = Api(app)
+app = FastAPI()
+
+# app = Flask(__name__)
+# api = Api(app)
 
 
-class DavidWebServerHandler(Resource):
+get_actions = GetActions()
 
-    get_actions = GetActions()
 
-    def get(self, parameters):
-        get_url, get_params = get_request_handler(parameters)
+@app.get("/{parameters}")
+async def get(parameters: str, background_tasks: BackgroundTasks):
+    get_url, get_params = get_request_handler(parameters)
 
-        if get_url.path == 'climate':
-            self.get_actions.climate(get_params)
+    if get_url.path == 'climate':
+        background_tasks.add_task(get_actions.climate, get_params)
+        # get_actions.climate(get_params)
 
-        elif get_url.path == 'connected':
-            self.get_actions.connected(get_params)
+    elif get_url.path == 'connected':
+        background_tasks.add_task(get_actions.connected, get_params)
+        # get_actions.connected(get_params)
 
-        elif get_url.path == 'motion':
-            self.get_actions.motion(get_params)
+    elif get_url.path == 'motion':
+        background_tasks.add_task(get_actions.motion, get_params)
+        # get_actions.motion(get_params)
 
-        elif get_url.path == 'gas':
-            self.get_actions.gas(get_params)
+    elif get_url.path == 'gas':
+        background_tasks.add_task(get_actions.gas, get_params)
+        # get_actions.gas(get_params)
 
-        elif get_url.path == 'oven':
-            self.get_actions.oven(get_params)
+    elif get_url.path == 'oven':
+        background_tasks.add_task(get_actions.oven, get_params)
+        # get_actions.oven(get_params)
 
-        else:
-            abort(404)
-        return 'OK', 200  # Отклик и Status
+    else:
+        raise HTTPException(status_code=404)
+
+    return 'OK'  # Отклик
+
+
+# class DavidWebServerHandler(Resource):
+#
+#     get_actions = GetActions()
+#
+#     def get(self, parameters):
+#         get_url, get_params = get_request_handler(parameters)
+#
+#         if get_url.path == 'climate':
+#             self.get_actions.climate(get_params)
+#
+#         elif get_url.path == 'connected':
+#             self.get_actions.connected(get_params)
+#
+#         elif get_url.path == 'motion':
+#             self.get_actions.motion(get_params)
+#
+#         elif get_url.path == 'gas':
+#             self.get_actions.gas(get_params)
+#
+#         elif get_url.path == 'oven':
+#             self.get_actions.oven(get_params)
+#
+#         else:
+#             abort(404)
+#         return 'OK', 200  # Отклик и Status
 
 
 if __name__ == '__main__':
-
     check_file(file_sqlite_db_path)
     check_file(file_log_web_server_path)
 
-    api.add_resource(DavidWebServerHandler, '/<string:parameters>')
-    app.run(host=server_ip_addr, port=server_port, debug=False)
+    uvicorn.run("david_web_server:app", host=server_ip_addr, port=server_port)
+
+    # api.add_resource(DavidWebServerHandler, '/<string:parameters>')
+    # app.run(host=server_ip_addr, port=server_port, debug=False)

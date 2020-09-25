@@ -13,7 +13,8 @@ Checkout list:
 3. Изменить версию в скриптах микроконтроллеров (если были изменения)
 4. Проверить наличие комментариев в коде.
 5. Проверить покрытие тестами.
-6. Сохранить изменения в Git
+6. Сохранить pip freeze > requirements.txt
+7. Сохранить изменения в Git
 
 ************************************************************************************************************************
 To Do list:
@@ -112,6 +113,7 @@ Version 0.9.0.dev change list and installation procedure:
 
 Модуль david_web_server:
 1. Добавлен класс Timer для контроля периодичности отправки emergency mail gas и oven (200921)
+2. Выполнен переход на FastAPI с async (200925)
 
 Микроконтроллер NodeMcu01BedRoom:
 1. 
@@ -120,3 +122,10 @@ Version 0.9.0.dev change list and installation procedure:
 1. 
 
 Version installation procedure:
+
+1. Установить библиотеки
+pip install fastapi
+pip install uvicorn
+
+2. Обновить requirements.txt
+pip freeze > requirements.txt
