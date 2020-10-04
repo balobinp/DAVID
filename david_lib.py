@@ -1,6 +1,6 @@
 #python3.6
 
-version = '0.8.0.dev'
+version = '0.9.0'
 currency_threshold_increase_per = 2
 currency_usd_threshold_high = 67
 currency_usd_threshold_low = 63
@@ -12,6 +12,8 @@ climate_hot_threshold = 25
 ip_addr = '192.168.1.44'
 port = 80
 ftp_ip_addr = '192.168.1.1'
+timer_gas_mail_delay = 60  # Time interval to send mail in case of gas emergency
+timer_oven_mail_delay = 60  # Time interval to send mail in case of oven emergency
 ftp_db_backup_dir = 'Transcend/david/db_backup'
 dir_david = r'/home/david'
 file_climate_hot_bedroom = r'./VOICE_SAMPLES/climate_hot_bedroom.mp3'
@@ -27,9 +29,11 @@ file_log_user_interface = r'./log/user_interface.log'
 
 # For tests
 
-# ip_addr = '192.168.1.52'
+# ip_addr = '192.168.1.53'
 # port = 80
 # ftp_ip_addr = '192.168.1.1'
+# timer_gas_mail_delay = 6  # Time interval to send mail in case of gas emergency
+# timer_oven_mail_delay = 6  # Time interval to send mail in case of oven emergency
 # ftp_db_backup_dir = 'Transcend/david/db_backup'
 # dir_david = r'c:\Users\balob\Downloads\DAVID'
 # file_climate_hot_bedroom = r'c:\Users\balob\Documents\DAVID\VOICE_SAMPLES\climate_hot_bedroom.mp3'

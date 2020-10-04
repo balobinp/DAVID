@@ -1,13 +1,18 @@
 # python3.6
 # Version 0.8.0.dev 200911
 
-from flask import Flask, abort # pip install Flask
-from flask_restful import Resource, Api # pip install Flask-RESTful
+from fastapi import BackgroundTasks, FastAPI, HTTPException
+import uvicorn
+
+# from flask import Flask, abort  # pip install Flask
+# from flask_restful import Resource, Api  # pip install Flask-RESTful
+
 from urllib.parse import parse_qs, urlparse
 import sqlite3
 from os.path import isfile, join
 import logging
 import datetime as dt
+import time
 
 import david_lib
 import david_user_interface
@@ -20,6 +25,8 @@ file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_log_web_server = david_lib.file_log_web_server
 file_log_web_server_path = join(dir_david, file_log_web_server)
+timer_gas_mail_delay = david_lib.timer_gas_mail_delay
+timer_oven_mail_delay = david_lib.timer_oven_mail_delay
 
 # Create logger
 web_server_log = logging.getLogger('web_server')
@@ -53,7 +60,38 @@ def get_request_handler(url_parameters):
     return get_url, get_params
 
 
+class Timer:
+
+    def __init__(self, delay: int, deadline: int = 0) -> None:
+        """
+        Timer class callable is to define timers and delays.
+        Return True if the timer has expired and False otherwise.
+        :param delay: timer delay in seconds.
+        :param deadline: time in seconds since the epoch when the Timer starts (default = 0).
+        """
+        self.delay = delay
+        self.deadline = deadline
+
+    def _diff(self):
+        now = time.time()
+        diff = self.deadline - now
+        return now, diff
+
+    def __call__(self):
+        now, diff = self._diff()
+        if diff < 0:
+            self.deadline = now + self.delay
+            return True
+        elif diff >= 0:
+            return False
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}(delay={self.delay}, deadline={int(self.deadline)})'
+
+
 class GetActions:
+    timer_gas = Timer(delay=timer_gas_mail_delay)
+    timer_oven = Timer(delay=timer_oven_mail_delay)
 
     def climate(self, get_params):
         sensor_id = get_params.get('sensor')[0]
@@ -69,7 +107,8 @@ class GetActions:
         else:
             cur = conn.cursor()
             cur.execute('''INSERT INTO CLIMATE_SENSORS (REP_DATE, SENSOR_ID, ATTEMPT, TEMPERATURE, HUMIDITY)
-                                        VALUES (datetime(), ?, ?, ?, ?)''', (sensor_id, attempt, temperature, humidity))
+                                        VALUES (datetime(), ?, ?, ?, ?)''',
+                        (sensor_id, attempt, temperature, humidity))
             conn.commit()
             conn.close()
 
@@ -119,7 +158,7 @@ class GetActions:
                                         VALUES (datetime(), ?, ?)''', (sensor_id, sensor_value))
             conn.commit()
             conn.close()
-        if gas_report_type == 'emergency':
+        if gas_report_type == 'emergency' and self.timer_gas():
             try:
                 dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 subject = f"Gas emergency {dt_now}"
@@ -134,49 +173,88 @@ class GetActions:
         sensor_id = get_params.get('sensor')[0]
         temperature = get_params.get('temperature')[0]
         web_server_log.debug(f'Message=oven_control;Sensor={sensor_id};Temp={temperature}')
-        try:
-            dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            subject = f"Oven check {dt_now}"
-            message = f"David high temperature over the oven at {dt_now}"
-            inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-            web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
-        except Exception as e:
-            web_server_log.error(f'Message=inform_user_mail;Sensor={sensor_id};Exception={e}')
+        if self.timer_oven():
+            try:
+                dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                subject = f"Oven check {dt_now}"
+                message = f"David high temperature over the oven at {dt_now}"
+                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
+            except Exception as e:
+                web_server_log.error(f'Message=inform_user_mail;Sensor={sensor_id};Exception={e}')
 
 
-app = Flask(__name__)
-api = Api(app)
+app = FastAPI()
+
+# app = Flask(__name__)
+# api = Api(app)
 
 
-class DavidWebServerHandler(Resource):
+get_actions = GetActions()
 
-    get_actions = GetActions()
 
-    def get(self, parameters):
-        get_url, get_params = get_request_handler(parameters)
+@app.get("/{parameters}")
+async def get(parameters: str, background_tasks: BackgroundTasks):
+    get_url, get_params = get_request_handler(parameters)
 
-        if get_url.path == 'climate':
-            self.get_actions.climate(get_params)
+    if get_url.path == 'climate':
+        background_tasks.add_task(get_actions.climate, get_params)
+        # get_actions.climate(get_params)
 
-        elif get_url.path == 'connected':
-            self.get_actions.connected(get_params)
+    elif get_url.path == 'connected':
+        background_tasks.add_task(get_actions.connected, get_params)
+        # get_actions.connected(get_params)
 
-        elif get_url.path == 'motion':
-            self.get_actions.motion(get_params)
+    elif get_url.path == 'motion':
+        background_tasks.add_task(get_actions.motion, get_params)
+        # get_actions.motion(get_params)
 
-        elif get_url.path == 'gas':
-            self.get_actions.gas(get_params)
+    elif get_url.path == 'gas':
+        background_tasks.add_task(get_actions.gas, get_params)
+        # get_actions.gas(get_params)
 
-        elif get_url.path == 'oven':
-            self.get_actions.oven(get_params)
+    elif get_url.path == 'oven':
+        background_tasks.add_task(get_actions.oven, get_params)
+        # get_actions.oven(get_params)
 
-        else:
-            abort(404)
-        return 'OK', 200  # Отклик и Status
+    else:
+        raise HTTPException(status_code=404)
+
+    return 'OK'  # Отклик
+
+
+# class DavidWebServerHandler(Resource):
+#
+#     get_actions = GetActions()
+#
+#     def get(self, parameters):
+#         get_url, get_params = get_request_handler(parameters)
+#
+#         if get_url.path == 'climate':
+#             self.get_actions.climate(get_params)
+#
+#         elif get_url.path == 'connected':
+#             self.get_actions.connected(get_params)
+#
+#         elif get_url.path == 'motion':
+#             self.get_actions.motion(get_params)
+#
+#         elif get_url.path == 'gas':
+#             self.get_actions.gas(get_params)
+#
+#         elif get_url.path == 'oven':
+#             self.get_actions.oven(get_params)
+#
+#         else:
+#             abort(404)
+#         return 'OK', 200  # Отклик и Status
 
 
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)
     check_file(file_log_web_server_path)
-    api.add_resource(DavidWebServerHandler, '/<string:parameters>')
-    app.run(host=server_ip_addr, port=server_port, debug=False)
+
+    uvicorn.run("david_web_server:app", host=server_ip_addr, port=server_port)
+
+    # api.add_resource(DavidWebServerHandler, '/<string:parameters>')
+    # app.run(host=server_ip_addr, port=server_port, debug=False)
