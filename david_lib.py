@@ -1,6 +1,6 @@
 #python3.6
 
-version = '0.9.0.dev'
+version = '0.9.0'
 currency_threshold_increase_per = 2
 currency_usd_threshold_high = 67
 currency_usd_threshold_low = 63

@@ -476,6 +476,9 @@ david_*
 WEB_UI/*
 
 2. Войти в виртуальное окружение проекта, установить библиотеки и сохранить requirements.txt.
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get clean
 source /home/david/env/bin/activate
 pip freeze --local > requirements.txt
 python --version
@@ -526,6 +529,10 @@ exit
 su david
 cd /home
 mkdir ./david
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get clean
 
 2. Настроить виртуальное окружение для программы.
 sudo apt-get install python3-pip

@@ -160,6 +160,7 @@ class TestWebServer(unittest.TestCase):
         urls = [url_01, url_02, url_03, url_04, url_05, url_06]
         for url in urls:
             r = requests.get(url)
+            time.sleep(0.5)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
