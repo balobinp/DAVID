@@ -105,15 +105,14 @@ To Do list:
 ************************************************************************************************************************
 
 ------------------------------------
-Version 0.9.0.dev change list and installation procedure:
+Version 0.10.0.dev change list and installation procedure:
 ------------------------------------
 
 Главный Компьютер:
 1. 
 
 Модуль david_web_server:
-1. Добавлен класс Timer для контроля периодичности отправки emergency mail gas и oven (200921)
-2. Выполнен переход на FastAPI с async (200925)
+1. 
 
 Микроконтроллер NodeMcu01BedRoom:
 1. 
@@ -122,10 +121,3 @@ Version 0.9.0.dev change list and installation procedure:
 1. 
 
 Version installation procedure:
-
-1. Установить библиотеки
-pip install fastapi
-pip install uvicorn
-
-2. Обновить requirements.txt
-pip freeze > requirements.txt
