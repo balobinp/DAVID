@@ -1,6 +1,7 @@
 #python3.6
 #Author: balobin.p@mail.ru
 import sqlite3
+from pandas import DataFrame
 from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
@@ -11,7 +12,6 @@ import david_lib
 import david_user_interface
 
 #from importlib import reload
-
 #reload(logging)
 
 dir_david = david_lib.dir_david
@@ -19,6 +19,8 @@ file_log_currency_check = david_lib.file_log_currency_check
 file_log_currency_check_path = join(dir_david, file_log_currency_check)
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
+tickers_foreign = david_lib.tickers_foreign
+tickers_russian = david_lib.tickers_russian
 url_cbrf = 'https://www.cbr.ru/scripts/XML_daily.asp'
 currency_threshold_increase_per = david_lib.currency_threshold_increase_per
 currency_usd_threshold_high = david_lib.currency_usd_threshold_high
@@ -45,16 +47,19 @@ currency_check_log.addHandler(file_handler)
 #а. Получает курс валют с сайта ЦБРФ. http_currency_request
 #currency_check_log.info(f'Message=http_currency_request;')
 #currency_check_log.error(f'Message=http_currency_request;')
+
 #б. Записывает в базу данных. currency_rate_db_insert
 #currency_check_log.debug(f'Message=currency_rate_db_insert;')
 #currency_check_log.info(f'Message=currency_rate_db_insert;')
 #currency_check_log.warning(f'Message=currency_rate_db_insert;')
 #currency_check_log.error(f'Message=currency_rate_db_insert;')
+
 #в. Читает базу данных. Выполняет проверку полученных данных. currency_check
 #currency_check_log.debug(f'Message=currency_check;')
 #currency_check_log.info(f'Message=currency_check;')
 #currency_check_log.warning(f'Message=currency_check;')
 #currency_check_log.error(f'Message=currency_check;')
+
 #г. Отправляет сообщение в WA. send_wa_notify
 #currency_check_log.debug(f'Message=send_wa_notify;')
 #currency_check_log.info(f'Message=send_wa_notify;')
@@ -67,6 +72,55 @@ def check_file(file_name):
     else:
         currency_check_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
     return None
+
+
+def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFrame):
+    """
+    Get price of shares from IIS MOEX.
+
+    :param market: IIS market. Values: 'foreign', 'russian'. Default is 'foreign'.
+    :param tickers: list of tickers. Leave empty to get all. Default empty list.
+    :return: status, DataFrame
+
+    Examples
+    -----
+    >>> status, df = get_iis_shares(market='foreign', tickers=['AAPL-RM'])
+    >>> if status:
+    >>>    display(df)
+    """
+
+    urls = {'russian': r'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities.xml',
+            'foreign': r'https://iss.moex.com/iss/engines/stock/markets/foreignshares/securities.xml'}
+
+    url = urls[market]
+
+    try:
+        resp = requests.get(url, timeout=3)
+        currency_check_log.info(
+            f'Message=http_currency_request;Response_ok={resp.ok};Reason={resp.reason};Status={resp.status_code}')
+    except Exception as err:
+        currency_check_log.error(f'Message=http_currency_request;Error={err}')
+        return False, DataFrame()
+    else:
+        tree = ET.fromstring(resp.content)
+
+        iis_shares = []
+        iis_shares_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+        for data in tree.findall('data'):
+            if data.attrib['id'] == 'securities':
+                for row in data.find('rows').findall('row'):
+                    iis_shares.append([row.attrib.get(name) for name in iis_shares_cols])
+
+        iis_shares_df = DataFrame(iis_shares, columns=iis_shares_cols)
+
+        if isinstance(tickers, list) and tickers:
+            return True, iis_shares_df.loc[iis_shares_df.SECID.isin(tickers)]
+        elif isinstance(tickers, list):
+            return True, iis_shares_df
+        else:
+            return False, DataFrame()
+
 
 def get_valute(valute_name='USD'):
     try:
@@ -131,10 +185,28 @@ def currency_check():
 
 
 if __name__ == '__main__':
+
     check_file(file_log_currency_check_path)
+
     char_code, usd_rate = get_valute('USD')
+
     currency_rate_db_insert(char_code, usd_rate)
+
     currency_check_result, currency_rate, _, _ = currency_check()
+
+    status, df = get_iis_shares(market='foreign', tickers=tickers_foreign)
+    if status:
+        html_foreign = df.sort_values(by='SECID').to_html()
+
+    status, df = get_iis_shares(market='russian', tickers=tickers_russian)
+    if status:
+        html_russian = df.sort_values(by='SECID').to_html()
+
     inform_user_mail = david_user_interface.InformUser()
-    message = f"<div>Result: {currency_check_result}, Value: {currency_rate}</div>"
+
+    message = f"""
+<div>Result: {currency_check_result}, Value: {currency_rate}</div>
+{html_foreign}
+{html_russian}
+"""
     inform_user_mail.mail('Currency Check', message, ["balobin.p@mail.ru", "pavel@roamability.com"])

@@ -4,6 +4,8 @@ version = '0.9.0'
 currency_threshold_increase_per = 2
 currency_usd_threshold_high = 67
 currency_usd_threshold_low = 63
+tickers_foreign = ['AAPL-RM', 'AMZN-RM', 'GOOG-RM', 'MSFT-RM']
+tickers_russian = ['SBER', 'GMKN', 'LKOH', 'MAIL', 'YNDX']
 climate_cold_threshold = 23
 climate_hot_threshold = 25
 
