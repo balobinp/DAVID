@@ -4,6 +4,7 @@ from os.path import isfile, isdir, join
 import datetime as dt
 import shutil
 import sqlite3
+from pandas import DataFrame
 
 import david_lib
 import david_currency_check
@@ -271,6 +272,112 @@ class UserInterface(unittest.TestCase):
         result = inform_user_mail.mail("Test message", message, ["balobin.p@mail.ru", "pavel@roamability.com"])
         self.assertEqual(result, 'successful')
 
+
+class TestCurrencyCheck(unittest.TestCase):
+
+    def test_01_parameters_ok(self):
+        status, df = david_currency_check.get_iis_shares(market='foreign', tickers=david_currency_check.tickers_foreign)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (True,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          sorted(david_currency_check.tickers_foreign),
+                          ))
+
+    def test_02_parameters_ok(self):
+        status, df = david_currency_check.get_iis_shares(market='russian', tickers=david_currency_check.tickers_russian)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist(),
+                          ),
+                         (True,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          sorted(david_currency_check.tickers_russian),
+                          ))
+
+    def test_03_parameters_nok_wrong_combination(self):
+        status, df = david_currency_check.get_iis_shares(market='russian', tickers=david_currency_check.tickers_foreign)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist(),
+                          ),
+                         (True,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
+
+    def test_04_parameters_nok_wrong_combination(self):
+        status, df = david_currency_check.get_iis_shares(market='foreign', tickers=david_currency_check.tickers_russian)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (True,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
+
+    def test_05_parameters_nok_wrong_values(self):
+        status, df = david_currency_check.get_iis_shares(market='wrong', tickers=david_currency_check.tickers_russian)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (False,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
+
+    def test_06_parameters_nok_wrong_values(self):
+        status, df = david_currency_check.get_iis_shares(market='foreign', tickers=['wrong'])
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (True,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
+
+    def test_07_parameters_nok_wrong_types(self):
+        status, df = david_currency_check.get_iis_shares(market=666, tickers=david_currency_check.tickers_russian)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (False,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
+
+    def test_08_parameters_nok_wrong_types(self):
+        status, df = david_currency_check.get_iis_shares(market='foreign', tickers=666)
+        self.assertEqual((status,
+                          isinstance(df, DataFrame),
+                          df.columns.tolist(),
+                          df.SECID.values.tolist()
+                          ),
+                         (False,
+                          True,
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          [],
+                          ))
 
 if __name__ == '__main__':
     unittest.main(verbosity=1)

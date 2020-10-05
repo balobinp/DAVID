@@ -92,7 +92,10 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
     urls = {'russian': r'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities.xml',
             'foreign': r'https://iss.moex.com/iss/engines/stock/markets/foreignshares/securities.xml'}
 
-    url = urls[market]
+    url = urls.get(market, '')
+
+    iis_shares = []
+    iis_shares_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
 
     try:
         resp = requests.get(url, timeout=3)
@@ -100,12 +103,9 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
             f'Message=http_currency_request;Response_ok={resp.ok};Reason={resp.reason};Status={resp.status_code}')
     except Exception as err:
         currency_check_log.error(f'Message=http_currency_request;Error={err}')
-        return False, DataFrame()
+        return False, DataFrame(columns=iis_shares_cols)
     else:
         tree = ET.fromstring(resp.content)
-
-        iis_shares = []
-        iis_shares_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
 
         for data in tree.findall('data'):
             if data.attrib['id'] == 'securities':
@@ -119,7 +119,7 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
         elif isinstance(tickers, list):
             return True, iis_shares_df
         else:
-            return False, DataFrame()
+            return False, DataFrame(columns=iis_shares_cols)
 
 
 def get_valute(valute_name='USD'):

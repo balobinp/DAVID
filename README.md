@@ -1,7 +1,7 @@
 # DAVID
 
 Author: balobin.p@mail.ru
-Version 0.9.0
+Version 0.10.0.dev
 Date 04.10.20
 
 ************************************************************************************************************************
@@ -113,6 +113,9 @@ Version 0.10.0.dev change list and installation procedure:
 
 Модуль david_web_server:
 1. 
+
+Модуль david_currency_check:
+1. Добавлены котировки акций (201005)
 
 Микроконтроллер NodeMcu01BedRoom:
 1. 
