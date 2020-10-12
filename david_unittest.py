@@ -287,6 +287,7 @@ class UserInterface(unittest.TestCase):
         for mp3_file in mp3_files_dict:
             result = inform_user.play_file(mp3_file)
             self.assertEqual(result, True)
+            time.sleep(1)
 
 
 class TestCurrencyCheck(unittest.TestCase):

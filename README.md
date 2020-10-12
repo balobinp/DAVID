@@ -52,7 +52,7 @@ To Do list:
 1. 
 
 Модуль david_gas_check:
-1. 
+1. Заменить метод оповещения на david_user_interface
 
 Модуль david_currency_check:
 1. 
@@ -64,7 +64,7 @@ To Do list:
 2. Доделать информирование пользователя.
 
 Модуль david_user_interface:
-1. 
+1. Проверить, почему возвращается False при проигрывании файла.
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Добавить sensor ID на экран при первичном подключении.

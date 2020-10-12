@@ -125,7 +125,7 @@ class InformUser:
 
         if mp3_file in self.mp3_files_dict.keys():
             try:
-                os.system("mpg123 " + join(self.dir_david, self.mp3_files_dict[mp3_file]))
+                os.system("sudo mpg123 " + join(self.dir_david, self.mp3_files_dict[mp3_file]))
                 user_interface_log.info(
                     f'Message=inform_user_result;Class=InformUser;Method=play_file;Result={result};Message={mp3_file}')
             except Exception as e:
