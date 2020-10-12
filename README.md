@@ -112,10 +112,17 @@ Version 0.10.0.dev change list and installation procedure:
 1. 
 
 Модуль david_web_server:
-1. 
+1. Добавлены методы оповещения голосом о превышении уровня газа и стоящей на плите посуде (201012).
+
+Справочник david_lib:
+1. Файлы mp3 заменены на справочник (201012)
 
 Модуль david_currency_check:
 1. Добавлены котировки акций (201005)
+
+Модуль david_user_interface:
+1. Изменен return на bool в методе InformUser.mail (201012).
+2. Добавлен метод оповещения play_file (201012).
 
 Микроконтроллер NodeMcu01BedRoom:
 1. 

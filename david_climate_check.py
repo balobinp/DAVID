@@ -8,10 +8,11 @@ import logging
 import david_lib
 
 dir_david = david_lib.dir_david
-file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
-file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
-file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
-file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+# file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
+mp3_files_dict = david_lib.mp3_files_dict
+file_climate_hot_bedroom_path = join(dir_david, mp3_files_dict['climate_hot_bedroom'])
+# file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
+file_climate_cold_bedroom_path = join(dir_david, mp3_files_dict['climate_cold_bedroom'])
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_log_climate_check = david_lib.file_log_climate_check
@@ -54,6 +55,7 @@ def get_climate_data():
     cur.execute(sql_str)
     results = cur.fetchall()
     return results
+
 
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)

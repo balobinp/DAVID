@@ -10,8 +10,13 @@ import david_lib
 dir_david = david_lib.dir_david
 file_log_gas_check = david_lib.file_log_gas_check
 file_log_gas_check_path = join(dir_david, file_log_gas_check)
-file_gas_danger = david_lib.file_gas_danger
-file_gas_danger_path = join(dir_david, file_gas_danger)
+
+# file_gas_danger = david_lib.file_gas_danger
+# file_gas_danger_path = join(dir_david, file_gas_danger)
+
+mp3_files_dict = david_lib.mp3_files_dict
+file_gas_danger_path = join(dir_david, mp3_files_dict['gas_danger'])
+
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 
