@@ -5,6 +5,7 @@ import datetime as dt
 import shutil
 import sqlite3
 from pandas import DataFrame
+from sys import platform
 
 import david_lib
 import david_currency_check
@@ -245,10 +246,13 @@ class TestWebServer(unittest.TestCase):
         self.assertEqual(result, 666)
 
     def test_get_system_data(self):
-        result = david_healthcheck.get_system_data()
-        self.assertIsInstance(result, dict)
-        self.assertIsInstance(result['percent'], float)
-        self.assertIsInstance(result['cpu'], float)
+        if platform == "win32":
+            pass
+        else:
+            result = david_healthcheck.get_system_data()
+            self.assertIsInstance(result, dict)
+            self.assertIsInstance(result['percent'], float)
+            self.assertIsInstance(result['cpu'], float)
 
 
 class UserInterface(unittest.TestCase):
@@ -283,11 +287,14 @@ class UserInterface(unittest.TestCase):
     # InformUser.play_file
 
     def test_inform_user_play_file(self):
-        inform_user = david_user_interface.InformUser()
-        for mp3_file in mp3_files_dict:
-            result = inform_user.play_file(mp3_file)
-            self.assertEqual(result, True)
-            time.sleep(1)
+        if platform == "win32":
+            pass
+        else:
+            inform_user = david_user_interface.InformUser()
+            for mp3_file in mp3_files_dict:
+                result = inform_user.play_file(mp3_file)
+                self.assertEqual(result, True)
+                time.sleep(1)
 
 
 class TestCurrencyCheck(unittest.TestCase):

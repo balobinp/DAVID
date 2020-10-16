@@ -5,20 +5,21 @@ import os
 from os.path import isfile, join
 import sqlite3
 import logging
+
 import david_lib
+import david_user_interface
 
 dir_david = david_lib.dir_david
 file_log_gas_check = david_lib.file_log_gas_check
 file_log_gas_check_path = join(dir_david, file_log_gas_check)
-
-# file_gas_danger = david_lib.file_gas_danger
-# file_gas_danger_path = join(dir_david, file_gas_danger)
 
 mp3_files_dict = david_lib.mp3_files_dict
 file_gas_danger_path = join(dir_david, mp3_files_dict['gas_danger'])
 
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
+
+gas_emergency_threshold = david_lib.gas_emergency_threshold
 
 # Create logger
 gas_check_log = logging.getLogger('gas_check')
@@ -69,15 +70,21 @@ def get_gas_data():
     conn.close()
     return gas_sensor_value
 
+
 if __name__ == '__main__':
+
     check_file(file_sqlite_db_path)
     check_file(file_log_gas_check_path)
     check_file(file_gas_danger_path)
+
+    inform_user = david_user_interface.InformUser()
+
     gas_sensor_value = get_gas_data()
     gas_check_log.info(f'Message=get_data_from_db;GasSensorValue={gas_sensor_value}')
-    if gas_sensor_value and gas_sensor_value > 900:
+
+    if gas_sensor_value and gas_sensor_value > gas_emergency_threshold:
         try:
-            os.system("mpg123 " + file_gas_danger_path)
-            gas_check_log.debug(f'Message=playing_file;file={file_gas_danger_path}')
+            result = inform_user.play_file('gas_danger')
+            gas_check_log.debug(f'Message=playing_file;file={file_gas_danger_path};Result={result}')
         except Exception as e:
             gas_check_log.error(f'Message=playing_file;Exception={e}')

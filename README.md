@@ -52,7 +52,7 @@ To Do list:
 1. 
 
 Модуль david_gas_check:
-1. Заменить метод оповещения на david_user_interface
+1. 
 
 Модуль david_currency_check:
 1. 
@@ -64,7 +64,7 @@ To Do list:
 2. Доделать информирование пользователя.
 
 Модуль david_user_interface:
-1. Проверить, почему возвращается False при проигрывании файла.
+1. 
 
 Микроконтроллер NodeMcu01BedRoom:
 1. Добавить sensor ID на экран при первичном подключении.
@@ -116,6 +116,7 @@ Version 0.10.0.dev change list and installation procedure:
 
 Справочник david_lib:
 1. Файлы mp3 заменены на справочник (201012)
+2. Добавлен gas_emergency_threshold (201016)
 
 Модуль david_currency_check:
 1. Добавлены котировки акций (201005)
@@ -123,6 +124,13 @@ Version 0.10.0.dev change list and installation procedure:
 Модуль david_user_interface:
 1. Изменен return на bool в методе InformUser.mail (201012).
 2. Добавлен метод оповещения play_file (201012).
+
+Модуль climate_check:
+1. Заменен метод оповещения на david_user_interface (201016)
+
+Модуль david_gas_check:
+1. Заменен метод оповещения на david_user_interface (201016)
+2. Добавлен gas_emergency_threshold из david_lib (201016)
 
 Микроконтроллер NodeMcu01BedRoom:
 1. 

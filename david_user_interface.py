@@ -58,12 +58,12 @@ def check_file(file_name):
 
 class InformUser:
 
-    def __init__(self, mp3_files_dict = mp3_files_dict, dir_david = dir_david):
-        check_file(file_sqlite_db_path)
-        check_file(file_log_user_interface_path)
-        check_file(file_pass_path)
-        self.mp3_files_dict = mp3_files_dict
-        self.dir_david = dir_david
+    def __init__(self, mp3_files_dict_=mp3_files_dict, dir_david_=dir_david, check_file_=check_file):
+        check_file_(file_sqlite_db_path)
+        check_file_(file_log_user_interface_path)
+        check_file_(file_pass_path)
+        self.mp3_files_dict = mp3_files_dict_
+        self.dir_david = dir_david_
         user_interface_log.info(f'Message=get_task;Class=InformUser;Result=constructed.')
 
         with open(file_pass_path, "r") as json_file:
@@ -104,7 +104,6 @@ class InformUser:
             result = True
             user_interface_log.info(f'Message=inform_user_result;Class=InformUser;Method=mail;Result={result};Subject={subject}')
         except Exception as e:
-            result = False
             user_interface_log.error(f'Message=inform_user_result;Class=InformUser;Method=mail;Result={result};Subject={subject}')
         return result
 
@@ -119,21 +118,21 @@ class InformUser:
         :return:
             Returns True in case of success and False otherwise.
         """
-
         user_interface_log.debug(f'Message=inform_user_attempt;Class=InformUser;Method=play_file;Message={mp3_file}')
         result = False
-
         if mp3_file in self.mp3_files_dict.keys():
             try:
                 os.system("sudo mpg123 " + join(self.dir_david, self.mp3_files_dict[mp3_file]))
                 user_interface_log.info(
                     f'Message=inform_user_result;Class=InformUser;Method=play_file;Result={result};Message={mp3_file}')
+                result = True
             except Exception as e:
                 user_interface_log.error(
                     f'Message=inform_user_result;Class=InformUser;Method=play_file;Result={result};Exception={e}')
         else:
             user_interface_log.error(
                 f'Message=inform_user_result;Class=InformUser;Method=play_file;Result={result};Unknown mp3 file.')
+        return result
 
 
 if __name__ == '__main__':
