@@ -1,6 +1,7 @@
 #python3.6
 #Author: balobin.p@mail.ru
 import sqlite3
+import pandas as pd
 from pandas import DataFrame
 from os.path import isfile, join
 import requests
@@ -96,6 +97,8 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
 
     iis_shares = []
     iis_shares_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+    iis_shares_last = []
+    iis_shares_last_cols = ['SECID', 'LAST']
 
     try:
         resp = requests.get(url, timeout=3)
@@ -111,8 +114,14 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
             if data.attrib['id'] == 'securities':
                 for row in data.find('rows').findall('row'):
                     iis_shares.append([row.attrib.get(name) for name in iis_shares_cols])
+            if data.attrib['id'] == 'marketdata':
+                for row in data.find('rows').findall('row'):
+                    iis_shares_last.append([row.attrib.get(name) for name in iis_shares_last_cols])
 
-        iis_shares_df = DataFrame(iis_shares, columns=iis_shares_cols)
+        # iis_shares_df = DataFrame(iis_shares, columns=iis_shares_cols)
+        iis_shares_df = pd.merge(DataFrame(iis_shares, columns=iis_shares_cols),
+                                 DataFrame(iis_shares_last, columns=iis_shares_last_cols),
+                                 how='left', on='SECID')
 
         if isinstance(tickers, list) and tickers:
             return True, iis_shares_df.loc[iis_shares_df.SECID.isin(tickers)]

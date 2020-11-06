@@ -120,6 +120,7 @@ Version 0.10.0.dev change list and installation procedure:
 
 Модуль david_currency_check:
 1. Добавлены котировки акций (201005)
+2. Добавлена котировка LAST (201106)
 
 Модуль david_user_interface:
 1. Изменен return на bool в методе InformUser.mail (201012).
