@@ -27,7 +27,7 @@ s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
 
 ### SET VARIABLES HERE ###
 
-version = 201018
+version = 201108
 
 ip_server = '192.168.1.44'
 # ip_server = '192.168.1.63'
