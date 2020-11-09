@@ -1,6 +1,6 @@
 # NodeMcu03Door_main
 
-version = 200814
+version = 201109
 
 from utime import ticks_diff, ticks_ms, ticks_add, sleep
 
