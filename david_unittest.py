@@ -5,6 +5,7 @@ import datetime as dt
 import shutil
 import sqlite3
 from pandas import DataFrame
+from sys import platform
 
 import david_lib
 import david_currency_check
@@ -22,10 +23,19 @@ file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
 
-file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
-file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
-file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
-file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+mp3_files_dict = david_lib.mp3_files_dict
+file_climate_hot_bedroom_path = join(dir_david, mp3_files_dict['climate_hot_bedroom'])
+file_climate_cold_bedroom_path = join(dir_david, mp3_files_dict['climate_cold_bedroom'])
+file_gas_danger_path = join(dir_david, mp3_files_dict['gas_danger'])
+file_check_oven_path = join(dir_david, mp3_files_dict['check_oven'])
+
+# file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
+# file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
+# file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
+# file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+# file_gas_danger = david_lib.file_gas_danger
+# file_gas_danger_path = join(dir_david, file_gas_danger)
+
 file_log_climate_check = david_lib.file_log_climate_check
 file_log_climate_check_path = join(dir_david, file_log_climate_check)
 file_log_currency_check = david_lib.file_log_currency_check
@@ -40,8 +50,6 @@ file_log_web_server_path = join(dir_david, file_log_web_server)
 
 file_log_gas_check = david_lib.file_log_gas_check
 file_log_gas_check_path = join(dir_david, file_log_gas_check)
-file_gas_danger = david_lib.file_gas_danger
-file_gas_danger_path = join(dir_david, file_gas_danger)
 
 
 # Check files
@@ -53,6 +61,7 @@ class TestFiles(unittest.TestCase):
         self.assertEqual(isfile(file_climate_hot_bedroom_path), True)
         self.assertEqual(isfile(file_climate_cold_bedroom_path), True)
         self.assertEqual(isfile(file_gas_danger_path), True)
+        self.assertEqual(isfile(file_check_oven_path), True)
         self.assertEqual(isfile(file_sqlite_db_path), True)
         self.assertEqual(isfile(file_log_web_server_path), True)
         self.assertEqual(isfile(file_log_climate_check_path), True)
@@ -237,10 +246,13 @@ class TestWebServer(unittest.TestCase):
         self.assertEqual(result, 666)
 
     def test_get_system_data(self):
-        result = david_healthcheck.get_system_data()
-        self.assertIsInstance(result, dict)
-        self.assertIsInstance(result['percent'], float)
-        self.assertIsInstance(result['cpu'], float)
+        if platform == "win32":
+            pass
+        else:
+            result = david_healthcheck.get_system_data()
+            self.assertIsInstance(result, dict)
+            self.assertIsInstance(result['percent'], float)
+            self.assertIsInstance(result['cpu'], float)
 
 
 class UserInterface(unittest.TestCase):
@@ -268,9 +280,21 @@ class UserInterface(unittest.TestCase):
           </body>
         </html>
         """
-        inform_user_mail = david_user_interface.InformUser()
-        result = inform_user_mail.mail("Test message", message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-        self.assertEqual(result, 'successful')
+        inform_user = david_user_interface.InformUser()
+        result = inform_user.mail("Test message", message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+        self.assertEqual(result, True)
+
+    # InformUser.play_file
+
+    def test_inform_user_play_file(self):
+        if platform == "win32":
+            pass
+        else:
+            inform_user = david_user_interface.InformUser()
+            for mp3_file in mp3_files_dict:
+                result = inform_user.play_file(mp3_file)
+                self.assertEqual(result, True)
+                time.sleep(1)
 
 
 class TestCurrencyCheck(unittest.TestCase):

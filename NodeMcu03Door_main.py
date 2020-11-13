@@ -1,6 +1,6 @@
 # NodeMcu03Door_main
 
-version = 200814
+version = 201109
 
 from utime import ticks_diff, ticks_ms, ticks_add, sleep
 
@@ -17,14 +17,14 @@ t_sw3 = 60000
 ldr_th = 800  # Light Resistor value threshold
 
 # Switches
-sw1 = Pin(16, Pin.OUT)  # D0 Out of the door
-sw2 = Pin(0, Pin.OUT)   # D3 Between the doors
-sw3 = Pin(2, Pin.OUT)   # D4 Inside
+sw1 = Pin(5, Pin.OUT)  # Out of the door
+sw2 = Pin(4, Pin.OUT)  # Between the doors
+sw3 = Pin(0, Pin.OUT)  # Inside
 
 # Motion sensors
-mt1 = Pin(12, Pin.IN)  # D6 Out of the door
-mt2 = Pin(13, Pin.IN)  # D7 Between the doors
-mt3 = Pin(14, Pin.IN)  # D5 Inside
+mt1 = Pin(12, Pin.IN)  # Out of the door
+mt2 = Pin(14, Pin.IN)  # Between the doors
+mt3 = Pin(16, Pin.IN)  # Inside
 
 # Camera control
 cam = Pin(15, Pin.OUT, value=0)  # D8

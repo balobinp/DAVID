@@ -6,12 +6,12 @@ from os.path import isfile, join
 import logging
 
 import david_lib
+import david_user_interface
 
 dir_david = david_lib.dir_david
-file_climate_hot_bedroom = david_lib.file_climate_hot_bedroom
-file_climate_hot_bedroom_path = join(dir_david, file_climate_hot_bedroom)
-file_climate_cold_bedroom = david_lib.file_climate_cold_bedroom
-file_climate_cold_bedroom_path = join(dir_david, file_climate_cold_bedroom)
+mp3_files_dict = david_lib.mp3_files_dict
+file_climate_hot_bedroom_path = join(dir_david, mp3_files_dict['climate_hot_bedroom'])
+file_climate_cold_bedroom_path = join(dir_david, mp3_files_dict['climate_cold_bedroom'])
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_log_climate_check = david_lib.file_log_climate_check
@@ -55,23 +55,28 @@ def get_climate_data():
     results = cur.fetchall()
     return results
 
+
 if __name__ == '__main__':
+
     check_file(file_sqlite_db_path)
     check_file(file_log_climate_check_path)
     check_file(file_climate_hot_bedroom_path)
 
+    inform_user = david_user_interface.InformUser()
+
     results = get_climate_data()
+
     for result in results:
         climate_check_log.info(f'Message=got_data_from_table_climate_sensors;location={result[0]};t={result[1]}')
         if result and result[0] == 'bedroom' and result[1] > climate_hot_threshold:
             try:
-                os.system("mpg123 " + file_climate_hot_bedroom_path)
-                climate_check_log.debug(f'Message=playing_file;file={file_climate_hot_bedroom_path}')
+                result = inform_user.play_file('climate_hot_bedroom')
+                climate_check_log.debug(f"Message=playing_file;file={file_climate_hot_bedroom_path};Result={result}")
             except Exception as e:
                 climate_check_log.error(f'Message=playing_file;Exception={e}')
         elif result and result[0] == 'bedroom' and result[1] < climate_cold_threshold:
             try:
-                os.system("mpg123 " + file_climate_cold_bedroom_path)
-                climate_check_log.debug(f'Message=playing_file;file={file_climate_cold_bedroom_path}')
+                result = inform_user.play_file('climate_cold_bedroom')
+                climate_check_log.debug(f"Message=playing_file;file={file_climate_cold_bedroom_path};Result={result}")
             except Exception as e:
                 climate_check_log.error(f'Message=playing_file;Exception={e}')

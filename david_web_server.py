@@ -44,7 +44,7 @@ web_server_log.addHandler(file_handler)
 # web_server_log.error(f'Message=;')
 # web_server_log.critical(f'Message=;')
 
-inform_user_mail = david_user_interface.InformUser()
+inform_user = david_user_interface.InformUser()
 
 
 def check_file(file_name):
@@ -135,8 +135,8 @@ class GetActions:
                 dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 subject = f"Motion detected {dt_now}"
                 message = f"David indore motion detected at {dt_now}"
-                # inform_user_mail = david_user_interface.InformUser()
-                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                # inform_user = david_user_interface.InformUser()
+                inform_user.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
                 web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
             except Exception as e:
                 web_server_log.error(f'Message=inform_user_mail;Exception={e}')
@@ -163,11 +163,12 @@ class GetActions:
                 dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 subject = f"Gas emergency {dt_now}"
                 message = f"David gas sensor emergency value detected at {dt_now}"
-                # inform_user_mail = david_user_interface.InformUser()
-                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
+                result = inform_user.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Result={result}')
+                result = inform_user.play_file('gas_danger')
+                web_server_log.info(f'Message=inform_user_play_file;Sensor={sensor_id};Result={result}')
             except Exception as e:
-                web_server_log.error(f'Message=inform_user_mail;Exception={e}')
+                web_server_log.error(f'Message=inform_user;Exception={e}')
 
     def oven(self, get_params):
         sensor_id = get_params.get('sensor')[0]
@@ -178,10 +179,12 @@ class GetActions:
                 dt_now = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 subject = f"Oven check {dt_now}"
                 message = f"David high temperature over the oven at {dt_now}"
-                inform_user_mail.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Sent=done')
+                result = inform_user.mail(subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
+                web_server_log.info(f'Message=inform_user_mail;Sensor={sensor_id};Result={result}')
+                result = inform_user.play_file('check_oven')
+                web_server_log.info(f'Message=inform_user_play_file;Sensor={sensor_id};Result={result}')
             except Exception as e:
-                web_server_log.error(f'Message=inform_user_mail;Sensor={sensor_id};Exception={e}')
+                web_server_log.error(f'Message=inform_user;Sensor={sensor_id};Exception={e}')
 
 
 app = FastAPI()
