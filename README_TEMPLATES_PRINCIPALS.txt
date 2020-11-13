@@ -25,7 +25,7 @@ git commit -m "201113"
 git push origin develop
 git diff --name-only master
 git checkout master
-git merge develop ??? -m "Version 0.1.0"
+git merge develop -m "Version 0.1.0"
 git push origin master
 git diff --name-only develop
 git log --graph --all --decorate --oneline
