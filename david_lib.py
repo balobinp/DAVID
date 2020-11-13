@@ -2,7 +2,7 @@
 
 from typing import Dict
 
-version = '0.10.3'
+version = '0.10.4'
 currency_threshold_increase_per = 2
 currency_usd_threshold_high = 67
 currency_usd_threshold_low = 63
