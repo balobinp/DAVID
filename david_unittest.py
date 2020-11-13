@@ -308,7 +308,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (True,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           sorted(david_currency_check.tickers_foreign),
                           ))
 
@@ -321,7 +321,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (True,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           sorted(david_currency_check.tickers_russian),
                           ))
 
@@ -334,7 +334,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (True,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
@@ -347,7 +347,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (True,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
@@ -360,7 +360,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (False,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
@@ -373,7 +373,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (True,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
@@ -386,7 +386,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (False,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
@@ -399,7 +399,7 @@ class TestCurrencyCheck(unittest.TestCase):
                           ),
                          (False,
                           True,
-                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+                          ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
                           [],
                           ))
 
