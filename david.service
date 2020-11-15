@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/home/david/env/bin/python /home/david/david_web_server.py
-Type=oneshot
+Type=simple
 RemainAfterExit=yes
 
 [Install]
