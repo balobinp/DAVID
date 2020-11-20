@@ -1,5 +1,6 @@
 #python3.6
 #Author: balobin.p@mail.ru
+
 import sqlite3
 import pandas as pd
 from pandas import DataFrame

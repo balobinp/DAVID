@@ -144,6 +144,7 @@ def make_db_backup_ftp():
         healthcheck_logger.error(message)
     return db_backups
 
+
 if __name__ == '__main__':
     check_file(file_sqlite_db_path)
     check_file(file_log_healthcheck_path)
@@ -255,8 +256,3 @@ color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
 
     inform_user_mail = david_user_interface.InformUser()
     inform_user_mail.mail(message_subject, message, ["balobin.p@mail.ru", "pavel@roamability.com"])
-
-    # import pprint
-    # pprint.pprint(message)
-
-

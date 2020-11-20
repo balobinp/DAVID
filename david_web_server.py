@@ -4,9 +4,6 @@
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 import uvicorn
 
-# from flask import Flask, abort  # pip install Flask
-# from flask_restful import Resource, Api  # pip install Flask-RESTful
-
 from urllib.parse import parse_qs, urlparse
 import sqlite3
 from os.path import isfile, join
@@ -189,10 +186,6 @@ class GetActions:
 
 app = FastAPI()
 
-# app = Flask(__name__)
-# api = Api(app)
-
-
 get_actions = GetActions()
 
 
@@ -224,33 +217,6 @@ async def get(parameters: str, background_tasks: BackgroundTasks):
         raise HTTPException(status_code=404)
 
     return 'OK'  # Отклик
-
-
-# class DavidWebServerHandler(Resource):
-#
-#     get_actions = GetActions()
-#
-#     def get(self, parameters):
-#         get_url, get_params = get_request_handler(parameters)
-#
-#         if get_url.path == 'climate':
-#             self.get_actions.climate(get_params)
-#
-#         elif get_url.path == 'connected':
-#             self.get_actions.connected(get_params)
-#
-#         elif get_url.path == 'motion':
-#             self.get_actions.motion(get_params)
-#
-#         elif get_url.path == 'gas':
-#             self.get_actions.gas(get_params)
-#
-#         elif get_url.path == 'oven':
-#             self.get_actions.oven(get_params)
-#
-#         else:
-#             abort(404)
-#         return 'OK', 200  # Отклик и Status
 
 
 if __name__ == '__main__':
