@@ -1,0 +1,9 @@
+Started by user [8mha:////4BXLWRHahyJBd64KcooHXA27Tkkq1Z4RJGgFcR89wT4bAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9lMSyzBQAQnsEIsAAAAA=[0mDavid
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/TestJob01
+[Checks API] No suitable checks publisher found.
+[TestJob01] $ /bin/sh -xe /tmp/jenkins1780629182045626103.sh
++ pwd
+/var/lib/jenkins/workspace/TestJob01
+[Checks API] No suitable checks publisher found.
+Finished: SUCCESS

@@ -1,0 +1,195 @@
+Started by user [8mha:////4BXLWRHahyJBd64KcooHXA27Tkkq1Z4RJGgFcR89wT4bAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9lMSyzBQAQnsEIsAAAAA=[0mDavid
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/david_update
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/balobinp/DAVID.git # timeout=10
+Fetching upstream changes from https://github.com/balobinp/DAVID.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+ > git fetch --tags --force --progress -- https://github.com/balobinp/DAVID.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision a382796884255cddd3891124f62204dfb3a3e997 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a382796884255cddd3891124f62204dfb3a3e997 # timeout=10
+Commit message: "201009"
+ > git rev-list --no-walk a382796884255cddd3891124f62204dfb3a3e997 # timeout=10
+[Checks API] No suitable checks publisher found.
+[david_update] $ /bin/sh -xe /tmp/jenkins8158087524837777994.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 1. Precheck.
+Step 1. Precheck.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ whoami
+jenkins
++ pwd
+/var/lib/jenkins/workspace/david_update
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins1321193895820760580.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 2. Save the backup.
+Step 2. Save the backup.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Remove backup folder if exists
+Remove backup folder if exists
++ date +%Y%m%d
++ [ -d /home/david/DAVID_BACKUP_20201018 ]
++ date +%Y%m%d
++ sudo rm -r /home/david/DAVID_BACKUP_20201018
++ echo Create backup folder
+Create backup folder
++ date +%Y%m%d
++ sudo mkdir /home/david/DAVID_BACKUP_20201018
++ echo Copy david_* files to the backup folder
+Copy david_* files to the backup folder
++ date +%Y%m%d
++ sudo cp /home/david/david_climate_check.py /home/david/david_currency_check.py /home/david/david_db_create.py /home/david/david_gas_check.py /home/david/david_healthcheck.py /home/david/david_lib.py /home/david/david_template.py /home/david/david_unittest.py /home/david/david_user_interface.py /home/david/david_web_server.py /home/david/DAVID_BACKUP_20201018
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins178703837627883759.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 3. Copy the new files to the working directory.
+Step 3. Copy the new files to the working directory.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo ls -l /home/david
+total 15140
+drwxr-xr-x 2 root  root     4096 Oct 18 15:14 DAVID_BACKUP_20201018
+-rw-r--r-- 1 david david    3208 Oct 12 09:59 david_climate_check.py
+-rw-r--r-- 1 david david    8729 Oct  5 17:45 david_currency_check.py
+-rw-r--r-- 1 david david 7582720 Oct 12 11:06 david_db_20201012.sqlite
+-rw-r--r-- 1 david david    8200 May 31 09:47 david_db_create.py
+-rw-r--r-- 1 david david 7781376 Oct 18 15:10 david_db.sqlite
+-rw-r--r-- 1 david david    2748 Oct 12 09:59 david_gas_check.py
+-rw-r--r-- 1 david david   11928 May 31 09:47 david_healthcheck.py
+-rw-r--r-- 1 david david    2743 Oct 12 19:50 david_lib.py
+-rw-r--r-- 1 david david     140 Apr 13  2020 david_pass.json
+-rw-r--r-- 1 david david    1412 May 24  2019 david_template.py
+-rw-r--r-- 1 david david   17738 Oct 12 10:44 david_unittest.py
+-rw-r--r-- 1 david david    5410 Oct 12 11:05 david_user_interface.py
+-rw-r--r-- 1 david david   10213 Oct 12 10:19 david_web_server.py
+drwxr-xr-x 4 david david    4096 Mar 21  2020 env
+drwxr-xr-x 2 david david    4096 Mar 21  2020 log
+drwxr-xr-x 2 david david    4096 Oct 12 19:50 __pycache__
+-rw-r--r-- 1 david david     573 Oct  9 20:25 requirements.txt
+drwxr-xr-x 2 david david    4096 Mar 22  2020 testing
+-rw-r--r-- 1 david david     669 Oct  3 19:53 test.py
+drwxr-xr-x 2 david david    4096 Oct 12 10:23 VOICE_SAMPLES
+drwxr-xr-x 7 david david    4096 Mar 21  2020 WEB_UI
++ + grep version
+cat david_lib.py
+version = '0.10.0'
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins4218745384333556481.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 4. Restart the services.
+Step 4. Restart the services.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins6968425641877956870.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 5. Run unit tests.
+Step 5. Run unit tests.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo runuser -l david -c /home/david/env/bin/python /home/david/david_unittest.py -v
+test_01_parameters_ok (__main__.TestCurrencyCheck) ... ok
+test_02_parameters_ok (__main__.TestCurrencyCheck) ... ok
+test_03_parameters_nok_wrong_combination (__main__.TestCurrencyCheck) ... ok
+test_04_parameters_nok_wrong_combination (__main__.TestCurrencyCheck) ... ok
+test_05_parameters_nok_wrong_values (__main__.TestCurrencyCheck) ... ok
+test_06_parameters_nok_wrong_values (__main__.TestCurrencyCheck) ... ok
+test_07_parameters_nok_wrong_types (__main__.TestCurrencyCheck) ... ok
+test_08_parameters_nok_wrong_types (__main__.TestCurrencyCheck) ... ok
+test_check_file (__main__.TestFiles) ... ok
+test_01_get_climate (__main__.TestWebServer) ... ok
+test_01_get_gas (__main__.TestWebServer) ... ok
+test_01_get_gas_check_timer (__main__.TestWebServer) ... ok
+test_02_fetch_climate_data (__main__.TestWebServer) ... ok
+test_02_fetch_gas_data (__main__.TestWebServer) ... ok
+test_02_get_climate_data (__main__.TestWebServer) ... ok
+test_02_get_gas_data (__main__.TestWebServer) ... ok
+test_02_healthcheck_fetch_climate_data (__main__.TestWebServer) ... ok
+test_02_healthcheck_fetch_gas_data (__main__.TestWebServer) ... ok
+test_currency_change_inform_user (__main__.TestWebServer) ... ok
+test_currency_check (__main__.TestWebServer) ... ok
+test_currency_rate_db_insert (__main__.TestWebServer) ... ok
+test_get_connect (__main__.TestWebServer) ... ok
+test_get_motion (__main__.TestWebServer) ... ok
+test_get_not_found (__main__.TestWebServer) ... ok
+test_get_oven (__main__.TestWebServer) ... ok
+test_get_oven_check_timer (__main__.TestWebServer) ... ok
+test_get_system_data (__main__.TestWebServer) ... ok
+test_get_valute (__main__.TestWebServer) ... ok
+test_inform_user_mail (__main__.UserInterface) ... ok
+test_inform_user_play_file (__main__.UserInterface) ... High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from climate_hot_bedroom.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of climate_hot_bedroom.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from climate_cold_bedroom.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of climate_cold_bedroom.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from gas_danger.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:04] Decoding of gas_danger.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from check_oven.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of check_oven.mp3 finished.
+ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 50.867s
+
+OK
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[Checks API] No suitable checks publisher found.
+Finished: SUCCESS

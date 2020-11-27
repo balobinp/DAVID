@@ -1,0 +1,13 @@
+commit 4d4adc183e3c716504acb203fd273351a0761ccd
+tree 835ba1b285c35fc3daaa3959f15757c8374d4574
+parent 6b913c81c52dd91d0599cd3d8f4062bca9ab14e1
+author Pavel Balobin <pavel@roamability.com> 2020-11-13 09:18:36 +0300
+committer Pavel Balobin <pavel@roamability.com> 2020-11-13 09:18:36 +0300
+
+    201113
+
+
+:100644 100644 f41a2df6955e1ec24b1448addf2ada5f4d3725cd e255948cd3a9bd9e779da90ec4cfaeadedcff8ee M	README.md
+:100644 100644 6bd1abb443036e27d3320e5f895807a543b22993 055d31afd9503636a30713cdf98e81f020e03e40 M	README_TEMPLATES_PRINCIPALS.txt
+:100644 100644 6bcc0355d48fe3376e3f041f3e1ab50ea3e1a12e e60520635737c299dc8ed74a5e69aaea5131648f M	david_lib.py
+:100644 100644 d8946dbe5091a3ec1fa33bb12aac984de6e0eeff c5255af15b9e82e8c9d02b87511fa662a26d90a9 M	david_unittest.py

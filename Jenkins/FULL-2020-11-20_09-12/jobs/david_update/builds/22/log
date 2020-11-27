@@ -1,0 +1,340 @@
+Started by user [8mha:////4BXLWRHahyJBd64KcooHXA27Tkkq1Z4RJGgFcR89wT4bAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9lMSyzBQAQnsEIsAAAAA=[0mDavid
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/david_update
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/balobinp/DAVID.git # timeout=10
+Fetching upstream changes from https://github.com/balobinp/DAVID.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+ > git fetch --tags --force --progress -- https://github.com/balobinp/DAVID.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision b31ac5eabf5741150ccc6f1c8c7f9b512125339e (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b31ac5eabf5741150ccc6f1c8c7f9b512125339e # timeout=10
+Commit message: "Version 0.10.2"
+ > git rev-list --no-walk b31ac5eabf5741150ccc6f1c8c7f9b512125339e # timeout=10
+[Checks API] No suitable checks publisher found.
+[david_update] $ /bin/sh -xe /tmp/jenkins1018271802775097972.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 1. Precheck.
+Step 1. Precheck.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ whoami
+jenkins
++ pwd
+/var/lib/jenkins/workspace/david_update
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins4629031364016366787.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 2. Save the backup.
+Step 2. Save the backup.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Remove backup folder if exists
+Remove backup folder if exists
++ date +%Y%m%d
++ [ -d /home/david/DAVID_BACKUP_20201113 ]
++ date +%Y%m%d
++ sudo rm -r /home/david/DAVID_BACKUP_20201113
++ echo Create backup folder
+Create backup folder
++ date +%Y%m%d
++ sudo mkdir /home/david/DAVID_BACKUP_20201113
++ echo Copy david_* files to the backup folder
+Copy david_* files to the backup folder
++ date +%Y%m%d
++ sudo cp /home/david/david_climate_check.py /home/david/david_currency_check.py /home/david/david_db_create.py /home/david/david_gas_check.py /home/david/david_healthcheck.py /home/david/david_lib.py /home/david/david_template.py /home/david/david_unittest.py /home/david/david_user_interface.py /home/david/david_web_server.py /home/david/DAVID_BACKUP_20201113
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins6063401173578844893.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 3. Copy the new files to the working directory.
+Step 3. Copy the new files to the working directory.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo cp /var/lib/jenkins/workspace/david_update/david_climate_check.py /var/lib/jenkins/workspace/david_update/david_currency_check.py /var/lib/jenkins/workspace/david_update/david_db_create.py /var/lib/jenkins/workspace/david_update/david_gas_check.py /var/lib/jenkins/workspace/david_update/david_healthcheck.py /var/lib/jenkins/workspace/david_update/david_lib.py /var/lib/jenkins/workspace/david_update/david_template.py /var/lib/jenkins/workspace/david_update/david_unittest.py /var/lib/jenkins/workspace/david_update/david_user_interface.py /var/lib/jenkins/workspace/david_update/david_web_server.py /home/david/
++ sudo chown david:david /home/david/david_climate_check.py /home/david/david_currency_check.py /home/david/david_db_create.py /home/david/david_gas_check.py /home/david/david_healthcheck.py /home/david/david_lib.py /home/david/david_template.py /home/david/david_unittest.py /home/david/david_user_interface.py /home/david/david_web_server.py
++ sudo ls -lr /home/david
+total 32132
+drwxr-xr-x 8 david david    4096 Nov 13 08:34 WEB_UI
+drwxr-xr-x 2 david david    4096 Oct 12 10:23 VOICE_SAMPLES
+-rw-r--r-- 1 david david     669 Oct  3 19:53 test.py
+drwxr-xr-x 2 david david    4096 Nov 13 08:16 testing
+-rw-r--r-- 1 david david     573 Oct  9 20:25 requirements.txt
+drwxr-xr-x 2 david david    4096 Nov 13 09:11 __pycache__
+drwxr-xr-x 2 david david    4096 Mar 21  2020 log
+drwxr-xr-x 4 david david    4096 Mar 21  2020 env
+-rw-r--r-- 1 david david    9950 Nov 13 09:13 david_web_server.py
+-rw-r--r-- 1 david david    5298 Nov 13 09:13 david_user_interface.py
+-rw-r--r-- 1 david david   17518 Nov 13 09:13 david_unittest.py
+-rw-r--r-- 1 david david    1363 Nov 13 09:13 david_template.py
+-rw-r--r-- 1 david david     140 Apr 13  2020 david_pass.json
+-rw-r--r-- 1 david david    2713 Nov 13 09:13 david_lib.py
+-rw-r--r-- 1 david david   11666 Nov 13 09:13 david_healthcheck.py
+-rw-r--r-- 1 david david    2746 Nov 13 09:13 david_gas_check.py
+-rw-r--r-- 1 david david 8698880 Nov 13 09:11 david_db.sqlite
+-rw-r--r-- 1 david david    7997 Nov 13 09:13 david_db_create.py
+-rw-r--r-- 1 david david 8698880 Nov 13 09:11 david_db_20201113.sqlite
+-rw-r--r-- 1 david david 7781376 Oct 18 15:15 david_db_20201018.sqlite
+-rw-r--r-- 1 david david 7582720 Oct 12 11:06 david_db_20201012.sqlite
+-rw-r--r-- 1 david david    9049 Nov 13 09:13 david_currency_check.py
+-rw-r--r-- 1 david david    3116 Nov 13 09:13 david_climate_check.py
+drwxr-xr-x 2 root  root     4096 Nov 13 09:13 DAVID_BACKUP_20201113
+drwxr-xr-x 2 root  root     4096 Oct 18 15:14 DAVID_BACKUP_20201018
++ + cat david_lib.py
+grep version
+version = '0.10.2'
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins8360008946058838128.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 4. Restart the services.
+Step 4. Restart the services.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo systemctl stop david.service
++ sudo systemctl start david.service
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins4906674802514030296.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 5. Run unit tests.
+Step 5. Run unit tests.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo runuser -l david -c /home/david/env/bin/python /home/david/david_unittest.py -v
+test_01_parameters_ok (__main__.TestCurrencyCheck) ... FAIL
+test_02_parameters_ok (__main__.TestCurrencyCheck) ... FAIL
+test_03_parameters_nok_wrong_combination (__main__.TestCurrencyCheck) ... FAIL
+test_04_parameters_nok_wrong_combination (__main__.TestCurrencyCheck) ... FAIL
+test_05_parameters_nok_wrong_values (__main__.TestCurrencyCheck) ... ok
+test_06_parameters_nok_wrong_values (__main__.TestCurrencyCheck) ... FAIL
+test_07_parameters_nok_wrong_types (__main__.TestCurrencyCheck) ... ok
+test_08_parameters_nok_wrong_types (__main__.TestCurrencyCheck) ... ok
+test_check_file (__main__.TestFiles) ... ok
+test_01_get_climate (__main__.TestWebServer) ... ok
+test_01_get_gas (__main__.TestWebServer) ... ok
+test_01_get_gas_check_timer (__main__.TestWebServer) ... ok
+test_02_fetch_climate_data (__main__.TestWebServer) ... FAIL
+test_02_fetch_gas_data (__main__.TestWebServer) ... ok
+test_02_get_climate_data (__main__.TestWebServer) ... FAIL
+test_02_get_gas_data (__main__.TestWebServer) ... ok
+test_02_healthcheck_fetch_climate_data (__main__.TestWebServer) ... FAIL
+test_02_healthcheck_fetch_gas_data (__main__.TestWebServer) ... ok
+test_currency_change_inform_user (__main__.TestWebServer) ... ok
+test_currency_check (__main__.TestWebServer) ... ok
+test_currency_rate_db_insert (__main__.TestWebServer) ... ok
+test_get_connect (__main__.TestWebServer) ... ok
+test_get_motion (__main__.TestWebServer) ... ok
+test_get_not_found (__main__.TestWebServer) ... ok
+test_get_oven (__main__.TestWebServer) ... ok
+test_get_oven_check_timer (__main__.TestWebServer) ... ok
+test_get_system_data (__main__.TestWebServer) ... ok
+test_get_valute (__main__.TestWebServer) ... ok
+test_inform_user_mail (__main__.UserInterface) ... ok
+test_inform_user_play_file (__main__.UserInterface) ... High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from climate_hot_bedroom.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of climate_hot_bedroom.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from climate_cold_bedroom.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of climate_cold_bedroom.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from gas_danger.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:04] Decoding of gas_danger.mp3 finished.
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layer 1, 2, and 3.
+Version 0.3.2-1 (2012/03/25). Written and copyrights by Joe Drew,
+now maintained by Nanakos Chrysostomos and others.
+Uses code from various people. See 'README' for more!
+THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!
+tcgetattr(): Inappropriate ioctl for device
+
+Directory: /home/david/./VOICE_SAMPLES
+Playing MPEG stream from check_oven.mp3 ...
+MPEG 2.0 layer III, 32 kbit/s, 24000 Hz mono
+                                                                            
+[0:03] Decoding of check_oven.mp3 finished.
+ok
+
+======================================================================
+FAIL: test_01_parameters_ok (__main__.TestCurrencyCheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 312, in test_01_parameters_ok
+    sorted(david_currency_check.tickers_foreign),
+AssertionError: Tuples differ: (True[45 chars]EVDATE', 'LAST'], ['AAPL-RM', 'AMZN-RM', 'GOOG-RM', 'MSFT-RM']) != (True[45 chars]EVDATE'], ['AAPL-RM', 'AMZN-RM', 'GOOG-RM', 'MSFT-RM'])
+
+First differing element 2:
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+  (True,
+   True,
+-  ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
+?                                              --------
+
++  ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+   ['AAPL-RM', 'AMZN-RM', 'GOOG-RM', 'MSFT-RM'])
+
+======================================================================
+FAIL: test_02_parameters_ok (__main__.TestCurrencyCheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 325, in test_02_parameters_ok
+    sorted(david_currency_check.tickers_russian),
+AssertionError: Tuples differ: (True[41 chars] 'PREVDATE', 'LAST'], ['GMKN', 'LKOH', 'MAIL', 'SBER', 'YNDX']) != (True[41 chars] 'PREVDATE'], ['GMKN', 'LKOH', 'MAIL', 'SBER', 'YNDX'])
+
+First differing element 2:
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+  (True,
+   True,
+-  ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'],
+?                                              --------
+
++  ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'],
+   ['GMKN', 'LKOH', 'MAIL', 'SBER', 'YNDX'])
+
+======================================================================
+FAIL: test_03_parameters_nok_wrong_combination (__main__.TestCurrencyCheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 338, in test_03_parameters_nok_wrong_combination
+    [],
+AssertionError: Tuples differ: (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], []) != (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+First differing element 2:
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+- (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], [])
+?                                                          --------
+
++ (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+======================================================================
+FAIL: test_04_parameters_nok_wrong_combination (__main__.TestCurrencyCheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 351, in test_04_parameters_nok_wrong_combination
+    [],
+AssertionError: Tuples differ: (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], []) != (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+First differing element 2:
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+- (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], [])
+?                                                          --------
+
++ (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+======================================================================
+FAIL: test_06_parameters_nok_wrong_values (__main__.TestCurrencyCheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 377, in test_06_parameters_nok_wrong_values
+    [],
+AssertionError: Tuples differ: (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], []) != (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+First differing element 2:
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
+['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
+
+- (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST'], [])
+?                                                          --------
+
++ (True, True, ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE'], [])
+
+======================================================================
+FAIL: test_02_fetch_climate_data (__main__.TestWebServer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 188, in test_02_fetch_climate_data
+    self.assertTupleEqual(result, correct_result)
+AssertionError: Tuples differ: (1, 10, 'nan', 31) != (1, 6, 6, 6)
+
+First differing element 1:
+10
+6
+
+- (1, 10, 'nan', 31)
++ (1, 6, 6, 6)
+
+======================================================================
+FAIL: test_02_get_climate_data (__main__.TestWebServer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 196, in test_02_get_climate_data
+    self.assertTupleEqual(result, correct_result)
+AssertionError: Tuples differ: ('bedroom', 'nan') != ('bedroom', 6)
+
+First differing element 1:
+'nan'
+6
+
+- ('bedroom', 'nan')
+?             ^^^^^
+
++ ('bedroom', 6)
+?             ^
+
+
+======================================================================
+FAIL: test_02_healthcheck_fetch_climate_data (__main__.TestWebServer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/david_unittest.py", line 242, in test_02_healthcheck_fetch_climate_data
+    self.assertEqual(result, {'bedroom': 6, 'childrenroom': 7})
+AssertionError: {'bedroom': 'nan', 'childrenroom': 'nan'} != {'bedroom': 6, 'childrenroom': 7}
+- {'bedroom': 'nan', 'childrenroom': 'nan'}
+?             ^^^^^                  ^^^^^
+
++ {'bedroom': 6, 'childrenroom': 7}
+?             ^                  ^
+
+
+----------------------------------------------------------------------
+Ran 30 tests in 49.648s
+
+FAILED (failures=8)
+Build step 'Execute shell' marked build as failure
+[Checks API] No suitable checks publisher found.
+Finished: FAILURE

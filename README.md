@@ -37,7 +37,7 @@ To Do list:
 14. Сделать распознавание лиц на камере входной двери.
 
 Главный Компьютер и общие замечания:
-1. 
+1. Добавить type checking mypy
 
 Модуль Django:
 1. Упростить пароли.
@@ -92,6 +92,23 @@ Version 0.11.0.dev change list and installation procedure:
 
 Главный Компьютер и общие замечания:
 1. В david.serivce заменен тип Type=simple (201113)
+2. Тестирование изменено на pytest
 
 Микроконтроллер NodeMcu02Gas:
 1. Сделана PCB NodeMcu02GasVer3 (201115)
+
+Version installation procedure:
+
+1. Установить pytest, mypy
+pip install pytest
+pip install mypy
+
+2. Заменить тесты на pytest в Jenkins
+pytest david_unittest.py -v -W ignore::DeprecationWarning
+
+3. Сделать backup Jenkins и сохранить в проект
+
+4. Сохранить зависимости
+pip freeze --local > requirements.txt
+
+5. Сравнить зависимости с тестовыми и обновить, если требуется

@@ -188,7 +188,7 @@ sudo systemctl restart david_web_ui.service
 sudo systemctl -l status david_web_ui.service
 
 8. Выполнить unit тестирование
-python /home/david/david_unittest.py
+pytest /home/david/david_unittest.py -v -W ignore::DeprecationWarning
 cd /home/david/WEB_UI
 python manage.py test children_math.tests
 python manage.py test mainpage.tests
@@ -349,7 +349,7 @@ ftp_user
 ftp_pass
 
 7. Выполнить unit тестирование
-sudo python /home/david/david_unittest.py
+sudo pytest /home/david/david_unittest.py -v -W ignore::DeprecationWarning
 cd /home/david/WEB_UI
 python manage.py test children_math.tests
 python manage.py test mainpage.tests

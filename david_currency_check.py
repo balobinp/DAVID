@@ -82,7 +82,7 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
 
     :param market: IIS market. Values: 'foreign', 'russian'. Default is 'foreign'.
     :param tickers: list of tickers. Leave empty to get all. Default empty list.
-    :return: status, DataFrame
+    :return: status, DataFrame[['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']]
 
     Examples
     -----
@@ -100,6 +100,7 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
     iis_shares_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE']
     iis_shares_last = []
     iis_shares_last_cols = ['SECID', 'LAST']
+    iis_shares_return_cols = ['SECID', 'PREVPRICE', 'SECNAME', 'PREVDATE', 'LAST']
 
     try:
         resp = requests.get(url, timeout=3)
@@ -107,7 +108,7 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
             f'Message=http_currency_request;Response_ok={resp.ok};Reason={resp.reason};Status={resp.status_code}')
     except Exception as err:
         currency_check_log.error(f'Message=http_currency_request;Error={err}')
-        return False, DataFrame(columns=iis_shares_cols)
+        return False, DataFrame(columns=iis_shares_return_cols)
     else:
         tree = ET.fromstring(resp.content)
 
@@ -129,7 +130,7 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
         elif isinstance(tickers, list):
             return True, iis_shares_df
         else:
-            return False, DataFrame(columns=iis_shares_cols)
+            return False, DataFrame(columns=iis_shares_return_cols)
 
 
 def get_valute(valute_name='USD'):

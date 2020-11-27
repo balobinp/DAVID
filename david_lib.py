@@ -8,7 +8,7 @@ currency_usd_threshold_high = 67
 currency_usd_threshold_low = 63
 tickers_foreign = ['AAPL-RM', 'AMZN-RM', 'GOOG-RM', 'MSFT-RM']
 tickers_russian = ['SBER', 'GMKN', 'LKOH', 'MAIL', 'YNDX']
-climate_cold_threshold = 23
+climate_cold_threshold = 20
 climate_hot_threshold = 25
 gas_emergency_threshold = 600
 
@@ -21,9 +21,6 @@ timer_gas_mail_delay = 60  # Time interval to send mail in case of gas emergency
 timer_oven_mail_delay = 60  # Time interval to send mail in case of oven emergency
 ftp_db_backup_dir = 'Transcend/david/db_backup'
 dir_david = r'/home/david'
-# file_climate_hot_bedroom = r'./VOICE_SAMPLES/climate_hot_bedroom.mp3'
-# file_climate_cold_bedroom = r'./VOICE_SAMPLES/climate_cold_bedroom.mp3'
-# file_gas_danger = r'./VOICE_SAMPLES/gas_danger.mp3'
 mp3_files_dict: Dict[str, str] = {
     'climate_hot_bedroom': r'./VOICE_SAMPLES/climate_hot_bedroom.mp3',
     'climate_cold_bedroom': r'./VOICE_SAMPLES/climate_cold_bedroom.mp3',
@@ -47,9 +44,6 @@ file_log_user_interface = r'./log/user_interface.log'
 # timer_oven_mail_delay = 6  # Time interval to send mail in case of oven emergency
 # ftp_db_backup_dir = 'Transcend/david/db_backup'
 # dir_david = r'c:\Users\balob\Downloads\DAVID'
-# # file_climate_hot_bedroom = r'.\VOICE_SAMPLES\climate_hot_bedroom.mp3'
-# # file_climate_cold_bedroom = r'.\VOICE_SAMPLES\climate_cold_bedroom.mp3'
-# # file_gas_danger = r'.\VOICE_SAMPLES\gas_danger.mp3'
 # mp3_files_dict: Dict[str, str] = {
 #     'climate_hot_bedroom': r'.\VOICE_SAMPLES\climate_hot_bedroom.mp3',
 #     'climate_cold_bedroom': r'.\VOICE_SAMPLES\climate_cold_bedroom.mp3',

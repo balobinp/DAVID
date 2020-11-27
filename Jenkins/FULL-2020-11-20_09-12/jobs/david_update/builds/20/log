@@ -1,0 +1,108 @@
+Started by user [8mha:////4BXLWRHahyJBd64KcooHXA27Tkkq1Z4RJGgFcR89wT4bAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9lMSyzBQAQnsEIsAAAAA=[0mDavid
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/david_update
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/balobinp/DAVID.git # timeout=10
+Fetching upstream changes from https://github.com/balobinp/DAVID.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+ > git fetch --tags --force --progress -- https://github.com/balobinp/DAVID.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision b31ac5eabf5741150ccc6f1c8c7f9b512125339e (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b31ac5eabf5741150ccc6f1c8c7f9b512125339e # timeout=10
+Commit message: "Version 0.10.2"
+ > git rev-list --no-walk b31ac5eabf5741150ccc6f1c8c7f9b512125339e # timeout=10
+[Checks API] No suitable checks publisher found.
+[david_update] $ /bin/sh -xe /tmp/jenkins3645462445850961265.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 1. Precheck.
+Step 1. Precheck.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ whoami
+jenkins
++ pwd
+/var/lib/jenkins/workspace/david_update
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins8474665969944558499.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 2. Save the backup.
+Step 2. Save the backup.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Remove backup folder if exists
+Remove backup folder if exists
++ date +%Y%m%d
++ [ -d /home/david/DAVID_BACKUP_20201113 ]
++ date +%Y%m%d
++ sudo rm -r /home/david/DAVID_BACKUP_20201113
++ echo Create backup folder
+Create backup folder
++ date +%Y%m%d
++ sudo mkdir /home/david/DAVID_BACKUP_20201113
++ echo Copy david_* files to the backup folder
+Copy david_* files to the backup folder
++ date +%Y%m%d
++ sudo cp /home/david/david_climate_check.py /home/david/david_currency_check.py /home/david/david_db_create.py /home/david/david_gas_check.py /home/david/david_healthcheck.py /home/david/david_lib.py /home/david/david_template.py /home/david/david_unittest.py /home/david/david_user_interface.py /home/david/david_web_server.py /home/david/DAVID_BACKUP_20201113
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins9028975266144661399.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 3. Copy the new files to the working directory.
+Step 3. Copy the new files to the working directory.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo cp /var/lib/jenkins/workspace/david_update/david_climate_check.py /var/lib/jenkins/workspace/david_update/david_currency_check.py /var/lib/jenkins/workspace/david_update/david_db_create.py /var/lib/jenkins/workspace/david_update/david_gas_check.py /var/lib/jenkins/workspace/david_update/david_healthcheck.py /var/lib/jenkins/workspace/david_update/david_lib.py /var/lib/jenkins/workspace/david_update/david_template.py /var/lib/jenkins/workspace/david_update/david_unittest.py /var/lib/jenkins/workspace/david_update/david_user_interface.py /var/lib/jenkins/workspace/david_update/david_web_server.py /home/david/
++ sudo chown david:david /home/david/david_climate_check.py /home/david/david_currency_check.py /home/david/david_db_create.py /home/david/david_gas_check.py /home/david/david_healthcheck.py /home/david/david_lib.py /home/david/david_template.py /home/david/david_unittest.py /home/david/david_user_interface.py /home/david/david_web_server.py
++ sudo ls -lr /home/david
+total 23636
+drwxr-xr-x 8 david david    4096 Nov 13 08:34 WEB_UI
+drwxr-xr-x 2 david david    4096 Oct 12 10:23 VOICE_SAMPLES
+-rw-r--r-- 1 david david     669 Oct  3 19:53 test.py
+drwxr-xr-x 2 david david    4096 Nov 13 08:16 testing
+-rw-r--r-- 1 david david     573 Oct  9 20:25 requirements.txt
+drwxr-xr-x 2 david david    4096 Nov 13 08:57 __pycache__
+drwxr-xr-x 2 david david    4096 Mar 21  2020 log
+drwxr-xr-x 4 david david    4096 Mar 21  2020 env
+-rw-r--r-- 1 david david    9950 Nov 13 09:01 david_web_server.py
+-rw-r--r-- 1 david david    5298 Nov 13 09:01 david_user_interface.py
+-rw-r--r-- 1 david david   17518 Nov 13 09:01 david_unittest.py
+-rw-r--r-- 1 david david    1363 Nov 13 09:01 david_template.py
+-rw-r--r-- 1 david david     140 Apr 13  2020 david_pass.json
+-rw-r--r-- 1 david david    2713 Nov 13 09:01 david_lib.py
+-rw-r--r-- 1 david david   11666 Nov 13 09:01 david_healthcheck.py
+-rw-r--r-- 1 david david    2746 Nov 13 09:01 david_gas_check.py
+-rw-r--r-- 1 david david 8698880 Nov 13 09:00 david_db.sqlite
+-rw-r--r-- 1 david david    7997 Nov 13 09:01 david_db_create.py
+-rw-r--r-- 1 david david 7781376 Oct 18 15:15 david_db_20201018.sqlite
+-rw-r--r-- 1 david david 7582720 Oct 12 11:06 david_db_20201012.sqlite
+-rw-r--r-- 1 david david    9049 Nov 13 09:01 david_currency_check.py
+-rw-r--r-- 1 david david    3116 Nov 13 09:01 david_climate_check.py
+drwxr-xr-x 2 root  root     4096 Nov 13 09:01 DAVID_BACKUP_20201113
+drwxr-xr-x 2 root  root     4096 Oct 18 15:14 DAVID_BACKUP_20201018
++ + cat david_lib.py
+grep version
+version = '0.10.2'
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+[david_update] $ /bin/sh -xe /tmp/jenkins1428168350497102245.sh
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ echo Step 4. Restart the services.
+Step 4. Restart the services.
++ echo --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
++ sudo systemctl stop david.service
++ sudo systemctl start david.service
+Job for david.service canceled.
+Build step 'Execute shell' marked build as failure
+[Checks API] No suitable checks publisher found.
+Finished: FAILURE

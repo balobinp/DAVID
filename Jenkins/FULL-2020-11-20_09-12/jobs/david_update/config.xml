@@ -1,0 +1,105 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>5</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.4">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/balobinp/DAVID.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>echo &apos;--------------------------------------------------------------------------------&apos;
+echo &apos;Step 1. Precheck.&apos;
+echo &apos;--------------------------------------------------------------------------------&apos;
+
+whoami
+pwd
+
+echo &apos;--------------------------------------------------------------------------------&apos;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo &apos;--------------------------------------------------------------------------------&apos;
+echo &apos;Step 2. Save the backup.&apos;
+echo &apos;--------------------------------------------------------------------------------&apos;
+
+echo &apos;Remove backup folder if exists&apos;
+if [ -d /home/david/DAVID_BACKUP_$(date +&quot;%Y%m%d&quot;) ]; then sudo rm -r /home/david/DAVID_BACKUP_$(date +&quot;%Y%m%d&quot;); fi
+
+echo &apos;Create backup folder&apos;
+sudo mkdir /home/david/DAVID_BACKUP_$(date +&quot;%Y%m%d&quot;)
+
+echo &apos;Copy david_* files to the backup folder&apos;
+sudo cp /home/david/david_*.py /home/david/DAVID_BACKUP_$(date +&quot;%Y%m%d&quot;)
+
+echo &apos;--------------------------------------------------------------------------------&apos;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo &apos;--------------------------------------------------------------------------------&apos;
+echo &apos;Step 3. Copy the new files to the working directory.&apos;
+echo &apos;--------------------------------------------------------------------------------&apos;
+
+sudo cp /var/lib/jenkins/workspace/david_update/david_*.py /home/david/
+sudo chown david:david /home/david/david_*.py
+sudo ls -lr /home/david
+
+cat david_lib.py | grep version
+
+echo &apos;--------------------------------------------------------------------------------&apos;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo &apos;--------------------------------------------------------------------------------&apos;
+echo &apos;Step 4. Restart the services.&apos;
+echo &apos;--------------------------------------------------------------------------------&apos;
+
+sudo systemctl stop david.service
+sudo systemctl start david.service
+
+echo &apos;--------------------------------------------------------------------------------&apos;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo &apos;--------------------------------------------------------------------------------&apos;
+echo &apos;Step 5. Run unit tests.&apos;
+echo &apos;--------------------------------------------------------------------------------&apos;
+
+sudo runuser -l  david -c &apos;/home/david/env/bin/python /home/david/david_unittest.py -v&apos;
+
+echo &apos;--------------------------------------------------------------------------------&apos;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
