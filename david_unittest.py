@@ -6,6 +6,7 @@ import shutil
 import sqlite3
 from pandas import DataFrame
 from sys import platform
+import pytest
 
 import david_lib
 import david_currency_check
@@ -14,6 +15,9 @@ import david_gas_check
 import david_healthcheck
 import david_user_interface
 import time
+
+# dont_test_list = ['play_file', 'mail', 'check_timer']  # 'play_file', 'mail', 'check_timer'
+dont_test_list = []  # 'play_file', 'mail', 'check_timer'
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
@@ -101,13 +105,22 @@ class TestWebServer(unittest.TestCase):
     def test_01_get_gas(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666'
         url_02 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=0'
-        url_03 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
-        urls = [url_01, url_02, url_03]
+        urls = [url_01, url_02]
         for url in urls:
             r = requests.get(url)
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
+    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
+    def test_01_get_gas_emergency(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
+        urls = [url_01]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
+    @pytest.mark.skipif('check_timer' in dont_test_list, reason='check_timer')
     def test_01_get_gas_check_timer(self):
         url = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
         for _ in range(10):
@@ -129,6 +142,7 @@ class TestWebServer(unittest.TestCase):
         conn.close()
         self.assertEqual(result, (2, 666))
 
+    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
     def test_get_motion(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
         urls = [url_01]
@@ -137,6 +151,7 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
+    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
     def test_get_oven(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/oven;sensor=7&temperature=66&type=1'
         urls = [url_01]
@@ -145,6 +160,7 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
+    @pytest.mark.skipif('check_timer' in dont_test_list, reason='check_timer')
     def test_get_oven_check_timer(self):
         url = f'http://{server_ip_addr}:{server_port}/oven;sensor=7&temperature=66&type=1'
         for _ in range(10):
@@ -260,6 +276,7 @@ class UserInterface(unittest.TestCase):
     # david_user_interface.py
     # InformUser.mail
 
+    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
     def test_inform_user_mail(self):
         message = """\
         <html>
@@ -286,6 +303,7 @@ class UserInterface(unittest.TestCase):
 
     # InformUser.play_file
 
+    @pytest.mark.skipif('play_file' in dont_test_list, reason='play_file')
     def test_inform_user_play_file(self):
         if platform == "win32":
             pass
