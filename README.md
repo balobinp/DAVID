@@ -13,7 +13,7 @@ Checkout list:
 3. Изменить версию в скриптах микроконтроллеров (если были изменения).
 4. Проверить наличие комментариев в коде.
 5. Проверить mypy
-mypy david_climate_check.py
+mypy <file_name>.py
 6. Проверить покрытие тестами.
 7. Выполнить тестирование pytest david_unittest.py -v -W ignore::DeprecationWarning
 8. Сохранить pip freeze > requirements.txt
@@ -98,6 +98,7 @@ Version 0.11.0.dev change list and installation procedure:
 Главный Компьютер и общие замечания:
 1. В david.serivce заменен тип Type=simple (201113)
 2. Тестирование изменено на pytest, добавлена фильрация тестов (201130)
+3. Функция check_file вынесена в david_lib (201204)
 
 Микроконтроллер NodeMcu02Gas:
 1. Сделана PCB NodeMcu02GasVer3 (201115)
@@ -105,7 +106,11 @@ Version 0.11.0.dev change list and installation procedure:
 Модуль climate_check:
 1. Выполнен рефакторинг модуля с добавлением docstring и типов (201130)
 
+Модуль david_currency_check:
+1. Выполнен рефакторинг модуля с добавлением docstring и типов (201204)
+
 Version installation procedure:
+------------------------------------
 
 1. Установить pytest, mypy
 pip install pytest

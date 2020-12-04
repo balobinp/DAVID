@@ -1,20 +1,16 @@
-#python3.6
-#Author: balobin.p@mail.ru
-
 import sqlite3
-import pandas as pd
+import pandas as pd  # type: ignore
 from pandas import DataFrame
 from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
 import logging
 import datetime as dt
+from typing import Optional, Tuple
 
 import david_lib
+from david_lib import check_file
 import david_user_interface
-
-#from importlib import reload
-#reload(logging)
 
 dir_david = david_lib.dir_david
 file_log_currency_check = david_lib.file_log_currency_check
@@ -68,15 +64,8 @@ currency_check_log.addHandler(file_handler)
 #currency_check_log.warning(f'Message=send_wa_notify;')
 #currency_check_log.error(f'Message=send_wa_notify;')
 
-def check_file(file_name):
-    if isfile(file_name):
-        currency_check_log.info(f'Message=check_file;File={file_name};Result=exists')
-    else:
-        currency_check_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
-    return None
 
-
-def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFrame):
+def get_iis_shares(market: str = 'foreign', tickers: list = []) -> Tuple[bool, DataFrame]:
     """
     Get price of shares from IIS MOEX.
 
@@ -114,13 +103,12 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
 
         for data in tree.findall('data'):
             if data.attrib['id'] == 'securities':
-                for row in data.find('rows').findall('row'):
+                for row in data.find('rows').findall('row'):  # type: ignore
                     iis_shares.append([row.attrib.get(name) for name in iis_shares_cols])
             if data.attrib['id'] == 'marketdata':
-                for row in data.find('rows').findall('row'):
+                for row in data.find('rows').findall('row'):  # type: ignore
                     iis_shares_last.append([row.attrib.get(name) for name in iis_shares_last_cols])
 
-        # iis_shares_df = DataFrame(iis_shares, columns=iis_shares_cols)
         iis_shares_df = pd.merge(DataFrame(iis_shares, columns=iis_shares_cols),
                                  DataFrame(iis_shares_last, columns=iis_shares_last_cols),
                                  how='left', on='SECID')
@@ -133,22 +121,40 @@ def get_iis_shares(market: str = 'foreign', tickers: list = []) -> (bool, DataFr
             return False, DataFrame(columns=iis_shares_return_cols)
 
 
-def get_valute(valute_name='USD'):
+def get_valuta(valuta_name: str = 'USD', url: str = url_cbrf) -> Tuple[str, Optional[str]]:
+    """
+    Get currency rate from Url.
+
+    :param valuta_name: Currency ticker. Default value is 'USD'.
+    :param url: Url to get currency rate. Default 'https://www.cbr.ru/scripts/XML_daily.asp'
+    :return: (Currency ticker, Currency rate) or (Currency ticker, None) in case of error.
+    """
     try:
-        resp = requests.get(url_cbrf, timeout=3)
+        resp = requests.get(url, timeout=3)
         currency_check_log.info(f'Message=http_currency_request;Response_ok={resp.ok};Reason={resp.reason};Status={resp.status_code}')
     except Exception as err:
         currency_check_log.error(f'Message=http_currency_request;Error={err}')
+        return valuta_name, None
     else:
         tree = ET.fromstring(resp.content)
         for valute in tree.iter('Valute'):
-            if valute.find('CharCode').text == valute_name:
-                char_code = valute.find('CharCode').text
-                rate = valute.find('Value').text
+            if valute.find('CharCode').text == valuta_name:  # type: ignore
+                char_code = valute.find('CharCode').text  # type: ignore
+                rate = valute.find('Value').text  # type: ignore
                 currency_check_log.info(f'Message=http_currency_request;CharCode={char_code};Rate={rate}')
-                return char_code, rate
+                if isinstance(char_code, str) and isinstance(rate, str):
+                    return char_code, rate
+        return valuta_name, None
 
-def currency_rate_db_insert(char_code, rate):
+
+def currency_rate_db_insert(char_code: str, rate: str) -> None:
+    """
+    Insert currency rate in database.
+
+    :param char_code: Currency ticker.
+    :param rate: Currency rate.
+    :return: None
+    """
     try:
         conn = sqlite3.connect(file_sqlite_db_path)
     except Exception as e:
@@ -159,9 +165,17 @@ def currency_rate_db_insert(char_code, rate):
                         VALUES (datetime(), ?, ?)''', (char_code, rate))
         conn.commit()
         conn.close()
+        currency_check_log.info(f'Message=currency_rate_db_insert;CharCode={char_code};Rate={rate}')
     return None
 
-def currency_check():
+
+def currency_check() -> Tuple[str, str, str, str]:
+    """
+    Fetch the last nd the previous USD rate a from database and check the difference.
+
+    :return: Tuple[status, currency_rate, currency_name, rep_date].
+    status can be 'currency_abnormal_increase' / 'currency_abnormal_decrease' / 'currency_normal'
+    """
     try:
         conn = sqlite3.connect(file_sqlite_db_path)
     except Exception as e:
@@ -174,11 +188,16 @@ def currency_check():
             FROM CURRENCY_RATES a
             LEFT JOIN CURRENCY_RATES b ON b.ID = a.ID - 1
             WHERE a.CURRENCY_NAME = 'USD' AND b.CURRENCY_NAME = 'USD'
-            ORDER BY a.REP_DATE DESC
+            ORDER BY a.ID DESC
             LIMIT 1''')
         rep_date, currency_name, currency_rate, prev_currency_rate, currency_change_per = cur.fetchone()
         rep_date = dt.datetime.strptime(rep_date, '%Y-%m-%d %H:%M:%S')
         conn.close()
+        if currency_name and currency_rate and prev_currency_rate and currency_change_per:
+            currency_check_log.debug(
+                f'Message=currency_check;{currency_name};{currency_rate};{prev_currency_rate};{currency_change_per}')
+        else:
+            currency_check_log.error(f'Message=currency_check;not_all_data_collected')
 
         if type(currency_rate) is str:
             currency_rate = float(currency_rate.replace(',', '.'))
@@ -197,11 +216,12 @@ def currency_check():
 
 if __name__ == '__main__':
 
-    check_file(file_log_currency_check_path)
+    check_file(currency_check_log, file_log_currency_check_path)
 
-    char_code, usd_rate = get_valute('USD')
+    char_code, usd_rate = get_valuta('USD')
 
-    currency_rate_db_insert(char_code, usd_rate)
+    if usd_rate:
+        currency_rate_db_insert(char_code, usd_rate)
 
     currency_check_result, currency_rate, _, _ = currency_check()
 

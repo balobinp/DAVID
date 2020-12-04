@@ -16,8 +16,8 @@ import david_healthcheck
 import david_user_interface
 import time
 
-# dont_test_list = ['play_file', 'mail', 'check_timer']  # 'play_file', 'mail', 'check_timer'
-dont_test_list = []  # 'play_file', 'mail', 'check_timer'
+dont_test_list = ['play_file', 'mail', 'check_timer']  # 'play_file', 'mail', 'check_timer'
+# dont_test_list = []  # 'play_file', 'mail', 'check_timer'
 
 server_ip_addr = david_lib.ip_addr
 server_port = david_lib.port
@@ -26,6 +26,9 @@ dir_david = david_lib.dir_david
 file_sqlite_db = david_lib.file_sqlite_db
 file_sqlite_db_path = join(dir_david, file_sqlite_db)
 file_sqlite_db_backup = f'david_db_{dt.datetime.now().strftime("%Y%m%d")}.sqlite'
+
+currency_usd_threshold_high = david_lib.currency_usd_threshold_high
+currency_usd_threshold_low = david_lib.currency_usd_threshold_low
 
 mp3_files_dict = david_lib.mp3_files_dict
 file_climate_hot_bedroom_path = join(dir_david, mp3_files_dict['climate_hot_bedroom'])
@@ -213,10 +216,18 @@ class TestWebServer(unittest.TestCase):
 
     # david_currency_check.py
 
-    def test_get_valute(self):
-        char_code, usd_rate = david_currency_check.get_valute('USD')
-        self.assertEqual(char_code, 'USD')
-        self.assertTrue(usd_rate)
+    def test_currency_rate_increase(self):
+        david_currency_check.currency_rate_db_insert('USD', str(currency_usd_threshold_high - 1))
+        david_currency_check.currency_rate_db_insert('USD', str(currency_usd_threshold_high + 1))
+        currency_check_result, _, _, _ = david_currency_check.currency_check()
+        assert currency_check_result == 'currency_abnormal_increase'
+
+    def test_currency_rate_decrease(self):
+        david_currency_check.currency_rate_db_insert('USD', str(currency_usd_threshold_low + 1))
+        david_currency_check.currency_rate_db_insert('USD', str(currency_usd_threshold_low - 1))
+        currency_check_result, rate, _, _ = david_currency_check.currency_check()
+        print(rate)
+        assert currency_check_result == 'currency_abnormal_decrease'
 
     def test_currency_rate_db_insert(self):
         david_currency_check.currency_rate_db_insert('USD', 666)
@@ -316,6 +327,16 @@ class UserInterface(unittest.TestCase):
 
 
 class TestCurrencyCheck(unittest.TestCase):
+
+    def test_get_valuta_success(self):
+        char_code, usd_rate = david_currency_check.get_valuta('USD')
+        assert char_code == 'USD'
+        assert usd_rate
+
+    def test_get_valuta_error(self):
+        char_code, usd_rate = david_currency_check.get_valuta('USD', url='http://')
+        assert char_code == 'USD'
+        assert usd_rate is None
 
     def test_01_parameters_ok(self):
         status, df = david_currency_check.get_iis_shares(market='foreign', tickers=david_currency_check.tickers_foreign)
