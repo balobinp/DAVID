@@ -4,6 +4,7 @@
 from os.path import isfile, join
 import logging
 import david_lib
+from david_lib import check_file
 
 dir_david = david_lib.dir_david
 file_log_temp = david_lib.file_log_name_temp
@@ -38,13 +39,34 @@ temp_log.addHandler(file_handler)
 # в. play_audio
 # temp_log.debug(f'Message=play_audio;')
 
-def check_file(file_name):
-    if isfile(file_name):
-        return None
-    else:
-        temp_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
-    return None
+
+def person(name: str, age: int) -> str:
+    """
+    **Description**
+
+    Description of function 'person'
+
+    :param name: Name of the person
+    :param age: Age of the person
+    :return: Description of the person
+
+    :raise NotImplementedError: If no name is set.
+
+    **Notes**
+
+    Some notes
+
+    **Examples**
+
+    >>>person('Pavel', 40)
+
+    """
+    if name is None:
+        raise NotImplementedError("No name")
+
+    return f'Name: {name}, age: {age}'
+
 
 if __name__ == '__main__':
-    check_file(file_sqlite_db_path)
-    check_file(file_log_temp_path)
+    check_file(temp_log, file_sqlite_db_path)
+    check_file(temp_log, file_log_temp_path)

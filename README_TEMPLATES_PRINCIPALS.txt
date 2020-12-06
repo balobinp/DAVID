@@ -71,7 +71,7 @@ git push origin develop
 б. db_connect
 в. playing_file
 
-3. Для каждого типа действий установить уровни
+3. Для каждого типа действий установить уровни и записать в Logger examples
 
 Уровни в порядке значимости:
 debug
@@ -92,6 +92,40 @@ climate_check.error(f'Message=db_connect;DB={file_sqlite_db};Result={e}')
 в. playing_file
 climate_check.debug(f'Message=playing_file;File={file_climate_hot_bedroom};Result=OK')
 climate_check.error(f'Message=playing_file;File={file_climate_hot_bedroom};Result={e}')
+
+------------------------------------------------------------------------
+Принцип документирования
+------------------------------------------------------------------------
+
+Для документирования использовать reStructured Text
+
+Пример:
+
+def person(name: str, age: int) -> str:
+    """
+    **Description**
+
+    Description of function 'person'
+
+    :param name: Name of the person
+    :param age: Age of the person
+    :return: Description of the person
+
+    :raise NotImplementedError: If no name is set.
+
+    **Notes**
+
+    Some notes
+
+    **Examples**
+
+    >>>person('Pavel', 40)
+
+    """
+    if name is None:
+        raise NotImplementedError("No name")
+
+    return f'Name: {name}, age: {age}'
 
 ------------------------------------------------------------------------
 Принцип наименования и нумерации контроллеров и сенсоров

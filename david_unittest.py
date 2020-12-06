@@ -105,46 +105,6 @@ class TestWebServer(unittest.TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(r.text.strip(), '"OK"')
 
-    def test_01_get_gas(self):
-        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666'
-        url_02 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=0'
-        urls = [url_01, url_02]
-        for url in urls:
-            r = requests.get(url)
-            self.assertEqual(r.status_code, 200)
-            self.assertEqual(r.text.strip(), '"OK"')
-
-    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
-    def test_01_get_gas_emergency(self):
-        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
-        urls = [url_01]
-        for url in urls:
-            r = requests.get(url)
-            self.assertEqual(r.status_code, 200)
-            self.assertEqual(r.text.strip(), '"OK"')
-
-    @pytest.mark.skipif('check_timer' in dont_test_list, reason='check_timer')
-    def test_01_get_gas_check_timer(self):
-        url = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
-        for _ in range(10):
-            r = requests.get(url)
-            self.assertEqual(r.status_code, 200)
-            self.assertEqual(r.text.strip(), '"OK"')
-            time.sleep(1)
-
-    def test_02_fetch_gas_data(self):
-        conn = sqlite3.connect(file_sqlite_db_path)
-        cur = conn.cursor()
-        sql_str = """SELECT SENSOR_ID, SENSOR_VALUE FROM GAS_SENSORS
-        WHERE REP_DATE >= DATETIME('now','-1 minute')
-        AND ID = (SELECT MAX(ID) FROM GAS_SENSORS);"""
-        cur.execute(sql_str)
-        result = None
-        for results in cur:
-            result = results
-        conn.close()
-        self.assertEqual(result, (2, 666))
-
     @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
     def test_get_motion(self):
         url_01 = f'http://{server_ip_addr}:{server_port}/motion;sensor=3'
@@ -255,12 +215,57 @@ class TestWebServer(unittest.TestCase):
 
     # david_gas_check.py
 
-    def test_02_get_gas_data(self):
+    def test_00_get_gas_data_check_value(self):
         result = david_gas_check.get_gas_data()
-        if result:
-            self.assertEqual(result, 666)
-        else:
-            self.assertIsNone(result)
+        assert result is None
+
+    def test_01_get_gas(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666'
+        url_02 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=0'
+        urls = [url_01, url_02]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
+    @pytest.mark.skipif('mail' in dont_test_list, reason='mail')
+    def test_01_get_gas_emergency(self):
+        url_01 = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
+        urls = [url_01]
+        for url in urls:
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+
+    @pytest.mark.skipif('check_timer' in dont_test_list, reason='check_timer')
+    def test_01_get_gas_check_timer(self):
+        url = f'http://{server_ip_addr}:{server_port}/gas;sensor=2&sensorValue=666&type=1'
+        for _ in range(10):
+            r = requests.get(url)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.text.strip(), '"OK"')
+            time.sleep(1)
+
+    def test_02_fetch_gas_data(self):
+        conn = sqlite3.connect(file_sqlite_db_path)
+        cur = conn.cursor()
+        sql_str = """SELECT SENSOR_ID, SENSOR_VALUE FROM GAS_SENSORS
+        WHERE REP_DATE >= DATETIME('now','-1 minute')
+        AND ID = (SELECT MAX(ID) FROM GAS_SENSORS);"""
+        cur.execute(sql_str)
+        result = None
+        for results in cur:
+            result = results
+        conn.close()
+        assert result == (2, 666)
+
+    def test_02_get_gas_data_check_type(self):
+        result = david_gas_check.get_gas_data()
+        assert isinstance(result, int)
+
+    def test_02_get_gas_data_check_value(self):
+        result = david_gas_check.get_gas_data()
+        assert result == 666
 
     # david_healthcheck.py
 

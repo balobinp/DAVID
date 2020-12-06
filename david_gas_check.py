@@ -5,8 +5,10 @@ import os
 from os.path import isfile, join
 import sqlite3
 import logging
+from typing import Optional
 
 import david_lib
+from david_lib import check_file
 import david_user_interface
 
 dir_david = david_lib.dir_david
@@ -39,43 +41,54 @@ gas_check_log.addHandler(file_handler)
 
 # Действия (для логирования):
 # а. check_file
-# temp_log.debug(f'Message=check_file;')
-# temp_log.info(f'Message=check_file;')
+# gas_check_log.debug(f'Message=check_file;')
+# gas_check_log.info(f'Message=check_file;')
 
 # б. get_data_from_db
-# temp_log.debug(f'Message=get_data_from_db;')
-# temp_log.info(f'Message=get_data_from_db;')
+# gas_check_log.debug(f'Message=get_data_from_db;')
+# gas_check_log.info(f'Message=get_data_from_db;')
+# gas_check_log.error(f'Message=get_data_from_db;')
 
 # в. playing_file
 # temp_log.debug(f'Message=playing_file;')
 # temp_log.info(f'Message=playing_file;')
 
-def check_file(file_name):
-    if isfile(file_name):
-        return None
-    else:
-        gas_check_log.error(f'Message=check_file;File={file_name};Result=does_not_exist')
-    return None
 
-def get_gas_data():
-    conn = sqlite3.connect(file_sqlite_db_path)
+def get_gas_data() -> Optional[int]:
+    """
+    **Description**
+
+    Fetch the last gas sensor measurment from Database.
+
+    :return: The gas sensor value for the last 15 minutes.
+
+    **Examples**
+
+    >>>get_gas_data()
+    """
+    gas_check_log.debug(f'Message=get_data_from_db;connecting_to_db')
+    try:
+        conn = sqlite3.connect(file_sqlite_db_path)
+    except Exception as e:
+        gas_check_log.error(f'Message=get_data_from_db;Exception={e}')
     cur = conn.cursor()
     sql_str = """SELECT SENSOR_VALUE FROM GAS_SENSORS
     WHERE REP_DATE >= DATETIME('now','-15 minute')
     AND ID = (SELECT MAX(ID) FROM GAS_SENSORS);"""
     cur.execute(sql_str)
-    gas_sensor_value = None
+    value = None
     for results in cur:
-        gas_sensor_value = results[0]
+        value = results[0]
     conn.close()
-    return gas_sensor_value
+    gas_check_log.debug(f'Message=get_data_from_db;gas_sensor_value={value}')
+    return value
 
 
 if __name__ == '__main__':
 
-    check_file(file_sqlite_db_path)
-    check_file(file_log_gas_check_path)
-    check_file(file_gas_danger_path)
+    check_file(gas_check_log, file_sqlite_db_path)
+    check_file(gas_check_log, file_log_gas_check_path)
+    check_file(gas_check_log, file_gas_danger_path)
 
     inform_user = david_user_interface.InformUser()
 

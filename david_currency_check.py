@@ -149,11 +149,17 @@ def get_valuta(valuta_name: str = 'USD', url: str = url_cbrf) -> Tuple[str, Opti
 
 def currency_rate_db_insert(char_code: str, rate: str) -> None:
     """
+    **Description**
+
     Insert currency rate in database.
 
     :param char_code: Currency ticker.
     :param rate: Currency rate.
     :return: None
+
+    **Examples**
+
+    >>>currency_rate_db_insert('USD', '70')
     """
     try:
         conn = sqlite3.connect(file_sqlite_db_path)
