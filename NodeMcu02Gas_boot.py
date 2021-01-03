@@ -1,16 +1,6 @@
-# Connections:
-# OLED     NodeMcu
-#  SDA <-> D2 (4)
-#  SCL <-> D1 (5)
-
-# DHT11     NodeMcu
-#   OUT <-> D3 (0)
-
 # boot.py
 # This file is executed on every boot (including wake-boot from deepsleep)
 
-# import os
-# import uos
 import network
 from machine import Pin, I2C, ADC
 from time import sleep
@@ -20,20 +10,20 @@ import webrepl
 
 import ssd1306
 
-s_id_tmp_1 = 1 # temperature in NodeMcu01BedRoom (main sensor)
-s_id_tmp_2 = 5 # temperature in NodeMcu02Gas
-s_id_gas_1 = 2 # gas in NodeMcu02Gas (main sensor)
-s_id_tmo_1 = 7 # temperature and motion in NodeMcu02Gas
+s_id_tmp_1 = 1  # temperature in NodeMcu01BedRoom (main sensor)
+s_id_tmp_2 = 5  # temperature in NodeMcu02Gas
+s_id_gas_1 = 2  # gas in NodeMcu02Gas (main sensor)
+s_id_tmo_1 = 7  # temperature and motion in NodeMcu02Gas
 
-### SET VARIABLES HERE ###
+# SET VARIABLES HERE #
 
-version = 201108
+version = 210103
 
 ip_server = '192.168.1.44'
 # ip_server = '192.168.1.63'
 port_server = 80
 
-s_id_ctr = s_id_gas_1 # NodeMcu02Gas
+s_id_ctr = s_id_gas_1  # NodeMcu02Gas
 
 oled_width = 128
 oled_height = 64
@@ -75,41 +65,41 @@ def get_req(url):
 def clear_str(oled, pos=0, fill=0):
     'OLED display pos=[0-50]'
     for x in range(oled_width):
-        for y in range(pos, pos+10):
+        for y in range(pos, pos + 10):
             oled.pixel(x, y, fill)
     oled.show()
 
 
 def clear_sym(oled, pos_x=0, pos_y=0, num=1, fill=0):
     'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
-    for x in range(8*num):
-        for y in range(pos_y, pos_y+10):
-            oled.pixel(pos_x*8+x, y, fill)
+    for x in range(8 * num):
+        for y in range(pos_y, pos_y + 10):
+            oled.pixel(pos_x * 8 + x, y, fill)
     oled.show()
 
 
 def draw_bulet(oled, pos_x=3, pos_y=0):
     'OLED display os_x=[0-15], pos_y=[0-50], num=<symbols>'
     bul = [
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],]
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 0, 1, 1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0], ]
     for y, line in enumerate(bul):
         for x, fill in enumerate(line):
-            oled.pixel(x+pos_x*8, y+pos_y, fill)
+            oled.pixel(x + pos_x * 8, y + pos_y, fill)
     oled.show()
 
 
 # Connecting to WiFi network
 sta_if = network.WLAN(network.STA_IF)
-sta_if.active(True) # Activate WiFi
+sta_if.active(True)  # Activate WiFi
 sta_if.connect(ssid, passwd)
 
 if oled:
