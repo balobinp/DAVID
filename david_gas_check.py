@@ -5,6 +5,7 @@ import os
 from os.path import isfile, join
 import sqlite3
 import logging
+from logging.handlers import RotatingFileHandler
 from typing import Optional
 
 import david_lib
@@ -27,7 +28,8 @@ gas_emergency_threshold = david_lib.gas_emergency_threshold
 gas_check_log = logging.getLogger('gas_check')
 gas_check_log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_gas_check_path)
+# file_handler = logging.FileHandler(file_log_gas_check_path)
+file_handler = RotatingFileHandler(file_log_gas_check_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 gas_check_log.addHandler(file_handler)
 

@@ -3,6 +3,7 @@
 
 from os.path import isfile, join
 import logging
+from logging.handlers import RotatingFileHandler
 import sqlite3
 import psutil
 import datetime as dt
@@ -29,7 +30,8 @@ file_sqlite_db_path = join(dir_david, file_sqlite_db)
 healthcheck_logger = logging.getLogger('healthcheck')
 healthcheck_logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_healthcheck_path)
+# file_handler = logging.FileHandler(file_log_healthcheck_path)
+file_handler = RotatingFileHandler(file_log_healthcheck_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 healthcheck_logger.addHandler(file_handler)
 

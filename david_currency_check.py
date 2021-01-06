@@ -5,6 +5,7 @@ from os.path import isfile, join
 import requests
 import xml.etree.ElementTree as ET
 import logging
+from logging.handlers import RotatingFileHandler
 import datetime as dt
 from typing import Optional, Tuple
 
@@ -29,7 +30,8 @@ currency_usd_threshold_low = david_lib.currency_usd_threshold_low
 currency_check_log = logging.getLogger('currency_check')
 currency_check_log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_currency_check_path)
+# file_handler = logging.FileHandler(file_log_currency_check_path)
+file_handler = RotatingFileHandler(file_log_currency_check_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 currency_check_log.addHandler(file_handler)
 

@@ -1,5 +1,5 @@
 # python3.6
-# Version 0.8.0.dev 200911
+# Version 0.11.0.dev 210106
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 import uvicorn
@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlparse
 import sqlite3
 from os.path import isfile, join
 import logging
+from logging.handlers import RotatingFileHandler
 import datetime as dt
 import time
 
@@ -27,9 +28,14 @@ timer_oven_mail_delay = david_lib.timer_oven_mail_delay
 
 # Create logger
 web_server_log = logging.getLogger('web_server')
+
+if web_server_log.hasHandlers():
+    web_server_log.handlers.clear()
+
 web_server_log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_web_server_path)
+# file_handler = logging.FileHandler(file_log_web_server_path)
+file_handler = RotatingFileHandler(file_log_web_server_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 web_server_log.addHandler(file_handler)
 

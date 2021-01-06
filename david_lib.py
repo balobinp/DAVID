@@ -36,7 +36,7 @@ gas_emergency_threshold = 600
 
 # For tests
 
-ip_addr = '192.168.1.53'
+ip_addr = '192.168.1.52'
 port = 80
 ftp_ip_addr = '192.168.1.1'
 timer_gas_mail_delay = 6  # Time interval to send mail in case of gas emergency

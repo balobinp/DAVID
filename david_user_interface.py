@@ -3,6 +3,7 @@
 
 from os.path import isfile, join
 import logging
+from logging.handlers import RotatingFileHandler
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -24,7 +25,8 @@ mp3_files_dict = david_lib.mp3_files_dict
 user_interface_log = logging.getLogger('user_interface')
 user_interface_log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_user_interface_path)
+# file_handler = logging.FileHandler(file_log_user_interface_path)
+file_handler = RotatingFileHandler(file_log_user_interface_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 user_interface_log.addHandler(file_handler)
 

@@ -1,6 +1,7 @@
 import sqlite3
 from os.path import isfile, join
 import logging
+from logging.handlers import RotatingFileHandler
 from typing import List, Tuple
 
 import david_lib
@@ -23,7 +24,8 @@ climate_hot_threshold = david_lib.climate_hot_threshold
 climate_check_log = logging.getLogger('climate_check')
 climate_check_log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s;Application=%(name)s;%(levelname)s;%(message)s')
-file_handler = logging.FileHandler(file_log_climate_check_path)
+# file_handler = logging.FileHandler(file_log_climate_check_path)
+file_handler = RotatingFileHandler(file_log_climate_check_path, maxBytes=1048576, backupCount=3)
 file_handler.setFormatter(formatter)
 climate_check_log.addHandler(file_handler)
 
