@@ -1,21 +1,20 @@
-#python3.6
-#Author: balobin.p@mail.ru
-
 from os.path import isfile, join
 import logging
 from logging.handlers import RotatingFileHandler
 import sqlite3
-import psutil
+import psutil  # type: ignore
 import datetime as dt
 import subprocess
 import re
 import json
 import ftplib
+from typing import Optional, Dict, List
 
 from david_currency_check import currency_check
 from david_climate_check import get_climate_data
 import david_user_interface
 import david_lib
+from david_lib import check_file
 
 dir_david = david_lib.dir_david
 ftp_ip_addr = david_lib.ftp_ip_addr
@@ -59,14 +58,24 @@ healthcheck_logger.addHandler(file_handler)
 # д. db_backup
 # healthcheck_logger.debug(f'Message=db_backup;')
 
-def check_file(file_name):
-    if isfile(file_name):
-        return None
-    else:
-        healthcheck_logger.error(f'Message=check_file;File={file_name};Result=does_not_exist')
-    return None
 
-def fetch_climate_data():
+def fetch_climate_data() -> Optional[Dict]:
+    """
+    **Description**
+
+    This is to fetch the climate data from database
+
+    This function fetches the climate data from database
+    using function david_climate_check.get_climate_data.
+    david_climate_check.get_climate_data fetches the last 15 minutes
+    temperature sensors values from database.
+    The values are returned only within the time interval between 05:00 and 18:00.
+    It logs the result into the log file.
+    It returns the dictionary with climate data
+    if "get_climate_data" returned the climate data and None otherwise.
+
+    :return: Dictionary with climate data or None
+    """
     climate_data_results = get_climate_data()
     result = {}
     for results in climate_data_results:
@@ -77,7 +86,18 @@ def fetch_climate_data():
     else:
         return result
 
-def fetch_gas_data():
+
+def fetch_gas_data() -> Optional[str]:
+    """
+    **Description**
+
+    This function fetches the gas sensor data from database.
+
+    This is to fetch the last 15 minutes gas sensor data from database
+    It logs the result into the log file.
+
+    :return: String with gas sensor data or None
+    """
     conn = sqlite3.connect(file_sqlite_db_path)
     cur = conn.cursor()
     sql_str = """SELECT SENSOR_VALUE FROM GAS_SENSORS
@@ -91,7 +111,19 @@ def fetch_gas_data():
     healthcheck_logger.debug(f'Message=get_data_from_db;gas={result}')
     return result
 
-def fetch_motion_data():
+
+def fetch_motion_data() -> Optional[List]:
+    """
+    **Description**
+
+    This function fetches the motion sensors data from database.
+
+    This function fetches the last 1 day motion sensors data from database.
+    The result is stored in List.
+    It logs the result into the log file.
+
+    :return: List with motion sensors data or None
+    """
     conn = sqlite3.connect(file_sqlite_db_path)
     cur = conn.cursor()
     sql_str = """SELECT REP_DATE, LOCATION
@@ -107,20 +139,57 @@ def fetch_motion_data():
     else:
         return result
 
-def get_system_data():
-    system_data_dict = dict(psutil.virtual_memory()._asdict())
-    system_data_dict.update({'cpu': psutil.cpu_percent()})
+
+def get_system_data() -> Dict[str, float]:
+    """
+    **Description**
+
+    This is to collect the server system information.
+
+    This function collects:
+     - memory load in percentage,
+     - cpu load in percentage,
+     - cpu temperature.
+
+    :return: Dictionary {'percent':float, 'cpu':float, 'cpu_temp':float}
+    """
+    system_data_dict = {}
+    try:
+        percent = psutil.virtual_memory().percent
+    except Exception as e:
+        healthcheck_logger.error(f'Message=system_check;Exception:{e}')
+        percent = float(0)
+    finally:
+        system_data_dict.update({'percent': percent})
+    try:
+        cpu = psutil.cpu_percent()
+    except Exception as e:
+        healthcheck_logger.error(f'Message=system_check;Exception:{e}')
+        cpu = float(0)
+    finally:
+        system_data_dict.update({'cpu': cpu})
     try:
         vcgencmd_output = subprocess.check_output(r'sudo vcgencmd measure_temp', shell=True).strip().decode("utf-8")
-        cpu_temp = float(re.search(r'[0-9]*\.[0-9]*', vcgencmd_output).group())
-    except:
-        cpu_temp = 0
-    system_data_dict.update({'cpu_temp': cpu_temp})
+        cpu_temp = float(re.search(r'[0-9]*\.[0-9]*', vcgencmd_output).group())  # type: ignore
+    except Exception as e:
+        healthcheck_logger.error(f'Message=system_check;Exception:{e}')
+        cpu_temp = float(0)
+    finally:
+        system_data_dict.update({'cpu_temp': cpu_temp})
     message = f"Message=system_check;cpu={system_data_dict['cpu']}%;mem:{system_data_dict['percent']}%;cpu_temp:{system_data_dict['cpu_temp']}C"
     healthcheck_logger.debug(message)
     return system_data_dict
 
-def make_db_backup_ftp():
+
+def make_db_backup_ftp() -> Optional[List[str]]:
+    """
+    **Description**
+
+    This function stores backup of database on file server.
+
+    :return: List of the last 3 database backup filenames on ftp server or None
+    """
+    db_backups = None
     with open(file_pass_path, "r") as json_file:
         passwords = json.load(json_file)
     ftp_user = passwords['ftp_user']
@@ -141,22 +210,23 @@ def make_db_backup_ftp():
         message = f"Message=db_backup;result=OK;last_backup={db_backups[-1:]}"
         healthcheck_logger.debug(message)
     except Exception as e:
-        db_backups = None
         message = f"Message=db_backup;result=NOK;error={e}"
         healthcheck_logger.error(message)
     return db_backups
 
 
 if __name__ == '__main__':
-    check_file(file_sqlite_db_path)
-    check_file(file_log_healthcheck_path)
-    check_file(file_pass_path)
+    check_file(healthcheck_logger, file_sqlite_db_path)
+    check_file(healthcheck_logger, file_log_healthcheck_path)
+    check_file(healthcheck_logger, file_pass_path)
     gas_sensor_value = fetch_gas_data()
     climate_data = fetch_climate_data()
     currency_check_result, currency_rate, currency_name, rep_date = currency_check()
     system_data_dict = get_system_data()
     motion_data = fetch_motion_data()
     db_backups = make_db_backup_ftp()
+
+    # TODO переделать справочник в объект класса данных для корректной проверки типов
 
     healthcheck_report_dict = {'gas_sensor_data': gas_sensor_value,
                                'climate_data': climate_data,
@@ -201,50 +271,50 @@ color:#0E909A'>David Report for {current_date}<o:p></o:p></span></p>
         message += f"<div>Climate sensors data: {healthcheck_report_dict['climate_data']}</div>"
         print(f"Данные с датчиов температуры: {healthcheck_report_dict['climate_data']}")
 
-    dt_last_currency_check = healthcheck_report_dict['currency_data']['USD']['rep_date'].date()
+    dt_last_currency_check = healthcheck_report_dict['currency_data']['USD']['rep_date'].date()  # type: ignore
     dt_diff_currency_check = (dt_last_currency_check - dt_today).days
 
     if dt_last_currency_check != dt_today:
         message += f"<div>No Currency data. The last update {abs(dt_diff_currency_check)} days ago.</div>"
         print(f"Отсутствуют данные по курсу доллара. Последнее обновление {abs(dt_diff_currency_check)} дней назад.")
-    elif healthcheck_report_dict['currency_data']['USD']['currency_check_result'] == 'currency_normal':
+    elif healthcheck_report_dict['currency_data']['USD']['currency_check_result'] == 'currency_normal':  # type: ignore
         message += "<div>USD rate is normal.</div>"
-        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"
-        print(f"Курс доллара в норме. "
+        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"  # type: ignore
+        print(f"Курс доллара в норме. "  # type: ignore
               f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
     else:
         message +=f"<div>Ubnormal USD rate.</div>"
-        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"
-        print(f"Превышены пороги изменения курса доллара."
+        message += f"<div>Current rate {healthcheck_report_dict['currency_data']['USD']['currency_rate']} rubles.</div>"  # type: ignore
+        print(f"Превышены пороги изменения курса доллара."  # type: ignore
               f"Текущий курс {healthcheck_report_dict['currency_data']['USD']['currency_rate']} рублей.")
 
-    if healthcheck_report_dict['system_data']['cpu'] < 40:
-        message += f"<div>CPU load is normal. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"
-        print(f"Загрузка CPU в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
+    if healthcheck_report_dict['system_data']['cpu'] < 40:  # type: ignore
+        message += f"<div>CPU load is normal. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"  # type: ignore
+        print(f"Загрузка CPU в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")  # type: ignore
     else:
-        message += f"<div>Ubnormal CPU load. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"
-        print(f"Превышена загрузка CPU. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")
+        message += f"<div>Ubnormal CPU load. Current value {healthcheck_report_dict['system_data']['cpu']}%.</div>"  # type: ignore
+        print(f"Превышена загрузка CPU. Текущее значение {healthcheck_report_dict['system_data']['cpu']}%.")  # type: ignore
 
-    if healthcheck_report_dict['system_data']['percent'] < 70:
-        message += f"<div>Memory load is normal. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"
-        print(f"Загрузка памяти в норме. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
+    if healthcheck_report_dict['system_data']['percent'] < 70:  # type: ignore
+        message += f"<div>Memory load is normal. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"  # type: ignore
+        print(f"Загрузка памяти в норме. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")  # type: ignore
     else:
-        message += f"<div>Ubnormal memory load. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"
-        print(f"Превышена загрузка памяти. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")
+        message += f"<div>Ubnormal memory load. Current value: {healthcheck_report_dict['system_data']['percent']}%.</div>"  # type: ignore
+        print(f"Превышена загрузка памяти. Текущее значение {healthcheck_report_dict['system_data']['percent']}%.")  # type: ignore
 
-    if healthcheck_report_dict['system_data']['cpu_temp'] < 55:
-        message += f"<div>CPU temperature is normal. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"
-        print(f"Температура процессора в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")
+    if healthcheck_report_dict['system_data']['cpu_temp'] < 55:  # type: ignore
+        message += f"<div>CPU temperature is normal. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"  # type: ignore
+        print(f"Температура процессора в норме. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")  # type: ignore
     else:
-        message += f"<div>Ubnormal CPU temperature. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"
-        print(f"Превышена температура процессора. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")
+        message += f"<div>Ubnormal CPU temperature. Current value: {healthcheck_report_dict['system_data']['cpu_temp']}C.</div>"  # type: ignore
+        print(f"Превышена температура процессора. Текущее значение {healthcheck_report_dict['system_data']['cpu_temp']}C.")  # type: ignore
 
     if healthcheck_report_dict['db_backups'] is None:
         message += "<div>DB backup was not created.</div>"
         print("Бэкап базы данных не был выполнен.")
     else:
-        message += f"<div>The last DB backup: {healthcheck_report_dict['db_backups'][-1:]}</div>"
-        print(f"Последний бэкап базы данных: {healthcheck_report_dict['db_backups'][-1:]}")
+        message += f"<div>The last DB backup: {healthcheck_report_dict['db_backups'][-1:]}</div>"  # type: ignore
+        print(f"Последний бэкап базы данных: {healthcheck_report_dict['db_backups'][-1:]}")  # type: ignore
 
     if motion_data:
         message += "<div>Motion detected:</div>"

@@ -47,8 +47,11 @@ def check_file(file_name):
 
 def get_climate_data() -> List[Tuple[str, float]]:
     """
+    **Description**
+
     Fetches the last 15 minutes temperature sensors values from database.
-    The values are retirned only within the time interval between 05:00 and 18:00.
+    The values are returned only within the time interval between 05:00 and 18:00.
+
     :return: list of tuples with 'Sensor name' and 'Sensor value'
     """
     conn = sqlite3.connect(file_sqlite_db_path)

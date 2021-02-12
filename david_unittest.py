@@ -285,6 +285,7 @@ class TestWebServer(unittest.TestCase):
             self.assertIsInstance(result, dict)
             self.assertIsInstance(result['percent'], float)
             self.assertIsInstance(result['cpu'], float)
+            self.assertIsInstance(result['cpu_temp'], float)
 
 
 class UserInterface(unittest.TestCase):

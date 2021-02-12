@@ -1,5 +1,6 @@
 from os.path import isfile
 from typing import Dict
+from logging import Logger
 
 version = '0.11.0'
 currency_threshold_increase_per = 2
@@ -58,7 +59,17 @@ file_log_healthcheck = r'.\log\healthcheck.log'
 file_log_user_interface = r'.\log\user_interface.log'
 
 
-def check_file(logger_name, file_name):
+def check_file(logger_name: Logger, file_name: str) -> None:
+    """
+    **Description**
+
+    This is to check if the file exists.
+    The check result will be stored in log file.
+
+    :param logger_name: Logger name to log the check result.
+    :param file_name: The file name to check if exists.
+    :return: None
+    """
     if isfile(file_name):
         logger_name.info(f'Message=check_file;File={file_name};Result=exists')
     else:

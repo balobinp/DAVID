@@ -64,7 +64,7 @@ To Do list:
 1. Исправить ошибки, которые возникают из-за порядка запуска тестов.
 
 Модуль david_healthcheck:
-1. 
+1. Переделать справочник в объект класса данных для корректной проверки типов.
 
 Модуль david_user_interface:
 1. 
@@ -117,6 +117,9 @@ Version 0.11.0.dev change list and installation procedure:
 
 Модуль david_gas_check:
 1. Выполнен рефакторинг модуля с добавлением docstring и типов (201206)
+
+Модуль david_healthcheck:
+1. Выполнен рефакторинг модуля с добавлением docstring и типов (210212)
 
 Version installation procedure:
 ------------------------------------
